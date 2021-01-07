@@ -3,6 +3,7 @@ package com.example.photochangerecord
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
 
 lateinit var myCameraBackGroundViewModel: CameraBackGroundViewModel
 

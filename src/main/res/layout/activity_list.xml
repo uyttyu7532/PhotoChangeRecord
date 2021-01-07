@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.photochangerecord.CameraBackGroundViewModel" />
+            type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         tools:context=".ListActivity">
 
         <TextView
-            android:text="@{viewModel.currentValue.toString()}"
+            android:text="@{viewModel.imageAlpha.toString()}"
             android:id="@+id/test_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

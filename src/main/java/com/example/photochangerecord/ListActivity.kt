@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.photochangerecord.databinding.ActivityListBinding
-import kotlinx.android.synthetic.main.activity_list.*
-import kotlinx.android.synthetic.main.activity_list.view.*
+import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
+
 
 class ListActivity : AppCompatActivity() {
 
@@ -34,17 +33,17 @@ class ListActivity : AppCompatActivity() {
 //        setContentView(view)
 
 
-        viewModel.currentValue.observe(this, {
+        viewModel.imageAlpha.observe(this, {
             Log.d(TAG, it.toString())
         })
 
-        plus.setOnClickListener {
-            viewModel.updateValue(ActionType.PLUS)
-        }
-
-        minus.setOnClickListener {
-            viewModel.updateValue(ActionType.MINUS)
-        }
+//        plus.setOnClickListener {
+//            viewModel.updateValue(ActionType.PLUS)
+//        }
+//
+//        minus.setOnClickListener {
+//            viewModel.updateValue(ActionType.MINUS)
+//        }
     }
 
 }

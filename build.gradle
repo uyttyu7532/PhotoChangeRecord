@@ -65,5 +65,8 @@ dependencies {
     // livedata (옵저버 패턴) - 값이 변경되면 알 수 있게
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
+    // https://github.com/Ramotion/fluid-slider-android
+    implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
+
 
 }

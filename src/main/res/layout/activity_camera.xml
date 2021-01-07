@@ -1,33 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <data>
+            <variable
+                name="viewModel"
+                type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
+    </data>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:alpha="0.5"
-        android:adjustViewBounds="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/photo"
-        android:scaleType="centerInside"/>
+        <FrameLayout
+            android:id="@+id/camera_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/alpha_background_image_slider">
 
-
-
-    <ImageButton
-        android:id="@+id/btn_convert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        app:srcCompat="@android:drawable/ic_menu_rotate" />
+            <SurfaceView
+                android:id="@+id/surfaceView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
 
+            <ImageView
+                android:id="@+id/alpha_background_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:alpha="@{viewModel.imageAlpha}"
+                android:background="@drawable/photo"
+                android:scaleType="centerInside" />
+        </FrameLayout>
 
-</FrameLayout>
+
+        <ImageButton
+            android:id="@+id/btn_convert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:tint="@android:color/white"
+            android:elevation="2dp"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_baseline_flip_camera_android_24" />
+
+        <com.ramotion.fluidslider.FluidSlider
+            android:id="@+id/alpha_background_image_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:initial_position="0.5" />
+
+    </RelativeLayout>
+</layout>
