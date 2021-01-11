@@ -1,12 +1,14 @@
 package com.example.photochangerecord
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
-import com.example.photochangerecord.viewmodel.Photo
+import com.example.photochangerecord.viewmodel.Folder
+import splitties.activities.start
 
 
 class GalleryActivity : AppCompatActivity() {
@@ -16,7 +18,6 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityGalleryBinding
-    var photoList = ArrayList<Photo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +25,22 @@ class GalleryActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery)
 
+        val intent = intent
+        var receivedFolderInfo: Folder = intent.getParcelableExtra("folderInfo")
 
-        recyclerview()
+        Log.d(TAG, "onCreate: $receivedFolderInfo")
+
+        recyclerview(receivedFolderInfo)
+
+        binding.newPhotoFab.setOnClickListener{
+            // TODO 나중에는 찍은 사진을 업데이트해서 보여줘야..
+            start<CameraActivity>()
+        }
     }
 
-    private fun recyclerview(){
-        initializeData()
+    private fun recyclerview(folder : Folder){
 
-        val adapter = GalleryAdapter(photoList!!)
+        val adapter = GalleryAdapter(folder.photos)
         val recyclerView = binding.recyclerViewGallery
         val manager = GridLayoutManager(this, 2)
         recyclerView.layoutManager = manager
@@ -46,29 +55,6 @@ class GalleryActivity : AppCompatActivity() {
             }
         })
 
-
     }
 
-    private fun initializeData(){
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photoList.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-    }
 }

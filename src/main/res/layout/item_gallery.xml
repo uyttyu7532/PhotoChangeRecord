@@ -19,7 +19,8 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/gallery_image"
+            android:layout_margin="10dp"
+            android:id="@+id/gallery_image_view"
             android:layout_width="160dp"
             android:layout_height="120dp"
             android:scaleType="centerInside"

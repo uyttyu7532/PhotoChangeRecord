@@ -35,6 +35,10 @@ android {
     dataBinding {
         enabled true
     }
+
+    androidExtensions { experimental = true }
+
+
 }
 
 dependencies {
@@ -54,8 +58,9 @@ dependencies {
     // 권한 설정
     implementation 'gun0912.ted:tedpermission:2.2.3'
 
-    // Toast
+    // splitties
     implementation("com.louiscad.splitties:splitties-toast:$splitties_version")
+    implementation("com.louiscad.splitties:splitties-activities:$splitties_version")
 
     def lifecycle_version = "2.2.0"
 
@@ -73,7 +78,6 @@ dependencies {
 
     // https://github.com/TakuSemba/MultiSnapRecyclerView
     implementation 'com.github.takusemba:multisnaprecyclerview:2.0.3'
-
 
 
 }

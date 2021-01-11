@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,12 @@ class VerticalAdapter(
     private val folderList: ArrayList<Folder>
 ) : RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
 
+    interface ItemClick
+    {
+        fun onClick(view: View, position: Int, folder: Folder)
+    }
+    var itemClick: ItemClick? = null
+
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -27,6 +34,13 @@ class VerticalAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        if(itemClick != null)
+        {
+            holder?.itemView?.setOnClickListener { v ->
+                itemClick?.onClick(v, position, folderList[position])
+            }
+        }
 
         holder.folderTitle.text = folderList[position].title
 
@@ -49,7 +63,5 @@ class VerticalAdapter(
     ) {
         val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
         val folderTitle: TextView = itemView.findViewById(R.id.folder_title) as TextView
-
-
     }
 }

@@ -2,7 +2,10 @@ package com.example.photochangerecord
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -14,14 +17,15 @@ import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
-import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.item_horizontal.view.*
+import kotlinx.android.synthetic.main.item_vertical.view.*
 
 
 class ListActivity : AppCompatActivity() {
-    private var mContext: Context ?= null
+    private var mContext: Context? = null
     private val folderList: ArrayList<Folder> = ArrayList()
 
-    companion object{
+    companion object {
         private const val TAG = "ListActivity"
     }
 
@@ -46,10 +50,27 @@ class ListActivity : AppCompatActivity() {
 
     }
 
-    private fun recyclerview(){
+    private fun recyclerview() {
         initializeData()
 
+
         val adapter = VerticalAdapter(mContext!!, folderList)
+        adapter.itemClick = object : VerticalAdapter.ItemClick {
+            override fun onClick(view: View, position: Int, folder: Folder) {
+                Log.d(TAG, "onClick: $position clicked")
+
+
+                // TODO 생각해보니까 여기서 사진 데이터를 모두 넘기기보다는 폴더명을 넘겨야할 듯?
+                // GalleryActivity에서 업데이트 될 수도 있으니까
+                val intent = Intent(mContext, GalleryActivity::class.java)
+                intent.putExtra("folderInfo", folder)
+                startActivity(intent)
+
+
+
+            }
+        }
+
         val recyclerView = binding.recyclerViewVertical
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager
@@ -58,11 +79,11 @@ class ListActivity : AppCompatActivity() {
         val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
         multiSnapHelper.attachToRecyclerView(recyclerView)
 
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if(dy > 0){
+                if (dy > 0) {
                     binding.newFolderFab.hide()
-                } else{
+                } else {
                     binding.newFolderFab.show()
                 }
                 super.onScrolled(recyclerView, dx, dy)
@@ -74,40 +95,44 @@ class ListActivity : AppCompatActivity() {
 
     private fun initializeData() {
         val photo1: ArrayList<Photo> = ArrayList()
-        photo1.add(Photo(R.drawable.photo, "어벤져스"))
-        photo1.add(Photo(R.drawable.photo, "미션임파서블"))
-        photo1.add(Photo(R.drawable.photo, "아저씨"))
+        photo1.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
+        photo1.add(Photo(R.drawable.photo, "2021-01-12 17:00:53"))
+        photo1.add(Photo(R.drawable.photo, "2021-01-13 17:00:53"))
+        photo1.add(Photo(R.drawable.photo, "2021-01-14 17:00:53"))
         folderList.add(Folder("Skin Log", photo1))
         val photo2: ArrayList<Photo> = ArrayList()
-        photo2.add(Photo(R.drawable.photo, "범죄도시"))
-        photo2.add(Photo(R.drawable.photo, "공공의적"))
-        photo2.add(Photo(R.drawable.photo, "맨인블랙"))
+        photo2.add(Photo(R.drawable.star, "2021-01-15 17:00:53"))
+        photo2.add(Photo(R.drawable.star, "2021-01-16 17:00:53"))
+        photo2.add(Photo(R.drawable.star, "2021-01-17 17:00:53"))
+        photo2.add(Photo(R.drawable.star, "2021-01-18 17:00:53"))
         folderList.add(Folder("Diet", photo2))
         val photo3: ArrayList<Photo> = ArrayList()
-        photo3.add(Photo(R.drawable.photo, "고질라"))
-        photo3.add(Photo(R.drawable.photo, "캡틴마블"))
-        photo3.add(Photo(R.drawable.photo, "아이언맨"))
-        photo3.add(Photo(R.drawable.photo, "고질라"))
-        photo3.add(Photo(R.drawable.photo, "캡틴마블"))
-        photo3.add(Photo(R.drawable.photo, "아이언맨"))
-        photo3.add(Photo(R.drawable.photo, "고질라"))
-        photo3.add(Photo(R.drawable.photo, "캡틴마블"))
-        photo3.add(Photo(R.drawable.photo, "아이언맨"))
+        photo3.add(Photo(R.drawable.hourglass, "2021-01-19 17:00:53"))
+        photo3.add(Photo(R.drawable.hourglass, "2021-01-20 17:00:53"))
+        photo3.add(Photo(R.drawable.photo, "2021-01-21 17:00:53"))
+        photo3.add(Photo(R.drawable.hourglass, "2021-01-22 17:00:53"))
+        photo3.add(Photo(R.drawable.photo, "2021-01-23 17:00:53"))
+        photo3.add(Photo(R.drawable.hourglass, "2021-01-24 17:00:53"))
+        photo3.add(Photo(R.drawable.photo, "2021-01-25 17:00:53"))
+        photo3.add(Photo(R.drawable.hourglass, "2021-01-26 17:00:53"))
         folderList.add(Folder("Diary", photo3))
         val photo4: ArrayList<Photo> = ArrayList()
-        photo4.add(Photo(R.drawable.photo, "어벤져스"))
-        photo4.add(Photo(R.drawable.photo, "미션임파서블"))
-        photo4.add(Photo(R.drawable.photo, "아저씨"))
+        photo4.add(Photo(R.drawable.bell, "2021-01-11 17:00:53"))
+        photo4.add(Photo(R.drawable.star, "2021-02-11 17:00:53"))
+        photo4.add(Photo(R.drawable.hourglass, "2021-03-11 17:00:53"))
+        photo4.add(Photo(R.drawable.photo, "2021-04-11 17:00:53"))
         folderList.add(Folder("Skin Log", photo1))
         val photo5: ArrayList<Photo> = ArrayList()
-        photo5.add(Photo(R.drawable.photo, "범죄도시"))
-        photo5.add(Photo(R.drawable.photo, "공공의적"))
-        photo5.add(Photo(R.drawable.photo, "맨인블랙"))
+        photo5.add(Photo(R.drawable.bell, "2021-05-11 17:00:53"))
+        photo5.add(Photo(R.drawable.bell, "2021-06-11 17:00:53"))
+        photo5.add(Photo(R.drawable.bell, "2021-07-11 17:00:53"))
+        photo5.add(Photo(R.drawable.bell, "2021-08-11 17:00:53"))
         folderList.add(Folder("Diet", photo2))
         val photo6: ArrayList<Photo> = ArrayList()
-        photo6.add(Photo(R.drawable.photo, "고질라"))
-        photo6.add(Photo(R.drawable.photo, "캡틴마블"))
-        photo6.add(Photo(R.drawable.photo, "아이언맨"))
+        photo6.add(Photo(R.drawable.photo, "2021-09-11 17:00:53"))
+        photo6.add(Photo(R.drawable.photo, "2021-10-11 17:00:53"))
+        photo6.add(Photo(R.drawable.photo, "2021-11-11 17:00:53"))
+        photo6.add(Photo(R.drawable.photo, "2021-12-11 17:00:53"))
         folderList.add(Folder("Diary", photo3))
     }
 
