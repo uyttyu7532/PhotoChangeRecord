@@ -1,25 +1,53 @@
 package com.example.photochangerecord
 
-import androidx.appcompat.app.AppCompatActivity
+
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
+import com.example.photochangerecord.viewmodel.Folder
+import com.example.photochangerecord.viewmodel.Photo
 
 
 class ListActivity : AppCompatActivity() {
+    private var mContext: Context ?= null
+    private val folderList: ArrayList<Folder> = ArrayList()
 
     companion object{
         private const val TAG = "ListActivity"
+
+        private val SIMPLE_TITLES = arrayListOf(
+            "Android",
+            "Beta",
+            "Cupcake",
+            "Donut",
+            "Eclair",
+            "Froyo",
+            "Gingerbread",
+            "Honeycomb",
+            "Ice Cream Sandwich",
+            "Jelly Bean",
+            "KitKat",
+            "Lollipop",
+            "Marshmallow",
+            "Nougat",
+            "Oreo"
+        )
     }
 
-    private lateinit var binding:ActivityListBinding
+    private lateinit var binding: ActivityListBinding
     private lateinit var viewModel: CameraBackGroundViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mContext = this
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_list)
 
         // 뷰모델 인스턴스를 가져온다.
@@ -28,22 +56,40 @@ class ListActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-//        binding =  ActivityListBinding.inflate(layoutInflater)
-//        val view = binding.root
-//        setContentView(view)
+        recyclerview()
 
 
-        viewModel.imageAlpha.observe(this, {
-            Log.d(TAG, it.toString())
-        })
+    }
 
-//        plus.setOnClickListener {
-//            viewModel.updateValue(ActionType.PLUS)
-//        }
-//
-//        minus.setOnClickListener {
-//            viewModel.updateValue(ActionType.MINUS)
-//        }
+    private fun recyclerview(){
+        initializeData()
+
+        val adapter = VerticalAdapter(mContext!!, folderList)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_vertical)
+        val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = manager
+        recyclerView.adapter = adapter
+
+
+    }
+
+
+    private fun initializeData() {
+        val photo1: ArrayList<Photo> = ArrayList()
+        photo1.add(Photo(R.drawable.photo, "어벤져스"))
+        photo1.add(Photo(R.drawable.photo, "미션임파서블"))
+        photo1.add(Photo(R.drawable.photo, "아저씨"))
+        folderList.add(Folder("Skin Log", photo1))
+        val photo2: ArrayList<Photo> = ArrayList()
+        photo2.add(Photo(R.drawable.photo, "범죄도시"))
+        photo2.add(Photo(R.drawable.photo, "공공의적"))
+        photo2.add(Photo(R.drawable.photo, "맨인블랙"))
+        folderList.add(Folder("Diet", photo2))
+        val photo3: ArrayList<Photo> = ArrayList()
+        photo3.add(Photo(R.drawable.photo, "고질라"))
+        photo3.add(Photo(R.drawable.photo, "캡틴마블"))
+        photo3.add(Photo(R.drawable.photo, "아이언맨"))
+        folderList.add(Folder("Diary", photo3))
     }
 
 }

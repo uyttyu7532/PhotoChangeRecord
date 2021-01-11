@@ -68,5 +68,7 @@ dependencies {
     // https://github.com/Ramotion/fluid-slider-android
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
 
+    // cardview
+    implementation "com.google.android.material:material:1.0.0"
 
 }

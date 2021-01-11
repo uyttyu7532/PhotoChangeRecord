@@ -10,9 +10,10 @@ import com.example.photochangerecord.CameraActivity
 import com.ramotion.fluidslider.FluidSlider
 import kotlinx.android.synthetic.main.activity_camera.*
 
+// 슬라이더 값이 바뀌면 이미지 뷰의 투명도가 바뀌는 것이기 때문에 양방향 데이터 바인딩이 아니었다.
 object BindingAdapter {
 
-    // TODO 슬라이더 값이 바뀌면 이미지 뷰의 투명도가 바뀌는 것이기 때문에 양방향 데이터 바인딩이 아니었다.
+
 //    // 단반향 데이터 바인딩에서도 사용
 //    // getter (view에 데이터를 set)
 //    @BindingAdapter("alpha")
@@ -29,7 +30,6 @@ object BindingAdapter {
 //        // InverseBindingListener의 onChange()가 어디서 호출되는 지 정의
 //        view.positionListener?.let {
 //            listener.onChange()
-//
 //        }
 //    }
 //
