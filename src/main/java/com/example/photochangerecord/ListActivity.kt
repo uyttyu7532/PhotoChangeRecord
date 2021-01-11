@@ -23,24 +23,6 @@ class ListActivity : AppCompatActivity() {
 
     companion object{
         private const val TAG = "ListActivity"
-
-        private val SIMPLE_TITLES = arrayListOf(
-            "Android",
-            "Beta",
-            "Cupcake",
-            "Donut",
-            "Eclair",
-            "Froyo",
-            "Gingerbread",
-            "Honeycomb",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow",
-            "Nougat",
-            "Oreo"
-        )
     }
 
     private lateinit var binding: ActivityListBinding
@@ -75,7 +57,6 @@ class ListActivity : AppCompatActivity() {
 
         val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
         multiSnapHelper.attachToRecyclerView(recyclerView)
-
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

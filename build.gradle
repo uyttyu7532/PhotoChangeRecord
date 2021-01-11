@@ -74,4 +74,6 @@ dependencies {
     // https://github.com/TakuSemba/MultiSnapRecyclerView
     implementation 'com.github.takusemba:multisnaprecyclerview:2.0.3'
 
+
+
 }

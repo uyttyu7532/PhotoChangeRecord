@@ -34,8 +34,8 @@ import kotlinx.android.synthetic.main.activity_camera.*
 import splitties.toast.toast
 
 
-//Camera2 Document: https://developer.android.com/reference/android/hardware/camera2/package-summary
-//Reference: https://webnautes.tistory.com/822
+// Camera2 Document: https://developer.android.com/reference/android/hardware/camera2/package-summary
+// Reference: https://webnautes.tistory.com/822
 class CameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraBinding // Build->Rebuild Project 할때 생성된다고 함!(어쩐지)

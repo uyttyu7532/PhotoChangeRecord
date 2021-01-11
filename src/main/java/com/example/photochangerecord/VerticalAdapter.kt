@@ -15,7 +15,7 @@ import com.takusemba.multisnaprecyclerview.SnapGravity
 class VerticalAdapter(
     private val context: Context,
     private val folderList: ArrayList<Folder>
-) : androidx.recyclerview.widget.RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
