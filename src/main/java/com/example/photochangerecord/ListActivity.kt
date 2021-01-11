@@ -14,6 +14,7 @@ import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
+import kotlinx.android.synthetic.main.activity_list.*
 
 
 class ListActivity : AppCompatActivity() {
@@ -67,13 +68,26 @@ class ListActivity : AppCompatActivity() {
         initializeData()
 
         val adapter = VerticalAdapter(mContext!!, folderList)
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_vertical)
+        val recyclerView = binding.recyclerViewVertical
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
 
         val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
         multiSnapHelper.attachToRecyclerView(recyclerView)
+
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(dy > 0){
+                    binding.newFolderFab.hide()
+                } else{
+                    binding.newFolderFab.show()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+
+            }
+        })
     }
 
 

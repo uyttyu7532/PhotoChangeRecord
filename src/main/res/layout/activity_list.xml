@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
     </data>
 
-    <FrameLayout
-        android:layout_marginTop="10dp"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_vertical"
@@ -20,12 +21,23 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_folder_btn"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/new_folder_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_baseline_create_new_folder_24" />
-    </FrameLayout>
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:backgroundTint="#ffffff"
+            android:text="New Folder"
+            android:textColor="#0C0039"
+            android:textSize="10sp"
+            android:tint="#ffffff"
+            app:icon="@drawable/ic_baseline_create_new_folder_24"
+            app:iconTint="#0C0039"
+            app:strokeColor="#0C0039"
+            app:strokeWidth="2dp"/>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>
