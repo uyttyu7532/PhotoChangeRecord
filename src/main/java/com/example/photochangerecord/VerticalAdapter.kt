@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.Photo
+import com.takusemba.multisnaprecyclerview.MultiSnapHelper
+import com.takusemba.multisnaprecyclerview.SnapGravity
 
 
 class VerticalAdapter(
@@ -34,6 +35,9 @@ class VerticalAdapter(
         holder.recyclerViewHorizontal.layoutManager = manager
         holder.recyclerViewHorizontal.adapter = adapter
 
+        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
+        multiSnapHelper.attachToRecyclerView(holder.recyclerViewHorizontal)
+
     }
 
     override fun getItemCount(): Int {
@@ -45,5 +49,7 @@ class VerticalAdapter(
     ) {
         val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
         val folderTitle: TextView = itemView.findViewById(R.id.folder_title) as TextView
+
+
     }
 }

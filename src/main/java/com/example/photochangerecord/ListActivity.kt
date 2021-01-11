@@ -12,6 +12,8 @@ import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
+import com.takusemba.multisnaprecyclerview.MultiSnapHelper
+import com.takusemba.multisnaprecyclerview.SnapGravity
 
 
 class ListActivity : AppCompatActivity() {
@@ -70,7 +72,8 @@ class ListActivity : AppCompatActivity() {
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
 
-
+        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
+        multiSnapHelper.attachToRecyclerView(recyclerView)
     }
 
 
@@ -89,6 +92,27 @@ class ListActivity : AppCompatActivity() {
         photo3.add(Photo(R.drawable.photo, "고질라"))
         photo3.add(Photo(R.drawable.photo, "캡틴마블"))
         photo3.add(Photo(R.drawable.photo, "아이언맨"))
+        photo3.add(Photo(R.drawable.photo, "고질라"))
+        photo3.add(Photo(R.drawable.photo, "캡틴마블"))
+        photo3.add(Photo(R.drawable.photo, "아이언맨"))
+        photo3.add(Photo(R.drawable.photo, "고질라"))
+        photo3.add(Photo(R.drawable.photo, "캡틴마블"))
+        photo3.add(Photo(R.drawable.photo, "아이언맨"))
+        folderList.add(Folder("Diary", photo3))
+        val photo4: ArrayList<Photo> = ArrayList()
+        photo4.add(Photo(R.drawable.photo, "어벤져스"))
+        photo4.add(Photo(R.drawable.photo, "미션임파서블"))
+        photo4.add(Photo(R.drawable.photo, "아저씨"))
+        folderList.add(Folder("Skin Log", photo1))
+        val photo5: ArrayList<Photo> = ArrayList()
+        photo5.add(Photo(R.drawable.photo, "범죄도시"))
+        photo5.add(Photo(R.drawable.photo, "공공의적"))
+        photo5.add(Photo(R.drawable.photo, "맨인블랙"))
+        folderList.add(Folder("Diet", photo2))
+        val photo6: ArrayList<Photo> = ArrayList()
+        photo6.add(Photo(R.drawable.photo, "고질라"))
+        photo6.add(Photo(R.drawable.photo, "캡틴마블"))
+        photo6.add(Photo(R.drawable.photo, "아이언맨"))
         folderList.add(Folder("Diary", photo3))
     }
 

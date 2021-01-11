@@ -71,4 +71,7 @@ dependencies {
     // cardview
     implementation "com.google.android.material:material:1.0.0"
 
+    // https://github.com/TakuSemba/MultiSnapRecyclerView
+    implementation 'com.github.takusemba:multisnaprecyclerview:2.0.3'
+
 }

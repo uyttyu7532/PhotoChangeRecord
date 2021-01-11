@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
+    app:cardCornerRadius="10dp"
     android:layout_marginRight="8dp"
     app:cardUseCompatPadding="true">
 
@@ -13,7 +14,7 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="#EFEFEF"
         android:gravity="center"
         android:padding="16dp"
         >
@@ -26,6 +27,7 @@
 
 
         <TextView
+            style="@style/Text.Gmarket.Medium"
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
