@@ -79,6 +79,9 @@ dependencies {
     // https://github.com/TakuSemba/MultiSnapRecyclerView
     implementation 'com.github.takusemba:multisnaprecyclerview:2.0.3'
 
+    // https://github.com/bumptech/glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
 }

@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -45,10 +47,15 @@ class ListActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.hide()
+
         recyclerview()
 
 
     }
+
+
 
     private fun recyclerview() {
         initializeData()
@@ -65,7 +72,6 @@ class ListActivity : AppCompatActivity() {
                 val intent = Intent(mContext, GalleryActivity::class.java)
                 intent.putExtra("folderInfo", folder)
                 startActivity(intent)
-
 
 
             }

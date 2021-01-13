@@ -1,7 +1,12 @@
 package com.example.photochangerecord
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
@@ -13,16 +18,25 @@ import splitties.activities.start
 
 class GalleryActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         private const val TAG = "GalleryActivity"
     }
 
     private lateinit var binding: ActivityGalleryBinding
+    private lateinit var mContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar!!.elevation = 0.0f
+        actionBar!!.title = ""
+
+
+        mContext = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery)
 
         val intent = intent
@@ -32,15 +46,25 @@ class GalleryActivity : AppCompatActivity() {
 
         recyclerview(receivedFolderInfo)
 
-        binding.newPhotoFab.setOnClickListener{
+        binding.newPhotoFab.setOnClickListener {
             // TODO 나중에는 찍은 사진을 업데이트해서 보여줘야..
             start<CameraActivity>()
         }
     }
 
-    private fun recyclerview(folder : Folder){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                this.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
-        val adapter = GalleryAdapter(folder.photos)
+    private fun recyclerview(folder: Folder) {
+
+        val adapter = GalleryAdapter(mContext, folder.photos)
         val recyclerView = binding.recyclerViewGallery
         val manager = GridLayoutManager(this, 2)
         recyclerView.layoutManager = manager

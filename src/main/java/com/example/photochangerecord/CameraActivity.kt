@@ -3,7 +3,9 @@ package com.example.photochangerecord
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.ImageFormat
+import android.graphics.drawable.ColorDrawable
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.camera2.*
@@ -15,11 +17,13 @@ import android.os.HandlerThread
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.SparseIntArray
+import android.view.MenuItem
 import android.view.SurfaceHolder
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.BindingAdapter
@@ -86,6 +90,9 @@ class CameraActivity : AppCompatActivity() {
 
         mContext = this
 
+        val actionBar: ActionBar? = supportActionBar
+        actionBar!!.hide()
+
         // 상태바 숨기기
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -121,6 +128,10 @@ class CameraActivity : AppCompatActivity() {
         binding.alphaBackgroundImageSlider.positionListener   = {
             Log.d(TAG, "onCreate: $it")
             viewModel.updateValue(it)
+        }
+
+        binding.btnHome.setOnClickListener {
+            this.onBackPressed()
         }
 
     }

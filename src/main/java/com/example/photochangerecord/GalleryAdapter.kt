@@ -1,13 +1,16 @@
 package com.example.photochangerecord
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.photochangerecord.viewmodel.Photo
 
 class GalleryAdapter(
+    private val context: Context,
     private val photos: ArrayList<Photo>
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
@@ -26,7 +29,8 @@ class GalleryAdapter(
         holder.title.text = photo.date
 
         // TODO Glide로 해야되나 (데이터 바인딩..)
-        holder.image.setImageResource(photo.resourceID)
+//        holder.image.setImageResource(photo.resourceID)
+        Glide.with(context).load(photo.resourceID).into(holder.image)
 
     }
 

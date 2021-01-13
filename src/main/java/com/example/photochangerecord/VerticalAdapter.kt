@@ -44,7 +44,7 @@ class VerticalAdapter(
 
         holder.folderTitle.text = folderList[position].title
 
-        val adapter = HorizontalAdapter(folderList[position].photos)
+        val adapter = HorizontalAdapter(context, folderList[position].photos)
         val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         holder.recyclerViewHorizontal.layoutManager = manager
         holder.recyclerViewHorizontal.adapter = adapter
