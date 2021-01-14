@@ -36,7 +36,7 @@
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:fontFamily="@font/gmarketsansttfmedium"
-            android:hint="Input your new folder name"
+            android:hint="Enter Folder Name"
             android:inputType="textPersonName" />
 
         <LinearLayout

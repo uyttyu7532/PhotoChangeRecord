@@ -1,6 +1,7 @@
 package com.example.photochangerecord
 
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -65,17 +66,24 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun showMakeFolderDialog(){
-//        val binding: AddFolderDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.add_folder_dialog, null, false)
+        val binding: AddFolderDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(this),
+            R.layout.add_folder_dialog,
+            null,
+            false
+        )
 
-        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.add_folder_dialog, null)
+//        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//        val view = inflater.inflate(R.layout.add_folder_dialog, null)
 
-        val alertDialog = AlertDialog.Builder(this).create()
+//        val alertDialog = AlertDialog.Builder(this).create()
 
+        val dialog = Dialog(this)
+        dialog.setContentView(binding.root)
 
-        alertDialog.setView(view)
-        alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        alertDialog.show()
+//        alertDialog.setView(view)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 
     private fun recyclerview() {
