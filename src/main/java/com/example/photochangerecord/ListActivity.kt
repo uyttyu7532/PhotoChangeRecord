@@ -3,24 +3,28 @@ package com.example.photochangerecord
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.databinding.ActivityListBinding
+import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
-import kotlinx.android.synthetic.main.item_horizontal.view.*
-import kotlinx.android.synthetic.main.item_vertical.view.*
+import kotlinx.android.synthetic.main.add_folder_dialog.*
+import splitties.toast.toast
 
 
 class ListActivity : AppCompatActivity() {
@@ -54,12 +58,25 @@ class ListActivity : AppCompatActivity() {
 
         binding.newFolderFab.setOnClickListener {
             // 폴더 생성 다이얼로그
-
+            showMakeFolderDialog()
 
         }
 
     }
 
+    private fun showMakeFolderDialog(){
+//        val binding: AddFolderDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.add_folder_dialog, null, false)
+
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.add_folder_dialog, null)
+
+        val alertDialog = AlertDialog.Builder(this).create()
+
+
+        alertDialog.setView(view)
+        alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
+    }
 
     private fun recyclerview() {
         initializeData()
@@ -78,7 +95,7 @@ class ListActivity : AppCompatActivity() {
             }
 
             override fun addBtnOnClick(view: View, position: Int, folder: Folder) {
-                Toast.makeText(this@ListActivity, folder.toString(), Toast.LENGTH_SHORT).show()
+                toast(folder.toString())
                 // 카메라로 이동 해당 폴더에 저장
             }
         }

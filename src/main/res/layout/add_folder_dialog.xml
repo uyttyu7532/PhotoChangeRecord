@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_bg"
+        android:orientation="vertical">
+
+        <!--    <TextView-->
+        <!--        android:id="@+id/dialogTitle"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginBottom="16dp"-->
+        <!--        android:layout_marginLeft="16dp"-->
+        <!--        android:layout_marginRight="16dp"-->
+        <!--        android:layout_marginTop="24dp"-->
+        <!--        android:text="NEW FOLDER"-->
+        <!--        android:textAlignment="center"-->
+        <!--        android:textSize="18sp"-->
+        <!--        android:textStyle="bold" />-->
+
+
+        <EditText
+            android:id="@+id/dialogEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:fontFamily="@font/gmarketsansttfmedium"
+            android:hint="Input your new folder name"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialogEt"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/dialog_disagree_btn"
+                android:layout_width="wrap_content"
+                android:ems="6"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:fontFamily="@font/gmarketsansttfbold"
+                android:text="@string/dialog_disagree" />
+
+            <TextView
+                android:ems="6"
+                android:gravity="center"
+                android:id="@+id/dialog_agree_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:fontFamily="@font/gmarketsansttfbold"
+                android:text="@string/dialog_agree" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
