@@ -40,33 +40,37 @@
             android:inputType="textPersonName" />
 
         <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dialogEt"
             android:layout_centerHorizontal="true">
 
             <TextView
+                android:layout_weight="1"
                 android:id="@+id/dialog_disagree_btn"
-                android:layout_width="wrap_content"
-                android:ems="6"
-                android:gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="25dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:ems="6"
                 android:fontFamily="@font/gmarketsansttfbold"
+                android:gravity="center"
                 android:text="@string/dialog_disagree" />
 
             <TextView
-                android:ems="6"
-                android:gravity="center"
+                android:layout_weight="1"
                 android:id="@+id/dialog_agree_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="25dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:ems="6"
                 android:fontFamily="@font/gmarketsansttfbold"
+                android:gravity="center"
                 android:text="@string/dialog_agree" />
 
 

@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
+import com.example.photochangerecord.viewmodel.Photo
 import com.ramotion.fluidslider.FluidSlider
 import kotlinx.android.synthetic.main.activity_camera.*
 import splitties.toast.toast
@@ -90,6 +91,14 @@ class CameraActivity : AppCompatActivity() {
 
         mContext = this
 
+        val intent = intent
+        var folderName: String? = intent.getStringExtra("folderName")
+
+        // 테스트
+        if (folderName != null) {
+            toast(folderName)
+        }
+
         val actionBar: ActionBar? = supportActionBar
         actionBar!!.hide()
 
@@ -125,7 +134,7 @@ class CameraActivity : AppCompatActivity() {
 
         // 새로운 의문: 코틀린에서는 원래 안해도 됐잖아?
         // 해결: 맞다. 근데 코틀린 안드로이드 익스텐션이 2021년에 종료된다고 한다.
-        binding.alphaBackgroundImageSlider.positionListener   = {
+        binding.alphaBackgroundImageSlider.positionListener = {
             Log.d(TAG, "onCreate: $it")
             viewModel.updateValue(it)
         }
@@ -134,7 +143,7 @@ class CameraActivity : AppCompatActivity() {
             this.onBackPressed()
         }
 
-        binding.newPhotoFab.setOnClickListener{
+        binding.newPhotoFab.setOnClickListener {
             // 사진 확인 화면 -> 해당 폴더에 저장하기
         }
 

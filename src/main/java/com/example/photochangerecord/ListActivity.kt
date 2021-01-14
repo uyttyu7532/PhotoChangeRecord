@@ -24,7 +24,6 @@ import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
-import kotlinx.android.synthetic.main.add_folder_dialog.*
 import splitties.toast.toast
 
 
@@ -73,15 +72,18 @@ class ListActivity : AppCompatActivity() {
             false
         )
 
-//        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//        val view = inflater.inflate(R.layout.add_folder_dialog, null)
-
-//        val alertDialog = AlertDialog.Builder(this).create()
-
         val dialog = Dialog(this)
-        dialog.setContentView(binding.root)
 
-//        alertDialog.setView(view)
+        binding.dialogAgreeBtn.setOnClickListener{
+            // TODO 폴더 생성하기 (폴더 이름 중복 확인)
+            dialog.dismiss()
+        }
+
+        binding.dialogDisagreeBtn.setOnClickListener{
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(binding.root)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
@@ -103,8 +105,10 @@ class ListActivity : AppCompatActivity() {
             }
 
             override fun addBtnOnClick(view: View, position: Int, folder: Folder) {
-                toast(folder.toString())
                 // 카메라로 이동 해당 폴더에 저장
+                val intent = Intent(mContext, CameraActivity::class.java)
+                intent.putExtra("folderName", folder.title)
+                startActivity(intent)
             }
         }
 

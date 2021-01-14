@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:backgroundTint="@android:color/transparent"
                 android:elevation="2dp"
                 android:src="@drawable/ic_baseline_flip_camera_android_24"
@@ -55,11 +56,11 @@
 
 
             <com.ramotion.fluidslider.FluidSlider
-                android:layout_marginBottom="96dp"
                 android:id="@+id/alpha_background_image_slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginBottom="96dp"
                 app:initial_position="0.5" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
