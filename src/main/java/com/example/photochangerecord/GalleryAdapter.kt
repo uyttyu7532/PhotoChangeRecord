@@ -7,17 +7,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 
 class GalleryAdapter(
     private val context: Context,
-    private val photos: ArrayList<Photo>
+    private val folder: Folder
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
 
     interface ItemClick
     {
-        fun onClick(view: View, position: Int, photo: Photo)
+        // TODO photo는 나중에 안 보내도 될듯 (photo -> folderName과 position)
+        fun onClick(view: View, position: Int, folderName: String, photo: Photo)
     }
     var itemClick: ItemClick? = null
 
@@ -34,11 +36,12 @@ class GalleryAdapter(
         if(itemClick != null)
         {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, photos[position])
+                itemClick?.onClick(v, position, folder.title, folder.photos[position])
             }
         }
 
-        val photo = photos[position]
+        val photo = folder.photos[position]
+
 
         holder.title.text = photo.date
 
@@ -49,7 +52,7 @@ class GalleryAdapter(
     }
 
     override fun getItemCount(): Int {
-        return photos.size
+        return folder.photos.size
     }
 
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(

@@ -32,8 +32,12 @@ class DetailActivity : AppCompatActivity() {
         actionBar!!.title = ""
 
         val intent = intent
-        var receivedPhotoInfo: Photo = intent.getParcelableExtra("photoInfo")
+        // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
+        var receivedPhotoInfo: Photo = intent.getParcelableExtra("photoInfo") // TODO 나중에 지우기
+        var folderName = intent.getStringExtra("folderName")
+        var photoPosition = intent.getIntExtra("photoPosition",0)
 
+        // TODO folder이름과 position으로 이미지 표시해야함!
         Glide.with(this).load(receivedPhotoInfo.resourceID).into(binding.detailImageView)
     }
 

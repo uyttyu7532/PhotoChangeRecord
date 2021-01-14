@@ -67,14 +67,15 @@ class GalleryActivity : AppCompatActivity() {
 
     private fun recyclerview(folder: Folder) {
 
-        val adapter = GalleryAdapter(mContext, folder.photos)
+        val adapter = GalleryAdapter(mContext, folder)
         adapter.itemClick = object : GalleryAdapter.ItemClick {
-            override fun onClick(view: View, position: Int, photo: Photo) {
+            override fun onClick(view: View, position: Int, folderName: String, photo: Photo) {
                 Log.d(TAG, "onClick: $position clicked")
 
-                // GalleryActivity에서 업데이트 될 수도 있으니까
                 val intent = Intent(mContext, DetailActivity::class.java)
-                intent.putExtra("photoInfo", photo)
+                intent.putExtra("photoInfo", photo) // TODO 나중에 지우기
+                intent.putExtra("folderName", folderName)
+                intent.putExtra("photoPosition", position)
                 startActivity(intent)
 
 

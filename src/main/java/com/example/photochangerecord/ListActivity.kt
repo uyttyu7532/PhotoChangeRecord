@@ -105,7 +105,7 @@ class ListActivity : AppCompatActivity() {
             }
 
             override fun addBtnOnClick(view: View, position: Int, folder: Folder) {
-                // 카메라로 이동 해당 폴더에 저장
+                // TODO 카메라로 이동 해당 폴더에 저장
                 val intent = Intent(mContext, CameraActivity::class.java)
                 intent.putExtra("folderName", folder.title)
                 startActivity(intent)

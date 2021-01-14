@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 
 class HorizontalAdapter(
     private val context: Context,
-    private val photos: ArrayList<Photo>
+    private val folder: Folder
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<HorizontalAdapter.ViewHolder>() {
 
     interface ItemClick
     {
-        fun onClick(view: View, position: Int, photo: Photo)
+        fun onClick(view: View, position: Int, folderName: String, photo: Photo) // TODO photo지우기
     }
     var itemClick: ItemClick? = null
 
@@ -33,11 +34,11 @@ class HorizontalAdapter(
         if(itemClick != null)
         {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, photos[position])
+                itemClick?.onClick(v, position, folder.title, folder.photos[position])
             }
         }
 
-        val photo = photos[position]
+        val photo = folder.photos[position]
         holder.title.text = photo.date
 
         // TODO Glide로 해야되나  (데이터 바인딩..)
@@ -46,7 +47,7 @@ class HorizontalAdapter(
     }
 
     override fun getItemCount(): Int {
-        return photos.size
+        return folder.photos.size
     }
 
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(

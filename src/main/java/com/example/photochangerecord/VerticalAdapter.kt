@@ -1,14 +1,18 @@
 package com.example.photochangerecord
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.viewmodel.Folder
+import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
 
@@ -58,7 +62,22 @@ class VerticalAdapter(
 
         holder.folderTitle.text = folderList[position].title
 
-        val adapter = HorizontalAdapter(context, folderList[position].photos)
+        val adapter = HorizontalAdapter(context, folderList[position])
+
+        adapter.itemClick = object : HorizontalAdapter.ItemClick {
+            override fun onClick(view: View, position: Int, folderName:String, photo: Photo) {
+                Log.d(TAG, "onClick: $position clicked")
+
+                // TODO 생각해보니까 여기서 사진 데이터를 모두 넘기기보다는 폴더명을 넘겨야할 듯?
+                // GalleryActivity에서 업데이트 될 수도 있으니까
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("photoInfo", photo) // TODO 나중에 지우기
+                intent.putExtra("folderName", folderName)
+                intent.putExtra("photoPosition", position)
+                context.startActivity(intent)
+            }
+        }
+
         val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         holder.recyclerViewHorizontal.layoutManager = manager
         holder.recyclerViewHorizontal.adapter = adapter
