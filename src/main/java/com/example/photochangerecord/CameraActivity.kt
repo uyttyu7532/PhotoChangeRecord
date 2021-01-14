@@ -134,6 +134,10 @@ class CameraActivity : AppCompatActivity() {
             this.onBackPressed()
         }
 
+        binding.newPhotoFab.setOnClickListener{
+            // 사진 확인 화면 -> 해당 폴더에 저장하기
+        }
+
     }
 
     private fun initSensor() {

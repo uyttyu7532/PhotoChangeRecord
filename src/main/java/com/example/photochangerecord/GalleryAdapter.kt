@@ -14,6 +14,13 @@ class GalleryAdapter(
     private val photos: ArrayList<Photo>
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
+
+    interface ItemClick
+    {
+        fun onClick(view: View, position: Int, photo: Photo)
+    }
+    var itemClick: ItemClick? = null
+
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
         viewType: Int
@@ -24,11 +31,18 @@ class GalleryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(itemClick != null)
+        {
+            holder?.itemView?.setOnClickListener { v ->
+                itemClick?.onClick(v, position, photos[position])
+            }
+        }
+
         val photo = photos[position]
 
         holder.title.text = photo.date
 
-        // TODO Glide로 해야되나 (데이터 바인딩..)
+        // TODO (데이터 바인딩..)
 //        holder.image.setImageResource(photo.resourceID)
         Glide.with(context).load(photo.resourceID).into(holder.image)
 

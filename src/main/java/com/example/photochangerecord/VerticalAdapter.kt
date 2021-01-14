@@ -18,11 +18,18 @@ class VerticalAdapter(
     private val folderList: ArrayList<Folder>
 ) : RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
 
+    companion object {
+        private const val TAG = "VerticalAdapter"
+    }
+
     interface ItemClick
     {
         fun onClick(view: View, position: Int, folder: Folder)
+        fun addBtnOnClick(view: View, position: Int, folder: Folder)
     }
     var itemClick: ItemClick? = null
+
+
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -39,6 +46,13 @@ class VerticalAdapter(
         {
             holder?.itemView?.setOnClickListener { v ->
                 itemClick?.onClick(v, position, folderList[position])
+            }
+        }
+
+        if(itemClick != null)
+        {
+            holder?.listAddPhotoBtn?.setOnClickListener { v ->
+                itemClick?.addBtnOnClick(v, position, folderList[position])
             }
         }
 
@@ -63,5 +77,8 @@ class VerticalAdapter(
     ) {
         val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
         val folderTitle: TextView = itemView.findViewById(R.id.folder_title) as TextView
+        val listAddPhotoBtn: ImageView = itemView.findViewById(R.id.list_add_photo_btn) as ImageView
+
+
     }
 }

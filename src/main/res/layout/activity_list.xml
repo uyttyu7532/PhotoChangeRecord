@@ -27,7 +27,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
             android:backgroundTint="#ffffff"
-            android:text="New Folder"
+            android:text="@string/new_folder"
             android:textColor="#0C0039"
             android:textSize="10sp"
             android:tint="#ffffff"

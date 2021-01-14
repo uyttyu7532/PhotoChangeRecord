@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -52,9 +52,13 @@ class ListActivity : AppCompatActivity() {
 
         recyclerview()
 
+        binding.newFolderFab.setOnClickListener {
+            // 폴더 생성 다이얼로그
+
+
+        }
 
     }
-
 
 
     private fun recyclerview() {
@@ -66,14 +70,16 @@ class ListActivity : AppCompatActivity() {
             override fun onClick(view: View, position: Int, folder: Folder) {
                 Log.d(TAG, "onClick: $position clicked")
 
-
                 // TODO 생각해보니까 여기서 사진 데이터를 모두 넘기기보다는 폴더명을 넘겨야할 듯?
                 // GalleryActivity에서 업데이트 될 수도 있으니까
                 val intent = Intent(mContext, GalleryActivity::class.java)
                 intent.putExtra("folderInfo", folder)
                 startActivity(intent)
+            }
 
-
+            override fun addBtnOnClick(view: View, position: Int, folder: Folder) {
+                Toast.makeText(this@ListActivity, folder.toString(), Toast.LENGTH_SHORT).show()
+                // 카메라로 이동 해당 폴더에 저장
             }
         }
 

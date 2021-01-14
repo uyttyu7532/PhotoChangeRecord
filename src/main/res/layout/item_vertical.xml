@@ -6,22 +6,24 @@
     android:descendantFocusability="blocksDescendants">
 
     <TextView
-        style="@style/Text.Gmarket.Medium"
         android:id="@+id/folder_title"
+        style="@style/Text.Gmarket.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="gygyg"
         android:includeFontPadding="true"
+        android:text="gygyg"
         android:textSize="30sp" />
 
     <ImageView
+        android:id="@+id/list_add_photo_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/folder_title"
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:baselineAlignBottom="true"
+        android:clickable="true"
         android:src="@drawable/ic_baseline_add_24" />
 
     <androidx.recyclerview.widget.RecyclerView
