@@ -87,4 +87,7 @@ dependencies {
 //    implementation 'com.afollestad.material-dialogs:input:3.3.0'
 //    implementation 'com.afollestad.material-dialogs:lifecycle:3.3.0'
 
+    // lottie
+    implementation 'com.airbnb.android:lottie:3.6.0'
+
 }
