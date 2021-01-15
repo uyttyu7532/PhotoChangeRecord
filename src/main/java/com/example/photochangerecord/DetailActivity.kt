@@ -8,10 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityDetailBinding
-import com.example.photochangerecord.databinding.ActivityListBinding
-import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 
 
