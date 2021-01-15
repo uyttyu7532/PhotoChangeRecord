@@ -19,7 +19,12 @@ class LaunchActivity : AppCompatActivity() {
             .setPermissionListener(object : PermissionListener {
                 // 권한 허용시 실행
                 override fun onPermissionGranted() {
-                    startActivity(Intent(this@LaunchActivity, CameraActivity::class.java))
+                    val intentReceived = intent
+                    var folderName: String? = intentReceived.getStringExtra("folderName")
+
+                    val intent = Intent(this@LaunchActivity, CameraActivity::class.java)
+                    intent.putExtra("folderName", folderName)
+                    startActivity(intent)
                     finish()
                 }
 

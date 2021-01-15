@@ -51,7 +51,9 @@ class GalleryActivity : AppCompatActivity() {
 
         binding.newPhotoFab.setOnClickListener {
             // TODO 나중에는 찍은 사진을 업데이트해서 보여줘야..
-            start<LaunchActivity>()
+            val intent = Intent(mContext, LaunchActivity::class.java)
+            intent.putExtra("folderName", receivedFolderInfo.title)
+            startActivity(intent)
         }
     }
 

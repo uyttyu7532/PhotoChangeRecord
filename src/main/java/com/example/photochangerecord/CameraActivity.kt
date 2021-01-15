@@ -3,40 +3,33 @@ package com.example.photochangerecord
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.graphics.Bitmap
 import android.graphics.ImageFormat
-import android.graphics.drawable.ColorDrawable
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.camera2.*
 import android.media.ImageReader
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
+import android.os.*
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.SparseIntArray
-import android.view.MenuItem
-import android.view.SurfaceHolder
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
 import com.example.photochangerecord.databinding.ActivityCameraBinding
-import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
-import com.example.photochangerecord.viewmodel.Photo
-import com.ramotion.fluidslider.FluidSlider
 import kotlinx.android.synthetic.main.activity_camera.*
 import splitties.toast.toast
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 // Camera2 Document: https://developer.android.com/reference/android/hardware/camera2/package-summary
@@ -94,6 +87,8 @@ class CameraActivity : AppCompatActivity() {
         val intent = intent
         var folderName: String? = intent.getStringExtra("folderName")
 
+        Log.d(TAG, "onCreate: $folderName")
+
         // 테스트
         if (folderName != null) {
             toast(folderName)
@@ -145,8 +140,85 @@ class CameraActivity : AppCompatActivity() {
 
         binding.newPhotoFab.setOnClickListener {
             // 사진 확인 화면 -> 해당 폴더에 저장하기
+            Log.d(TAG, "onCreate: camera btn clicked")
+            getBitMapFromSurfaceView(binding.surfaceView) { bitmap ->
+                persistImage(
+                    bitmap!!,
+                    folderName!!
+                )
+            }
         }
+    }
 
+    /**
+     * Pixel copy to copy SurfaceView/VideoView into BitMap
+     * Work with Surface View, Video View
+     * Won't work on Normal View
+     */
+    private fun getBitMapFromSurfaceView(videoView: SurfaceView, callback: (Bitmap?) -> Unit) {
+        val bitmap: Bitmap = Bitmap.createBitmap(
+            videoView.width,
+            videoView.height,
+            Bitmap.Config.ARGB_8888
+        );
+        try {
+            // Create a handler thread to offload the processing of the image.
+            val handlerThread = HandlerThread("PixelCopier");
+            handlerThread.start();
+            PixelCopy.request(
+                videoView, bitmap,
+                PixelCopy.OnPixelCopyFinishedListener { copyResult ->
+                    Log.d(TAG, "getBitMapFromSurfaceView: $copyResult")
+                    if (copyResult == PixelCopy.SUCCESS) {
+                        callback(bitmap)
+                    }
+                    handlerThread.quitSafely();
+                },
+                Handler(handlerThread.looper)
+            )
+        } catch (e: IllegalArgumentException) {
+            callback(null)
+            // PixelCopy may throw IllegalArgumentException, make sure to handle it
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun persistImage(bitmap: Bitmap, folderName: String) {
+        try {
+//            val dir = File(getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()+"/CertificateMarker")
+//            val dir = File(
+//                Environment.getExternalStoragePublicDirectory(
+//                    Environment.DIRECTORY_DCIM
+//                ).toString() + "/PhotoChangeRecord"
+//            )
+
+            val dir = File(
+                getExternalFilesDir(
+                    Environment.DIRECTORY_DCIM
+                ).toString() + "/$folderName"
+            )
+
+            if (!dir!!.exists()) {
+                dir.mkdirs()
+            }
+            val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss")
+            var time = dateFormat.format(Date())
+            val newFile = File(dir, "${time}.jpg")
+
+//            val out = openFileOutput(newFile.toString(), MODE_APPEND)
+            val out = FileOutputStream(newFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.flush()
+            out.close()
+
+            Log.d(TAG, "persistImage: Success")
+            Log.d(TAG, "persistImage: ${newFile.path}")
+
+        } catch (e: Exception) {
+            Log.d(TAG, "persistImage: Fail")
+            Log.d(TAG, "persistImage: $e")
+        }
     }
 
     private fun initSensor() {
@@ -164,6 +236,7 @@ class CameraActivity : AppCompatActivity() {
 
         mSurfaceViewHolder = surfaceView.holder
         mSurfaceViewHolder.addCallback(object : SurfaceHolder.Callback {
+
             override fun surfaceCreated(holder: SurfaceHolder) {
                 initCameraAndPreview()
 
