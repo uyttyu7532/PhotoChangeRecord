@@ -44,8 +44,8 @@
             android:textSize="10sp"
             android:tint="#ffffff"
             app:icon="@drawable/ic_baseline_photo_camera_24"
-            app:iconTint="#0C0039"
-            app:strokeColor="#0C0039"
+            app:iconTint="@color/colorPrimaryDark"
+            app:strokeColor="@color/colorPrimaryDark"
             app:strokeWidth="2dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
