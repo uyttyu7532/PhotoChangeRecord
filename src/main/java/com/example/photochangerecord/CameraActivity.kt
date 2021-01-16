@@ -151,20 +151,6 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    fun viewToBitmap(view: View): Bitmap? {
-        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        return if (view is SurfaceView) {
-            view.setZOrderOnTop(true)
-            view.draw(canvas)
-            view.setZOrderOnTop(false)
-            bitmap
-        } else {
-            //For ViewGroup & View
-            view.draw(canvas)
-            bitmap
-        }
-    }
 
 
     /**

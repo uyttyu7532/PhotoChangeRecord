@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -16,7 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
-import splitties.activities.start
+import java.io.File
 
 
 class GalleryActivity : AppCompatActivity() {
@@ -27,6 +28,7 @@ class GalleryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGalleryBinding
     private lateinit var mContext: Context
+    private lateinit var folderName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,18 +45,22 @@ class GalleryActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery)
 
         val intent = intent
-        var receivedFolderInfo: Folder = intent.getParcelableExtra("folderInfo")
+        folderName = intent.getStringExtra("folderName")
 
-        Log.d(TAG, "onCreate: $receivedFolderInfo")
-
-        recyclerview(receivedFolderInfo)
 
         binding.newPhotoFab.setOnClickListener {
             // TODO 나중에는 찍은 사진을 업데이트해서 보여줘야..
             val intent = Intent(mContext, LaunchActivity::class.java)
-            intent.putExtra("folderName", receivedFolderInfo.title)
+            intent.putExtra("folderName", folderName)
             startActivity(intent)
         }
+
+
+    }
+
+    override fun onResume() {
+        recyclerview(getFolder(folderName))
+        super.onResume()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,17 +73,43 @@ class GalleryActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun recyclerview(folder: Folder) {
+
+    private fun getFolder(folderName:String): Folder {
+
+        var directory = File(
+            getExternalFilesDir(
+                Environment.DIRECTORY_DCIM
+            ).toString()+"/$folderName"
+        )
+        var files = directory.listFiles()
+
+        var photos:ArrayList<Photo> = ArrayList() // 파일 경로
+
+        for (f in files) {
+            photos.add(Photo(f.absolutePath))
+        }
+        return Folder(folderName, photos)
+    }
+
+
+    private fun deleteFolder(folderName:String){
+        // TODO
+    }
+
+    private fun deletePhotor(){
+        // TODO
+    }
+
+    private fun recyclerview(folder:Folder) {
 
         val adapter = GalleryAdapter(mContext, folder)
         adapter.itemClick = object : GalleryAdapter.ItemClick {
-            override fun onClick(view: View, position: Int, folderName: String, photo: Photo) {
+            override fun onClick(view: View, position: Int, folder: Folder) {
                 Log.d(TAG, "onClick: $position clicked")
 
                 val intent = Intent(mContext, DetailActivity::class.java)
-                intent.putExtra("photoInfo", photo) // TODO 나중에 지우기
-                intent.putExtra("folderName", folderName)
-                intent.putExtra("photoPosition", position)
+                intent.putExtra("folder", folder)
+                intent.putExtra("position", position)
                 startActivity(intent)
 
 

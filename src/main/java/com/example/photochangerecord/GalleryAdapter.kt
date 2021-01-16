@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.Photo
 
 class GalleryAdapter(
     private val context: Context,
@@ -19,7 +18,7 @@ class GalleryAdapter(
     interface ItemClick
     {
         // TODO photo는 나중에 안 보내도 될듯 (photo -> folderName과 position)
-        fun onClick(view: View, position: Int, folderName: String, photo: Photo)
+        fun onClick(view: View, position: Int, folder:Folder)
     }
     var itemClick: ItemClick? = null
 
@@ -36,18 +35,18 @@ class GalleryAdapter(
         if(itemClick != null)
         {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, folder.title, folder.photos[position])
+                itemClick?.onClick(v, position, folder)
             }
         }
 
         val photo = folder.photos[position]
 
 
-        holder.title.text = photo.date
+        holder.title.text = photo.absolute_file_path
 
         // TODO (데이터 바인딩..)
 //        holder.image.setImageResource(photo.resourceID)
-        Glide.with(context).load(photo.resourceID).into(holder.image)
+        Glide.with(context).load(photo.absolute_file_path).into(holder.image)
 
     }
 

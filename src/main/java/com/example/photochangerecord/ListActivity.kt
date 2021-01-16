@@ -7,11 +7,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +24,7 @@ import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
-import splitties.toast.toast
+import java.io.File
 
 
 class ListActivity : AppCompatActivity() {
@@ -42,6 +42,9 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         mContext = this
+
+        Log.d(TAG, "onCreate:" + getFolderName())
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_list)
 
@@ -64,7 +67,37 @@ class ListActivity : AppCompatActivity() {
 
     }
 
-    private fun showMakeFolderDialog(){
+    private fun getFolderName(): ArrayList<String> {
+
+        var directory = File(
+            getExternalFilesDir(
+                Environment.DIRECTORY_DCIM
+            ).toString()
+        )
+        var files = directory.listFiles();
+
+        var filesNameList: ArrayList<String> = ArrayList()
+
+        for (f in files) {
+            filesNameList.add(f.name)
+        }
+
+        return filesNameList
+
+    }
+
+
+
+    private fun makeNewFolder(folderName: String) {
+        // TODO
+        // 중복확인 후 생성
+    }
+
+    private fun deleteFolder(folderName: String) {
+        // TODO
+    }
+
+    private fun showMakeFolderDialog() {
         val binding: AddFolderDialogBinding = DataBindingUtil.inflate(
             LayoutInflater.from(this),
             R.layout.add_folder_dialog,
@@ -74,12 +107,12 @@ class ListActivity : AppCompatActivity() {
 
         val dialog = Dialog(this)
 
-        binding.dialogAgreeBtn.setOnClickListener{
+        binding.dialogAgreeBtn.setOnClickListener {
             // TODO 폴더 생성하기 (폴더 이름 중복 확인)
             dialog.dismiss()
         }
 
-        binding.dialogDisagreeBtn.setOnClickListener{
+        binding.dialogDisagreeBtn.setOnClickListener {
             dialog.dismiss()
         }
 
@@ -100,7 +133,7 @@ class ListActivity : AppCompatActivity() {
                 // TODO 생각해보니까 여기서 사진 데이터를 모두 넘기기보다는 폴더명을 넘겨야할 듯?
                 // GalleryActivity에서 업데이트 될 수도 있으니까
                 val intent = Intent(mContext, GalleryActivity::class.java)
-                intent.putExtra("folderInfo", folder)
+                intent.putExtra("folderName", folder.title)
                 startActivity(intent)
             }
 
@@ -136,44 +169,45 @@ class ListActivity : AppCompatActivity() {
 
     private fun initializeData() {
         val photo1: ArrayList<Photo> = ArrayList()
-        photo1.add(Photo(R.drawable.photo, "2021-01-11 17:00:53"))
-        photo1.add(Photo(R.drawable.photo, "2021-01-12 17:00:53"))
-        photo1.add(Photo(R.drawable.photo, "2021-01-13 17:00:53"))
-        photo1.add(Photo(R.drawable.photo, "2021-01-14 17:00:53"))
+        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
         folderList.add(Folder("Skin Log", photo1))
         val photo2: ArrayList<Photo> = ArrayList()
-        photo2.add(Photo(R.drawable.star, "2021-01-15 17:00:53"))
-        photo2.add(Photo(R.drawable.star, "2021-01-16 17:00:53"))
-        photo2.add(Photo(R.drawable.star, "2021-01-17 17:00:53"))
-        photo2.add(Photo(R.drawable.star, "2021-01-18 17:00:53"))
+        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
         folderList.add(Folder("Diet", photo2))
         val photo3: ArrayList<Photo> = ArrayList()
-        photo3.add(Photo(R.drawable.hourglass, "2021-01-19 17:00:53"))
-        photo3.add(Photo(R.drawable.hourglass, "2021-01-20 17:00:53"))
-        photo3.add(Photo(R.drawable.photo, "2021-01-21 17:00:53"))
-        photo3.add(Photo(R.drawable.hourglass, "2021-01-22 17:00:53"))
-        photo3.add(Photo(R.drawable.photo, "2021-01-23 17:00:53"))
-        photo3.add(Photo(R.drawable.hourglass, "2021-01-24 17:00:53"))
-        photo3.add(Photo(R.drawable.photo, "2021-01-25 17:00:53"))
-        photo3.add(Photo(R.drawable.hourglass, "2021-01-26 17:00:53"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
         folderList.add(Folder("Diary", photo3))
         val photo4: ArrayList<Photo> = ArrayList()
-        photo4.add(Photo(R.drawable.bell, "2021-01-11 17:00:53"))
-        photo4.add(Photo(R.drawable.star, "2021-02-11 17:00:53"))
-        photo4.add(Photo(R.drawable.hourglass, "2021-03-11 17:00:53"))
-        photo4.add(Photo(R.drawable.photo, "2021-04-11 17:00:53"))
+        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
         folderList.add(Folder("Skin Log", photo1))
         val photo5: ArrayList<Photo> = ArrayList()
-        photo5.add(Photo(R.drawable.bell, "2021-05-11 17:00:53"))
-        photo5.add(Photo(R.drawable.bell, "2021-06-11 17:00:53"))
-        photo5.add(Photo(R.drawable.bell, "2021-07-11 17:00:53"))
-        photo5.add(Photo(R.drawable.bell, "2021-08-11 17:00:53"))
+        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_03503" +
+                "3.jpg"))
         folderList.add(Folder("Diet", photo2))
         val photo6: ArrayList<Photo> = ArrayList()
-        photo6.add(Photo(R.drawable.photo, "2021-09-11 17:00:53"))
-        photo6.add(Photo(R.drawable.photo, "2021-10-11 17:00:53"))
-        photo6.add(Photo(R.drawable.photo, "2021-11-11 17:00:53"))
-        photo6.add(Photo(R.drawable.photo, "2021-12-11 17:00:53"))
+        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
+        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
+        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
+        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
         folderList.add(Folder("Diary", photo3))
     }
 

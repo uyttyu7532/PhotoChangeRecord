@@ -17,7 +17,7 @@ class HorizontalAdapter(
 
     interface ItemClick
     {
-        fun onClick(view: View, position: Int, folderName: String, photo: Photo) // TODO photo지우기
+        fun onClick(view: View, position: Int, folder: Folder)
     }
     var itemClick: ItemClick? = null
 
@@ -34,15 +34,15 @@ class HorizontalAdapter(
         if(itemClick != null)
         {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, folder.title, folder.photos[position])
+                itemClick?.onClick(v, position, folder)
             }
         }
 
         val photo = folder.photos[position]
-        holder.title.text = photo.date
+        holder.title.text = photo.absolute_file_path
 
-        // TODO Glide로 해야되나  (데이터 바인딩..)
-        Glide.with(context).load(photo.resourceID).into(holder.image)
+        // TODO (데이터 바인딩..)
+        Glide.with(context).load(photo.absolute_file_path).into(holder.image)
 
     }
 
