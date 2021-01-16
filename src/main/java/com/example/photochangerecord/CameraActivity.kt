@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.ImageFormat
 import android.hardware.Sensor
 import android.hardware.SensorManager
@@ -87,7 +86,7 @@ class CameraActivity : AppCompatActivity() {
 
         val intent = intent
         var folderName: String? = intent.getStringExtra("folderName")
-        
+
 
         // 테스트
         if (folderName != null) {
