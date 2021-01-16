@@ -18,7 +18,7 @@ import com.takusemba.multisnaprecyclerview.SnapGravity
 
 class VerticalAdapter(
     private val context: Context,
-    private val folderList: ArrayList<Folder>
+    private val folderNameList: ArrayList<String>
 ) : RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
 
     companion object {
@@ -27,8 +27,8 @@ class VerticalAdapter(
 
     interface ItemClick
     {
-        fun onClick(view: View, position: Int, folder: Folder)
-        fun addBtnOnClick(view: View, position: Int, folder: Folder)
+        fun onClick(view: View, position: Int, foldeName: String)
+        fun addBtnOnClick(view: View, position: Int, folderName: String)
     }
     var itemClick: ItemClick? = null
 
@@ -48,51 +48,52 @@ class VerticalAdapter(
         if(itemClick != null)
         {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, folderList[position])
+                itemClick?.onClick(v, position, folderNameList[position])
             }
         }
 
         if(itemClick != null)
         {
             holder?.listAddPhotoBtn?.setOnClickListener { v ->
-                itemClick?.addBtnOnClick(v, position, folderList[position])
+                itemClick?.addBtnOnClick(v, position, folderNameList[position])
             }
         }
 
-        holder.folderTitle.text = folderList[position].title
+        holder.folderTitle.text = folderNameList[position]
 
-        val adapter = HorizontalAdapter(context, folderList[position])
 
-        adapter.itemClick = object : HorizontalAdapter.ItemClick {
-            override fun onClick(view: View, position: Int, folder:Folder) {
-                Log.d(TAG, "onClick: $position clicked")
-
-                // TODO 생각해보니까 여기서 사진 데이터를 모두 넘기기보다는 폴더명을 넘겨야할 듯?
-                // GalleryActivity에서 업데이트 될 수도 있으니까
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("folder", folder)
-                intent.putExtra("position", position)
-                context.startActivity(intent)
-            }
-        }
-
-        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        holder.recyclerViewHorizontal.layoutManager = manager
-        holder.recyclerViewHorizontal.adapter = adapter
-
-        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
-        multiSnapHelper.attachToRecyclerView(holder.recyclerViewHorizontal)
+        // ListActivity(메인)에 일단 사진을 제외함. 리사이클러뷰 in 리사이클러뷰
+//        val adapter = HorizontalAdapter(context, folderList[position])
+//
+//        adapter.itemClick = object : HorizontalAdapter.ItemClick {
+//            override fun onClick(view: View, position: Int, folder:Folder) {
+//                Log.d(TAG, "onClick: $position clicked")
+//
+//                // GalleryActivity에서 업데이트 될 수도 있으니까
+//                val intent = Intent(context, DetailActivity::class.java)
+//                intent.putExtra("folder", folder)
+//                intent.putExtra("position", position)
+//                context.startActivity(intent)
+//            }
+//        }
+//
+//        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        holder.recyclerViewHorizontal.layoutManager = manager
+//        holder.recyclerViewHorizontal.adapter = adapter
+//
+//        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
+//        multiSnapHelper.attachToRecyclerView(holder.recyclerViewHorizontal)
 
     }
 
     override fun getItemCount(): Int {
-        return folderList.size
+        return folderNameList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(
         itemView
     ) {
-        val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
+//        val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
         val folderTitle: TextView = itemView.findViewById(R.id.folder_title) as TextView
         val listAddPhotoBtn: ImageView = itemView.findViewById(R.id.list_add_photo_btn) as ImageView
 

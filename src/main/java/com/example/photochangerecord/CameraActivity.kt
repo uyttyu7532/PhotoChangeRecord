@@ -87,8 +87,7 @@ class CameraActivity : AppCompatActivity() {
 
         val intent = intent
         var folderName: String? = intent.getStringExtra("folderName")
-
-        Log.d(TAG, "onCreate: $folderName")
+        
 
         // 테스트
         if (folderName != null) {
