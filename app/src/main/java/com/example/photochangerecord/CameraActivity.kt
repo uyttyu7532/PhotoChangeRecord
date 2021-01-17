@@ -24,7 +24,6 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
-import kotlinx.android.synthetic.main.activity_camera.*
 import splitties.toast.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -88,11 +87,6 @@ class CameraActivity : AppCompatActivity() {
         var folderName: String? = intent.getStringExtra("folderName")
 
 
-        // 테스트
-        if (folderName != null) {
-            toast(folderName)
-        }
-
         val actionBar: ActionBar? = supportActionBar
         actionBar!!.hide()
 
@@ -145,10 +139,8 @@ class CameraActivity : AppCompatActivity() {
                     folderName!!
                 )
             }
-
         }
     }
-
 
 
     /**
@@ -235,7 +227,7 @@ class CameraActivity : AppCompatActivity() {
             mWidth = widthPixels
         }
 
-        mSurfaceViewHolder = surfaceView.holder
+        mSurfaceViewHolder = binding.surfaceView.holder
         mSurfaceViewHolder.addCallback(object : SurfaceHolder.Callback {
 
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -256,7 +248,7 @@ class CameraActivity : AppCompatActivity() {
             }
         })
 
-        btn_convert.setOnClickListener { switchCamera() }
+        binding.btnConvert.setOnClickListener { switchCamera() }
     }
 
     private fun switchCamera() {
@@ -402,16 +394,16 @@ class CameraActivity : AppCompatActivity() {
             updateTextureViewSize(newWidth, newHeight)
         }
 
-        val layoutParams: ViewGroup.LayoutParams = alpha_background_image.layoutParams
+        val layoutParams: ViewGroup.LayoutParams = binding.alphaBackgroundImage.layoutParams
         layoutParams.width = realWidth
         layoutParams.height = realHeight
         Log.d(TAG, "setAspectRatioTextureView: $realHeight $realWidth\"")
-        alpha_background_image.layoutParams = layoutParams
+        binding.alphaBackgroundImage.layoutParams = layoutParams
 
     }
 
     private fun updateTextureViewSize(viewWidth: Int, viewHeight: Int) {
         Log.d("ViewSize", "TextureView Width : $viewWidth TextureView Height : $viewHeight")
-        surfaceView.layoutParams = FrameLayout.LayoutParams(viewWidth, viewHeight)
+        binding.surfaceView.layoutParams = FrameLayout.LayoutParams(viewWidth, viewHeight)
     }
 }
