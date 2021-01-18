@@ -11,6 +11,7 @@ import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -25,6 +26,7 @@ import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import com.takusemba.multisnaprecyclerview.MultiSnapHelper
 import com.takusemba.multisnaprecyclerview.SnapGravity
+import splitties.toast.toast
 import java.io.File
 
 
@@ -89,9 +91,25 @@ class ListActivity : AppCompatActivity() {
     }
 
 
-    private fun makeNewFolder(folderName: String) {
-        // TODO
-        // 중복확인 후 생성
+    private fun makeNewFolder(folderName: String, CallBack: (isExisted: Boolean) -> Unit) {
+        // TODO 중복확인
+
+        val dir = File(
+            getExternalFilesDir(
+                Environment.DIRECTORY_DCIM
+            ).toString() + "/$folderName"
+        )
+
+        Log.d(TAG, "makeNewFolder: ${dir.absolutePath}")
+
+        if (!dir!!.exists()) {
+            dir.mkdirs()
+            CallBack(false)
+            recyclerview(getFolderName())
+        } else {
+            toast("Existed Folder Name")
+            CallBack(true)
+        }
     }
 
     private fun deleteFolder(folderName: String) {
@@ -109,8 +127,14 @@ class ListActivity : AppCompatActivity() {
         val dialog = Dialog(this)
 
         binding.dialogAgreeBtn.setOnClickListener {
-            // TODO 폴더 생성하기 (폴더 이름 중복 확인)
-            dialog.dismiss()
+
+            makeNewFolder(binding.dialogEt.text.toString(), CallBack = {
+                if(!it){
+                    dialog.dismiss()
+                }
+
+            })
+
         }
 
         binding.dialogDisagreeBtn.setOnClickListener {
@@ -122,8 +146,7 @@ class ListActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun recyclerview(folderNameList:ArrayList<String>) {
-//        initializeData()
+    private fun recyclerview(folderNameList: ArrayList<String>) {
 
 
         val adapter = VerticalAdapter(mContext!!, folderNameList)
@@ -131,7 +154,6 @@ class ListActivity : AppCompatActivity() {
             override fun onClick(view: View, position: Int, folderName: String) {
                 Log.d(TAG, "onClick: $position clicked")
 
-                // TODO 생각해보니까 여기서 사진 데이터를 모두 넘기기보다는 폴더명을 넘겨야할 듯?
                 // GalleryActivity에서 업데이트 될 수도 있으니까
                 val intent = Intent(mContext, GalleryActivity::class.java)
                 intent.putExtra("folderName", folderName)
@@ -139,7 +161,6 @@ class ListActivity : AppCompatActivity() {
             }
 
             override fun addBtnOnClick(view: View, position: Int, folderName: String) {
-                // TODO 카메라로 이동 해당 폴더에 저장
                 val intent = Intent(mContext, LaunchActivity::class.java)
                 intent.putExtra("folderName", folderName)
                 startActivity(intent)
@@ -168,49 +189,5 @@ class ListActivity : AppCompatActivity() {
         })
     }
 
-
-//    private fun initializeData() {
-//        val photo1: ArrayList<Photo> = ArrayList()
-//        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo1.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
-//        folderList.add(Folder("Skin Log", photo1))
-//        val photo2: ArrayList<Photo> = ArrayList()
-//        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo2.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
-//        folderList.add(Folder("Diet", photo2))
-//        val photo3: ArrayList<Photo> = ArrayList()
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo3.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
-//        folderList.add(Folder("Diary", photo3))
-//        val photo4: ArrayList<Photo> = ArrayList()
-//        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo4.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
-//        folderList.add(Folder("Skin Log", photo1))
-//        val photo5: ArrayList<Photo> = ArrayList()
-//        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo5.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_03503" +
-//                "3.jpg"))
-//        folderList.add(Folder("Diet", photo2))
-//        val photo6: ArrayList<Photo> = ArrayList()
-//        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011144.jpg"))
-//        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_011908.jpg"))
-//        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_014756.jpg"))
-//        photo6.add(Photo("/storage/emulated/0/Android/data/com.example.photochangerecord/files/DCIM/Skin Log/20210116_035033.jpg"))
-//        folderList.add(Folder("Diary", photo3))
-//    }
 
 }
