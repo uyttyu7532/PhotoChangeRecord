@@ -89,10 +89,7 @@ class CameraActivity : AppCompatActivity() {
         val intent = intent
         var folderName: String? = intent.getStringExtra("folderName")
         var backgroundPhoto: Photo? = intent.getParcelableExtra("backgroundPhoto")
-
-
-        val actionBar: ActionBar? = supportActionBar
-        actionBar!!.hide()
+        
 
         // 상태바 숨기기
         window.setFlags(

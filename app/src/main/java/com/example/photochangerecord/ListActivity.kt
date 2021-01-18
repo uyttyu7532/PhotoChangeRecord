@@ -50,9 +50,6 @@ class ListActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        val actionBar: ActionBar? = supportActionBar
-        actionBar!!.hide()
-
 
         binding.newFolderFab.setOnClickListener {
             // 폴더 생성 다이얼로그

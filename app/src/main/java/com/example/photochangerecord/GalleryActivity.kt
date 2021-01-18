@@ -43,14 +43,17 @@ class GalleryActivity : AppCompatActivity() {
         mContext = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery)
 
+
         val intent = intent
         folderName = intent.getStringExtra("folderName")
 
-        val actionBar: ActionBar? = supportActionBar
-        actionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar!!.elevation = 0.0f
-        actionBar!!.title = folderName
+        setSupportActionBar(binding.toolbar)
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.elevation = 0.0f
+        supportActionBar!!.title = folderName
+
+
 
 
         binding.newPhotoFab.setOnClickListener {

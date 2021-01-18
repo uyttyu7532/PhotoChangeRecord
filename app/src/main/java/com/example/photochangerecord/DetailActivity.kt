@@ -41,11 +41,11 @@ class DetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
 
-        val actionBar: ActionBar? = supportActionBar
-        actionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
-        actionBar!!.elevation = 0.0f
-        actionBar!!.title = ""
+        setSupportActionBar(binding.toolbar)
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.elevation = 0.0f
+        supportActionBar!!.title = ""
 
         detailSlider = binding.detailSlider
 
