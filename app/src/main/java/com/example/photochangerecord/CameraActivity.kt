@@ -14,6 +14,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.SparseIntArray
 import android.view.*
+import android.view.View.INVISIBLE
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
@@ -115,6 +116,10 @@ class CameraActivity : AppCompatActivity() {
 
         initSensor()
         initView()
+
+        if(backgroundPhoto == null){
+            binding.alphaBackgroundImageSlider.visibility = INVISIBLE
+        }
 
 
         // 의문: binding.alphaBackgroundImageSlider vs alphaBackgroundImageSlider 무슨 차이가 있는거지?

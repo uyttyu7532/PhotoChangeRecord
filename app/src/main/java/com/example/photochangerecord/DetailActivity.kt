@@ -1,22 +1,25 @@
 package com.example.photochangerecord
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.photochangerecord.databinding.ActivityDetailBinding
+import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.PositionViewModel
 import com.ramotion.fluidslider.FluidSlider
 import splitties.toast.toast
+import java.io.File
 import kotlin.math.floor
 
 
@@ -92,8 +95,57 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+            R.id.action_delete_detail -> {
+                showDeletePhotoDialog(callback = {
+                    when (it) {
+                        true -> {
+                            toast("Delete Success")
+                            finish()
+                        }
+                        false -> toast("Delete Failed")
+                    }
+                })
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun deletePhoto(filePath: String): Boolean {
+        val f = File(filePath)
+        return f.delete()
+    }
+
+    private fun showDeletePhotoDialog(callback: (Boolean) -> Unit) {
+        val binding: DeleteFolderDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(this),
+            R.layout.delete_folder_dialog,
+            null,
+            false
+        )
+
+        val dialog = Dialog(this)
+
+        binding.deleteFolderDialogTextView.text =
+            "Are you sure you want to permanently delete this photo?"
+
+        binding.dialogAgreeBtn.setOnClickListener {
+
+            if (deletePhoto(receiveFolder.photos[receivedPosition].absolute_file_path)) {
+                callback(true)
+                dialog.dismiss()
+            } else {
+                callback(false)
+            }
+
+        }
+
+        binding.dialogDisagreeBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(binding.root)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 
     private fun setSlider() {

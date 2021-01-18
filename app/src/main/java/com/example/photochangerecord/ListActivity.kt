@@ -124,8 +124,7 @@ class ListActivity : AppCompatActivity() {
 
             if (makeNewFolder(binding.dialogEt.text.toString())) {
                 dialog.dismiss()
-            }
-            else{
+            } else {
                 toast("Check Your Folder Name!")
             }
 

@@ -34,7 +34,7 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGalleryBinding
     private lateinit var mContext: Context
     private lateinit var folderName: String
-    private var photos:ArrayList<Photo> = ArrayList()
+    private var photos: ArrayList<Photo> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,18 +54,20 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar!!.title = folderName
 
 
-
-
         binding.newPhotoFab.setOnClickListener {
             val intent = Intent(mContext, LaunchActivity::class.java)
             intent.putExtra("folderName", folderName)
-            intent.putExtra("backgroundPhoto", photos[photos.size-1])
+
+            if(photos.size != 0) {
+                intent.putExtra("backgroundPhoto", photos[photos.size - 1])
+            }
             startActivity(intent)
         }
 
     }
 
     override fun onResume() {
+        Log.d(TAG, "onResume: started")
         recyclerview(getFolder(folderName))
         super.onResume()
     }
@@ -83,11 +85,10 @@ class GalleryActivity : AppCompatActivity() {
             }
             R.id.action_delete_folder -> {
                 showDeleteFolderDialog(callback = {
-                    if(it){
+                    if (it) {
                         toast("Delete Success")
                         finish()
-                    }
-                    else{
+                    } else {
                         toast("Delete Failed")
                     }
                 })
@@ -106,7 +107,7 @@ class GalleryActivity : AppCompatActivity() {
         )
         var files = directory.listFiles()
 
-//        var photos: ArrayList<Photo> = ArrayList() // 파일 경로
+        photos= ArrayList() // 파일 경로
 
         for (f in files) {
             photos.add(Photo(f.absolutePath))
@@ -165,11 +166,12 @@ class GalleryActivity : AppCompatActivity() {
     }
 
 
-    private fun deletePhotor() {
-        // TODO
+    private fun deletePhoto() {
+        // TODO 다중선택?
     }
 
     private fun recyclerview(folder: Folder) {
+
 
         val adapter = GalleryAdapter(mContext, folder)
 //        adapter.setHasStableIds(true)
