@@ -22,8 +22,11 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
+import com.example.photochangerecord.viewmodel.Photo
 import splitties.toast.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -85,6 +88,7 @@ class CameraActivity : AppCompatActivity() {
 
         val intent = intent
         var folderName: String? = intent.getStringExtra("folderName")
+        var backgroundPhoto: Photo? = intent.getParcelableExtra("backgroundPhoto")
 
 
         val actionBar: ActionBar? = supportActionBar
@@ -126,6 +130,14 @@ class CameraActivity : AppCompatActivity() {
             Log.d(TAG, "onCreate: $it")
             viewModel.updateValue(it)
         }
+
+        Log.d(TAG, "onCreate: ${folderName}")
+        Log.d(TAG, "onCreate: ${backgroundPhoto?.absolute_file_path}")
+        Glide.with(this).load(backgroundPhoto?.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .dontAnimate().into(
+                binding.alphaBackgroundImage
+            )
+
 
         binding.btnHome.setOnClickListener {
             this.onBackPressed()

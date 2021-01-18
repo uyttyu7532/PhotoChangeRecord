@@ -54,7 +54,6 @@
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:alpha="@{viewModel.imageAlpha}"
-            android:background="@drawable/photo"
             android:scaleType="centerInside" />
 
         <com.ramotion.fluidslider.FluidSlider

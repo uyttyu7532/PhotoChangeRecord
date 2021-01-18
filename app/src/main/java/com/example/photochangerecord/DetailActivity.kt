@@ -1,9 +1,11 @@
 package com.example.photochangerecord
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +16,7 @@ import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.PositionViewModel
 import com.ramotion.fluidslider.FluidSlider
+import splitties.toast.toast
 import kotlin.math.floor
 
 
@@ -23,11 +26,12 @@ class DetailActivity : AppCompatActivity() {
         private const val TAG = "DetailActivity"
     }
 
-    lateinit var binding: ActivityDetailBinding
-    lateinit var detailSlider: FluidSlider
-    lateinit var receiveFolder: Folder
+    private lateinit var binding: ActivityDetailBinding
+    private lateinit var detailSlider: FluidSlider
+    private lateinit var receiveFolder: Folder
+    private var receivedPosition = 0
     private var folderSize = 0
-    private var positionFloat=0.0f
+    private var positionFloat = 0.0f
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +53,7 @@ class DetailActivity : AppCompatActivity() {
         val intent = intent
         // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
         receiveFolder = intent.getParcelableExtra("folder")
-        var receivedPosition: Int = intent.getIntExtra("position", 0)
+        receivedPosition = intent.getIntExtra("position", 0)
 
         folderSize = receiveFolder.photos.size
         positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
@@ -67,7 +71,32 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-    private fun setSlider(){
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                this.onBackPressed()
+                return true
+            }
+            R.id.action_detail_camera -> {
+                val intent = Intent(this, LaunchActivity::class.java)
+                intent.putExtra("folderName", receiveFolder.title)
+                intent.putExtra(
+                    "backgroundPhoto",
+                    receiveFolder.photos[receivedPosition]
+                )
+                startActivity(intent)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setSlider() {
         val positionViewModel = PositionViewModel()
 
         detailSlider.positionListener = {
@@ -103,14 +132,5 @@ class DetailActivity : AppCompatActivity() {
             })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                this.onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
 }

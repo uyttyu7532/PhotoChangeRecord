@@ -28,7 +28,7 @@ import java.io.File
 
 class ListActivity : AppCompatActivity() {
     private var mContext: Context? = null
-    private val folderList: ArrayList<Folder> = ArrayList()
+//    private val folderList: ArrayList<Folder> = ArrayList()
 
     companion object {
         private const val TAG = "ListActivity"
@@ -99,10 +99,6 @@ class ListActivity : AppCompatActivity() {
 
         Log.d(TAG, "makeNewFolder: ${dir.absolutePath}")
 
-//        // TODO 폴더이름 정규식?
-//        if () {
-//            isSuccess =  false
-//        }
 
         if (!dir!!.exists()) {
             dir.mkdirs()
@@ -161,11 +157,12 @@ class ListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            override fun addBtnOnClick(view: View, position: Int, folderName: String) {
-                val intent = Intent(mContext, LaunchActivity::class.java)
-                intent.putExtra("folderName", folderName)
-                startActivity(intent)
-            }
+//            override fun addBtnOnClick(view: View, position: Int, folderName: String) {
+//                val intent = Intent(mContext, LaunchActivity::class.java)
+//                intent.putExtra("folderName", folderName)
+//                // TODO                     intent.putExtra("backgroundPhoto", backgroundPhoto)
+//                startActivity(intent)
+//            }
         }
 
         val recyclerView = binding.recyclerViewVertical

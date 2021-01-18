@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.photochangerecord.viewmodel.Photo
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 
@@ -21,9 +22,11 @@ class LaunchActivity : AppCompatActivity() {
                 override fun onPermissionGranted() {
                     val intentReceived = intent
                     var folderName: String? = intentReceived.getStringExtra("folderName")
+                    var backgroundPhoto: Photo? = intentReceived.getParcelableExtra("backgroundPhoto")
 
                     val intent = Intent(this@LaunchActivity, CameraActivity::class.java)
                     intent.putExtra("folderName", folderName)
+                    intent.putExtra("backgroundPhoto", backgroundPhoto)
                     startActivity(intent)
                     finish()
                 }

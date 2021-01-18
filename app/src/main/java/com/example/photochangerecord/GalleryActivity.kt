@@ -18,13 +18,11 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
-import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import splitties.toast.toast
 import java.io.File
-import javax.security.auth.callback.Callback
 
 
 class GalleryActivity : AppCompatActivity() {
@@ -36,6 +34,7 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGalleryBinding
     private lateinit var mContext: Context
     private lateinit var folderName: String
+    private var photos:ArrayList<Photo> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +56,7 @@ class GalleryActivity : AppCompatActivity() {
         binding.newPhotoFab.setOnClickListener {
             val intent = Intent(mContext, LaunchActivity::class.java)
             intent.putExtra("folderName", folderName)
+            intent.putExtra("backgroundPhoto", photos[photos.size-1])
             startActivity(intent)
         }
 
@@ -68,7 +68,7 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.menu_gallery, menu)
         return true
     }
 
@@ -103,7 +103,7 @@ class GalleryActivity : AppCompatActivity() {
         )
         var files = directory.listFiles()
 
-        var photos: ArrayList<Photo> = ArrayList() // 파일 경로
+//        var photos: ArrayList<Photo> = ArrayList() // 파일 경로
 
         for (f in files) {
             photos.add(Photo(f.absolutePath))

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +28,8 @@ class VerticalAdapter(
 
     interface ItemClick
     {
-        fun onClick(view: View, position: Int, foldeName: String)
-        fun addBtnOnClick(view: View, position: Int, folderName: String)
+        fun onClick(view: View, position: Int, folderName: String)
+//        fun addBtnOnClick(view: View, position: Int, folderName: String)
     }
     var itemClick: ItemClick? = null
 
@@ -52,12 +53,12 @@ class VerticalAdapter(
             }
         }
 
-        if(itemClick != null)
-        {
-            holder?.listAddPhotoBtn?.setOnClickListener { v ->
-                itemClick?.addBtnOnClick(v, position, folderNameList[position])
-            }
-        }
+//        if(itemClick != null)
+//        {
+//            holder?.listAddPhotoBtn?.setOnClickListener { v ->
+//                itemClick?.addBtnOnClick(v, position, folderNameList[position])
+//            }
+//        }
 
         holder.folderTitle.text = folderNameList[position]
 
@@ -95,7 +96,8 @@ class VerticalAdapter(
     ) {
 //        val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
         val folderTitle: TextView = itemView.findViewById(R.id.folder_title) as TextView
-        val listAddPhotoBtn: ImageView = itemView.findViewById(R.id.list_add_photo_btn) as ImageView
+        val folderLayout : RelativeLayout = itemView.findViewById(R.id.folder_layout) as RelativeLayout
+//        val listAddPhotoBtn: ImageView = itemView.findViewById(R.id.list_add_photo_btn) as ImageView
 
 
     }

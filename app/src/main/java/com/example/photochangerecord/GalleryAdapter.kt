@@ -55,8 +55,6 @@ class GalleryAdapter(
 //        holder.title.text = photo.absolute_file_path
 
         // TODO (데이터 바인딩..)
-//        holder.image.setImageResource(photo.resourceID)
-
         Glide.with(context).load(photo.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.ALL).dontAnimate().into(
             holder.image
         )
