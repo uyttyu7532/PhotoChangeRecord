@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
@@ -15,7 +14,6 @@
         android:layout_height="match_parent">
 
         <FrameLayout
-
             android:layout_above="@+id/alpha_background_image_slider"
             android:id="@+id/camera_frame_layout"
             android:layout_width="match_parent"
