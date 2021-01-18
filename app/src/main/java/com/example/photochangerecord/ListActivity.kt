@@ -11,7 +11,6 @@ import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,9 +22,6 @@ import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
 import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.Photo
-import com.takusemba.multisnaprecyclerview.MultiSnapHelper
-import com.takusemba.multisnaprecyclerview.SnapGravity
 import splitties.toast.toast
 import java.io.File
 
@@ -61,8 +57,8 @@ class ListActivity : AppCompatActivity() {
         binding.newFolderFab.setOnClickListener {
             // 폴더 생성 다이얼로그
             showMakeFolderDialog()
-
         }
+
 
     }
 
@@ -91,8 +87,9 @@ class ListActivity : AppCompatActivity() {
     }
 
 
-    private fun makeNewFolder(folderName: String, CallBack: (isExisted: Boolean) -> Unit) {
-        // TODO 중복확인
+    private fun makeNewFolder(folderName: String): Boolean {
+
+        var isSuccess: Boolean
 
         val dir = File(
             getExternalFilesDir(
@@ -102,19 +99,23 @@ class ListActivity : AppCompatActivity() {
 
         Log.d(TAG, "makeNewFolder: ${dir.absolutePath}")
 
+//        // TODO 폴더이름 정규식?
+//        if () {
+//            isSuccess =  false
+//        }
+
         if (!dir!!.exists()) {
             dir.mkdirs()
-            CallBack(false)
             recyclerview(getFolderName())
+            isSuccess = true
         } else {
             toast("Existed Folder Name")
-            CallBack(true)
+            isSuccess = false
         }
+
+        return isSuccess
     }
 
-    private fun deleteFolder(folderName: String) {
-        // TODO
-    }
 
     private fun showMakeFolderDialog() {
         val binding: AddFolderDialogBinding = DataBindingUtil.inflate(
@@ -128,12 +129,12 @@ class ListActivity : AppCompatActivity() {
 
         binding.dialogAgreeBtn.setOnClickListener {
 
-            makeNewFolder(binding.dialogEt.text.toString(), CallBack = {
-                if(!it){
-                    dialog.dismiss()
-                }
-
-            })
+            if (makeNewFolder(binding.dialogEt.text.toString())) {
+                dialog.dismiss()
+            }
+            else{
+                toast("Check Your Folder Name!")
+            }
 
         }
 

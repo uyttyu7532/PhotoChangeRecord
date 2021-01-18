@@ -32,6 +32,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_baseline_add_24" />
 
+
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/recycler_view_horizontal"-->
 <!--        android:layout_width="match_parent"-->
