@@ -25,6 +25,9 @@ class DetailActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityDetailBinding
     lateinit var detailSlider: FluidSlider
+    lateinit var receiveFolder: Folder
+    private var folderSize = 0
+    private var positionFloat=0.0f
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +48,11 @@ class DetailActivity : AppCompatActivity() {
 
         val intent = intent
         // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
-        var receiveFolder: Folder = intent.getParcelableExtra("folder")
+        receiveFolder = intent.getParcelableExtra("folder")
         var receivedPosition: Int = intent.getIntExtra("position", 0)
 
-        var folderSize = receiveFolder.photos.size
-        var positionFloat: Float = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
+        folderSize = receiveFolder.photos.size
+        positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
 
         detailSlider.position = positionFloat
         detailSlider.bubbleText = (receivedPosition + 1).toString()
@@ -60,7 +63,11 @@ class DetailActivity : AppCompatActivity() {
         Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
             .into(binding.detailImageView)
 
+        setSlider()
 
+    }
+
+    private fun setSlider(){
         val positionViewModel = PositionViewModel()
 
         detailSlider.positionListener = {
@@ -95,7 +102,6 @@ class DetailActivity : AppCompatActivity() {
 
             })
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

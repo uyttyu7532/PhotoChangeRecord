@@ -89,7 +89,6 @@ class ListActivity : AppCompatActivity() {
     }
 
 
-
     private fun makeNewFolder(folderName: String) {
         // TODO
         // 중복확인 후 생성
