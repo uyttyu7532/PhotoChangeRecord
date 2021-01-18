@@ -103,6 +103,7 @@ class GalleryActivity : AppCompatActivity() {
     private fun recyclerview(folder:Folder) {
 
         val adapter = GalleryAdapter(mContext, folder)
+//        adapter.setHasStableIds(true)
         adapter.itemClick = object : GalleryAdapter.ItemClick {
             override fun onClick(view: View, position: Int, folder: Folder) {
                 Log.d(TAG, "onClick: $position clicked")

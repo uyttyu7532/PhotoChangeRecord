@@ -2,13 +2,14 @@ package com.example.photochangerecord
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.PositionViewModel
@@ -52,8 +53,8 @@ class DetailActivity : AppCompatActivity() {
 
         detailSlider.position = positionFloat
         detailSlider.bubbleText = (receivedPosition + 1).toString()
-        detailSlider.endText = folderSize.toString()
         detailSlider.startText = ""
+        detailSlider.endText = ""
 
 
         Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
@@ -69,6 +70,11 @@ class DetailActivity : AppCompatActivity() {
             positionViewModel.updatePosition(currentPosition)
         }
 
+        detailSlider.endTrackingListener = {
+            // TODO end 시점에서 가장 가까운 위치에 놓고 싶음
+            Log.d(TAG, "onCreate: end = ${detailSlider.position}")
+        }
+
 
 
         //라이브 데이터 변경되면 실행
@@ -76,10 +82,17 @@ class DetailActivity : AppCompatActivity() {
             {
                 Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
                     .into(binding.detailImageView)
-                detailSlider.bubbleText = (it+1).toString()
+                detailSlider.bubbleText = (it + 1).toString()
+
+                Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
+                    .diskCacheStrategy(
+                        DiskCacheStrategy.AUTOMATIC
+                    ).dontAnimate()
+                    .into(binding.detailImageView)
+
+                detailSlider.bubbleText = (it + 1).toString()
+
             })
-
-
     }
 
 
