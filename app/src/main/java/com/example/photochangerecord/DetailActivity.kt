@@ -70,11 +70,12 @@ class DetailActivity : AppCompatActivity() {
             positionViewModel.updatePosition(currentPosition)
         }
 
-        detailSlider.endTrackingListener = {
-            // TODO end 시점에서 가장 가까운 위치에 놓고 싶음
-            Log.d(TAG, "onCreate: end = ${detailSlider.position}")
-        }
-
+//        // end시점으로 가장 가까운 위치로 이동 (근데 생각보다 애니메이션이 별로임)
+//        detailSlider.endTrackingListener = {
+//            var closePosition = positionViewModel.currentDetailPosition.value
+//            detailSlider.position =  closePosition!!.toFloat() / (folderSize - 1).toFloat()
+//            detailSlider.bubbleText = (closePosition + 1).toString()
+//        }
 
 
         //라이브 데이터 변경되면 실행
