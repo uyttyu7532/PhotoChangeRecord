@@ -164,7 +164,7 @@ class ListActivity : AppCompatActivity() {
         val recyclerView = binding.recyclerViewVertical
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager
-        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+//        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerView.adapter = adapter
 
 //        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)

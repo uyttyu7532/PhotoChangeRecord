@@ -90,7 +90,7 @@ class CameraActivity : AppCompatActivity() {
         val intent = intent
         var folderName: String? = intent.getStringExtra("folderName")
         var backgroundPhoto: Photo? = intent.getParcelableExtra("backgroundPhoto")
-        
+
 
         // 상태바 숨기기
         window.setFlags(
@@ -117,9 +117,11 @@ class CameraActivity : AppCompatActivity() {
         initSensor()
         initView()
 
-        if(backgroundPhoto == null){
+        if (backgroundPhoto == null) {
             binding.alphaBackgroundImageSlider.visibility = INVISIBLE
         }
+
+        binding.alphaBackgroundImageSlider.position = MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
 
 
         // 의문: binding.alphaBackgroundImageSlider vs alphaBackgroundImageSlider 무슨 차이가 있는거지?
@@ -129,13 +131,14 @@ class CameraActivity : AppCompatActivity() {
         // 새로운 의문: 코틀린에서는 원래 안해도 됐잖아?
         // 해결: 맞다. 근데 코틀린 안드로이드 익스텐션이 2021년에 종료된다고 한다.
         binding.alphaBackgroundImageSlider.positionListener = {
-            Log.d(TAG, "onCreate: $it")
+//            Log.d(TAG, "onCreate: $it")
             viewModel.updateValue(it)
         }
 
         Log.d(TAG, "onCreate: ${folderName}")
         Log.d(TAG, "onCreate: ${backgroundPhoto?.absolute_file_path}")
-        Glide.with(this).load(backgroundPhoto?.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+        Glide.with(this).load(backgroundPhoto?.absolute_file_path)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .dontAnimate().into(
                 binding.alphaBackgroundImage
             )

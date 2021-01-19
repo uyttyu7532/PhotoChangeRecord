@@ -9,6 +9,8 @@
 
     android:descendantFocusability="blocksDescendants">
 
+
+
     <TextView
         android:id="@+id/folder_title"
         style="@style/Text.Gmarket.Medium"
@@ -41,5 +43,5 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
 <!--        android:layout_below="@+id/folder_title"-->
-<!--        android:layout_marginBottom="10dp" />-->
+<!--        android:layout_marginBottom=m"10dp" />-->
 </RelativeLayout>

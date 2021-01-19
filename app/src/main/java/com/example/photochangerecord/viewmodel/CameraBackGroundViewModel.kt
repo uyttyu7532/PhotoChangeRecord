@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.photochangerecord.MyApplication
 
 //enum class ActionType {
 //    PLUS,
@@ -28,7 +29,7 @@ class CameraBackGroundViewModel : ViewModel() {
     // 초기값 설정
     init {
         Log.d(TAG, "CameraBackGroundViewModel 생성자 호출 ")
-        _imageAlpha.value = 0.5f
+        _imageAlpha.value = MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
     }
 
 //    fun updateValue(actionType: ActionType) {
@@ -40,10 +41,12 @@ class CameraBackGroundViewModel : ViewModel() {
 
     fun updateValue(position: Float) {
         _imageAlpha.postValue(position)
+//        Log.d(TAG, "updateValue: $position")
+        MyApplication.prefs.setFloat("backGroundAlpha", position)
     }
 
     companion object {
-        private const val TAG = "로그"
+        private const val TAG = "CameraBackGroundViewModel"
     }
 
 
