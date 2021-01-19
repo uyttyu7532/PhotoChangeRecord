@@ -17,14 +17,12 @@ import android.view.*
 import android.view.View.INVISIBLE
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import coil.load
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
 import com.example.photochangerecord.viewmodel.Photo
@@ -119,9 +117,12 @@ class CameraActivity : AppCompatActivity() {
 
         if (backgroundPhoto == null) {
             binding.alphaBackgroundImageSlider.visibility = INVISIBLE
+        }else{
+            binding.alphaBackgroundImage.load(File(backgroundPhoto?.absolute_file_path))
         }
 
-        binding.alphaBackgroundImageSlider.position = MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
+        binding.alphaBackgroundImageSlider.position =
+            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
 
 
         // 의문: binding.alphaBackgroundImageSlider vs alphaBackgroundImageSlider 무슨 차이가 있는거지?
@@ -137,11 +138,12 @@ class CameraActivity : AppCompatActivity() {
 
         Log.d(TAG, "onCreate: ${folderName}")
         Log.d(TAG, "onCreate: ${backgroundPhoto?.absolute_file_path}")
-        Glide.with(this).load(backgroundPhoto?.absolute_file_path)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .dontAnimate().into(
-                binding.alphaBackgroundImage
-            )
+//        Glide.with(this).load(backgroundPhoto?.absolute_file_path)
+//            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+//            .dontAnimate().into(
+//                binding.alphaBackgroundImage
+//            )
+
 
 
         binding.btnHome.setOnClickListener {

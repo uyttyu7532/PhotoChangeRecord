@@ -5,14 +5,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import coil.load
 import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
@@ -67,8 +65,12 @@ class DetailActivity : AppCompatActivity() {
         detailSlider.endText = ""
 
 
-        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
-            .into(binding.detailImageView)
+//        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
+//            .into(binding.detailImageView)
+
+        binding.detailImageView.load(File(receiveFolder.photos[receivedPosition].absolute_file_path))
+
+
 
         setSlider()
 
@@ -171,11 +173,13 @@ class DetailActivity : AppCompatActivity() {
             {
                 detailSlider.bubbleText = (it + 1).toString()
 
-                Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
-                    .diskCacheStrategy(
-                        DiskCacheStrategy.ALL
-                    ).dontAnimate()
-                    .into(binding.detailImageView)
+//                Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
+//                    .diskCacheStrategy(
+//                        DiskCacheStrategy.ALL
+//                    ).dontAnimate()
+//                    .into(binding.detailImageView)
+
+                binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
 
                 detailSlider.bubbleText = (it + 1).toString()
 

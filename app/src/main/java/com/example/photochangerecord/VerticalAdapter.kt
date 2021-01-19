@@ -1,20 +1,12 @@
 package com.example.photochangerecord
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.Photo
-import com.takusemba.multisnaprecyclerview.MultiSnapHelper
-import com.takusemba.multisnaprecyclerview.SnapGravity
 
 
 class VerticalAdapter(

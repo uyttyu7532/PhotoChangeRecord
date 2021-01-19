@@ -1,18 +1,13 @@
 package com.example.photochangerecord
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
+import coil.load
 import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.Photo
+import java.io.File
 
 class GalleryAdapter(
     private val context: Context,
@@ -20,12 +15,11 @@ class GalleryAdapter(
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
 
 
-
-    interface ItemClick
-    {
+    interface ItemClick {
         // TODO photo는 나중에 안 보내도 될듯 (photo -> folderName과 position)
         fun onClick(view: View, position: Int, folder: Folder)
     }
+
     var itemClick: ItemClick? = null
 
 
@@ -34,7 +28,6 @@ class GalleryAdapter(
 //        return folder.photos[position].absolute_file_path.toLong()
 ////        return super.getItemId(position)
 //    }
-
 
 
     override fun onCreateViewHolder(
@@ -47,8 +40,7 @@ class GalleryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(itemClick != null)
-        {
+        if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
                 itemClick?.onClick(v, position, folder)
             }
@@ -61,9 +53,15 @@ class GalleryAdapter(
 
 
         // TODO (데이터 바인딩..)
-        Glide.with(context).load(photo.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.ALL).dontAnimate().thumbnail(0.1f).into(
-            holder.image
-        )
+//        Glide.with(context).load(photo.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.ALL).dontAnimate().thumbnail(0.1f).into(
+//            holder.image
+//        )
+        holder.image.load(File(photo.absolute_file_path)) {
+            crossfade(true)
+            crossfade(200)
+            placeholder(R.drawable.loading)
+        }
+
 
     }
 
@@ -74,7 +72,7 @@ class GalleryAdapter(
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(
         itemView
     ) {
-//        val title: TextView = itemView.findViewById(R.id.gallery_image_title) as TextView
+        //        val title: TextView = itemView.findViewById(R.id.gallery_image_title) as TextView
         val image: ImageView = itemView.findViewById(R.id.gallery_image_view) as ImageView
 
     }
