@@ -43,7 +43,6 @@ class GalleryActivity : AppCompatActivity() {
         mContext = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery)
 
-
         val intent = intent
         folderName = intent.getStringExtra("folderName")
 
@@ -54,11 +53,20 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar!!.title = folderName
 
 
+        // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
+        recyclerview(getFolder(folderName))
+        if(photos.size == 0){
+            val intent = Intent(mContext, LaunchActivity::class.java)
+            intent.putExtra("folderName", folderName)
+            startActivity(intent)
+        }
+
+
         binding.newPhotoFab.setOnClickListener {
             val intent = Intent(mContext, LaunchActivity::class.java)
             intent.putExtra("folderName", folderName)
 
-            if(photos.size != 0) {
+            if (photos.size != 0) {
                 intent.putExtra("backgroundPhoto", photos[photos.size - 1])
             }
             startActivity(intent)
@@ -67,7 +75,6 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        Log.d(TAG, "onResume: started")
         recyclerview(getFolder(folderName))
         super.onResume()
     }
@@ -107,7 +114,7 @@ class GalleryActivity : AppCompatActivity() {
         )
         var files = directory.listFiles()
 
-        photos= ArrayList() // 파일 경로
+        photos = ArrayList() // 파일 경로
 
         for (f in files) {
             photos.add(Photo(f.absolutePath))
