@@ -55,7 +55,7 @@ class GalleryActivity : AppCompatActivity() {
 
         // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
         recyclerview(getFolder(folderName))
-        if(photos.size == 0){
+        if (photos.size == 0) {
             val intent = Intent(mContext, LaunchActivity::class.java)
             intent.putExtra("folderName", folderName)
             startActivity(intent)

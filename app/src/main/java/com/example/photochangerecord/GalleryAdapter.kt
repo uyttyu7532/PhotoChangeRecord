@@ -1,12 +1,16 @@
 package com.example.photochangerecord
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 
@@ -14,6 +18,7 @@ class GalleryAdapter(
     private val context: Context,
     private val folder: Folder
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
+
 
 
     interface ItemClick
@@ -54,8 +59,9 @@ class GalleryAdapter(
 
 //        holder.title.text = photo.absolute_file_path
 
+
         // TODO (데이터 바인딩..)
-        Glide.with(context).load(photo.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.ALL).dontAnimate().into(
+        Glide.with(context).load(photo.absolute_file_path).diskCacheStrategy(DiskCacheStrategy.ALL).dontAnimate().thumbnail(0.1f).into(
             holder.image
         )
 

@@ -169,13 +169,11 @@ class DetailActivity : AppCompatActivity() {
         //라이브 데이터 변경되면 실행
         positionViewModel.currentDetailPosition.observe(this,
             {
-                Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
-                    .into(binding.detailImageView)
                 detailSlider.bubbleText = (it + 1).toString()
 
                 Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
                     .diskCacheStrategy(
-                        DiskCacheStrategy.AUTOMATIC
+                        DiskCacheStrategy.ALL
                     ).dontAnimate()
                     .into(binding.detailImageView)
 
