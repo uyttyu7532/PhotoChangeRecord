@@ -17,6 +17,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
+import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
@@ -52,13 +53,13 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar!!.title = folderName
 
 
-        // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
-        recyclerview(getFolder(folderName))
-        if (photos.size == 0) {
-            val intent = Intent(mContext, LaunchActivity::class.java)
-            intent.putExtra("folderName", folderName)
-            startActivity(intent)
-        }
+//        // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
+//        recyclerview(getFolder(folderName))
+//        if (photos.size == 0) {
+//            val intent = Intent(mContext, LaunchActivity::class.java)
+//            intent.putExtra("folderName", folderName)
+//            startActivity(intent)
+//        }
 
 
         binding.newPhotoFab.setOnClickListener {
@@ -99,6 +100,9 @@ class GalleryActivity : AppCompatActivity() {
                     }
                 })
             }
+            R.id.action_rename_folder -> {
+                showRenameFolderDialog()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -121,6 +125,26 @@ class GalleryActivity : AppCompatActivity() {
         return Folder(folderName, photos)
     }
 
+    private fun renameFolder(folderName: String, newFolderName: String): Boolean {
+        val folder = File(
+            getExternalFilesDir(
+                Environment.DIRECTORY_DCIM
+            ).toString() + "/$folderName"
+        )
+
+        folder.renameTo(
+            File(
+                getExternalFilesDir(
+                    Environment.DIRECTORY_DCIM
+                ).toString() + "/$newFolderName"
+            )
+        )
+
+        recyclerview(getFolder(newFolderName))
+
+        return true
+    }
+
 
     private fun deleteFolder(folderName: String): Boolean {
         val deleteFolder = File(
@@ -132,13 +156,45 @@ class GalleryActivity : AppCompatActivity() {
         if (deleteFolder.exists()) {
             val deleteFolderList = deleteFolder.listFiles()
             for (j in deleteFolderList.indices) {
+                Log.d(TAG, "deleteFolder: $j 파일삭제 ")
                 deleteFolderList[j].delete()
             }
-            if (deleteFolderList.isEmpty() && deleteFolder.isDirectory) {
-                deleteFolder.delete()
-            }
+            deleteFolder.delete()
         }
         return true
+    }
+
+
+    private fun showRenameFolderDialog() {
+        val binding: AddFolderDialogBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(this),
+            R.layout.add_folder_dialog,
+            null,
+            false
+        )
+
+        binding.dialogAgreeBtn.text = "RENAME"
+
+        val dialog = Dialog(this)
+
+        binding.dialogAgreeBtn.setOnClickListener {
+            var newFolderName = binding.dialogEt.text.toString()
+            if (renameFolder(folderName, newFolderName)) {
+                recyclerview(getFolder(newFolderName))
+                supportActionBar!!.title = newFolderName
+                dialog.dismiss()
+            } else {
+                toast("Check Your Folder Name!")
+            }
+        }
+
+        binding.dialogDisagreeBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(binding.root)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 
     private fun showDeleteFolderDialog(callback: (Boolean) -> Unit) {
@@ -177,8 +233,6 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     private fun recyclerview(folder: Folder) {
-
-
         val adapter = GalleryAdapter(mContext, folder)
 //        adapter.setHasStableIds(true)
         adapter.itemClick = object : GalleryAdapter.ItemClick {
@@ -189,8 +243,6 @@ class GalleryActivity : AppCompatActivity() {
                 intent.putExtra("folder", folder)
                 intent.putExtra("position", position)
                 startActivity(intent)
-
-
             }
         }
 

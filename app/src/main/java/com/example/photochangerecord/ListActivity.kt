@@ -25,7 +25,7 @@ import java.io.File
 
 class ListActivity : AppCompatActivity() {
     private var mContext: Context? = null
-//    private val folderList: ArrayList<Folder> = ArrayList()
+    private var filesNameList: ArrayList<String> = ArrayList()
 
     companion object {
         private const val TAG = "ListActivity"
@@ -57,7 +57,10 @@ class ListActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        recyclerview(getFolderName())
+        var foldernames = getFolderName()
+        Log.d(TAG, "onResume: $foldernames")
+        recyclerview(foldernames)
+        
         super.onResume()
     }
 
@@ -68,13 +71,15 @@ class ListActivity : AppCompatActivity() {
                 Environment.DIRECTORY_DCIM
             ).toString()
         )
-        var files = directory.listFiles();
+        var files = directory.listFiles()
 
-        var filesNameList: ArrayList<String> = ArrayList()
+        filesNameList = ArrayList()
+        Log.d(TAG, "getFolderName: $filesNameList")
 
         for (f in files) {
             filesNameList.add(f.name)
         }
+        Log.d(TAG, "getFolderName: $filesNameList")
 
         return filesNameList
 
@@ -137,14 +142,11 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun recyclerview(folderNameList: ArrayList<String>) {
-
-
         val adapter = VerticalAdapter(mContext!!, folderNameList)
         adapter.itemClick = object : VerticalAdapter.ItemClick {
             override fun onClick(view: View, position: Int, folderName: String) {
                 Log.d(TAG, "onClick: $position clicked")
 
-                // GalleryActivity에서 업데이트 될 수도 있으니까
                 val intent = Intent(mContext, GalleryActivity::class.java)
                 intent.putExtra("folderName", folderName)
                 startActivity(intent)

@@ -16,7 +16,6 @@ class GalleryAdapter(
 
 
     interface ItemClick {
-        // TODO photo는 나중에 안 보내도 될듯 (photo -> folderName과 position)
         fun onClick(view: View, position: Int, folder: Folder)
     }
 
