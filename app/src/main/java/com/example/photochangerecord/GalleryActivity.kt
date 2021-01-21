@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
@@ -54,12 +56,15 @@ class GalleryActivity : AppCompatActivity() {
 
 
 //        // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
-//        recyclerview(getFolder(folderName))
 //        if (photos.size == 0) {
-//            val intent = Intent(mContext, LaunchActivity::class.java)
-//            intent.putExtra("folderName", folderName)
-//            startActivity(intent)
+////            val intent = Intent(mContext, LaunchActivity::class.java)
+////            intent.putExtra("folderName", folderName)
+////            startActivity(intent)
+//            binding.noImageFrameLayout.visibility = VISIBLE
+//        }else{
+//            binding.noImageFrameLayout.visibility = GONE
 //        }
+
 
 
         binding.newPhotoFab.setOnClickListener {
@@ -76,6 +81,7 @@ class GalleryActivity : AppCompatActivity() {
 
     override fun onResume() {
         recyclerview(getFolder(folderName))
+        Log.d(TAG, "onResume: started")
         super.onResume()
     }
 
@@ -122,6 +128,14 @@ class GalleryActivity : AppCompatActivity() {
         for (f in files) {
             photos.add(Photo(f.absolutePath))
         }
+
+        // 폴더에 저장된 사진이 없다면 no image 표시
+        if (photos.size == 0) {
+            binding.noImageFrameLayout.visibility = VISIBLE
+        }else{
+            binding.noImageFrameLayout.visibility = GONE
+        }
+
         return Folder(folderName, photos)
     }
 
@@ -260,6 +274,7 @@ class GalleryActivity : AppCompatActivity() {
                 binding.newPhotoFab.show()
             }
         })
+
 
     }
 

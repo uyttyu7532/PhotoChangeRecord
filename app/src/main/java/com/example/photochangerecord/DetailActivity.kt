@@ -5,11 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.util.Range
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import coil.load
@@ -19,10 +18,8 @@ import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.PositionViewModel
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
-import com.ramotion.fluidslider.FluidSlider
 import splitties.toast.toast
 import java.io.File
-import kotlin.math.floor
 
 
 class DetailActivity : AppCompatActivity() {
@@ -68,22 +65,29 @@ class DetailActivity : AppCompatActivity() {
 //        detailSlider.startText = ""
 //        detailSlider.endText = ""
 
-        detailSlider.setIndicatorTextDecimalFormat("0")
-        detailSlider.steps = folderSize-1
-        detailSlider.setRange(0.0f, (folderSize-1).toFloat(),1.0f)
-        detailSlider.setProgress((receivedPosition).toFloat())
-
-
 
 //        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
 //            .into(binding.detailImageView)
 
         binding.detailImageView.load(File(receiveFolder.photos[receivedPosition].absolute_file_path))
 
-
-
         setSlider()
 
+    }
+
+    override fun onResume() {
+
+        if (receiveFolder.photos.size == 1) {
+            detailSlider.visibility = INVISIBLE
+        } else {
+            detailSlider.visibility = VISIBLE
+            detailSlider.setIndicatorTextDecimalFormat("0")
+            detailSlider.steps = folderSize - 1
+            detailSlider.setRange(0.0f, (folderSize - 1).toFloat())
+            detailSlider.setProgress((receivedPosition).toFloat())
+        }
+
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -126,6 +130,7 @@ class DetailActivity : AppCompatActivity() {
         val f = File(filePath)
         return f.delete()
     }
+
 
     private fun showDeletePhotoDialog(callback: (Boolean) -> Unit) {
         val binding: DeleteFolderDialogBinding = DataBindingUtil.inflate(
