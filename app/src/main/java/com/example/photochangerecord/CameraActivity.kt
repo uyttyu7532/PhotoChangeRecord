@@ -26,6 +26,8 @@ import coil.load
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
 import com.example.photochangerecord.viewmodel.Photo
+import com.jaygoo.widget.OnRangeChangedListener
+import com.jaygoo.widget.RangeSeekBar
 import splitties.toast.toast
 import java.io.File
 import java.io.FileOutputStream
@@ -117,12 +119,17 @@ class CameraActivity : AppCompatActivity() {
 
         if (backgroundPhoto == null) {
             binding.alphaBackgroundImageSlider.visibility = INVISIBLE
-        }else{
+        } else {
             binding.alphaBackgroundImage.load(File(backgroundPhoto?.absolute_file_path))
         }
 
-        binding.alphaBackgroundImageSlider.position =
-            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
+//        binding.alphaBackgroundImageSlider.position =
+//            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
+
+        binding.alphaBackgroundImageSlider.setIndicatorTextDecimalFormat("0")
+        binding.alphaBackgroundImageSlider.setProgress(
+            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)*100
+        )
 
 
         // 의문: binding.alphaBackgroundImageSlider vs alphaBackgroundImageSlider 무슨 차이가 있는거지?
@@ -131,10 +138,31 @@ class CameraActivity : AppCompatActivity() {
 
         // 새로운 의문: 코틀린에서는 원래 안해도 됐잖아?
         // 해결: 맞다. 근데 코틀린 안드로이드 익스텐션이 2021년에 종료된다고 한다.
-        binding.alphaBackgroundImageSlider.positionListener = {
-//            Log.d(TAG, "onCreate: $it")
-            viewModel.updateValue(it)
-        }
+//        binding.alphaBackgroundImageSlider.positionListener = {
+////            Log.d(TAG, "onCreate: $it")
+//            viewModel.updateValue(it)
+//        }
+
+        binding.alphaBackgroundImageSlider.setOnRangeChangedListener(object :
+            OnRangeChangedListener {
+            override fun onRangeChanged(
+                rangeSeekBar: RangeSeekBar,
+                leftValue: Float,
+                rightValue: Float,
+                isFromUser: Boolean
+            ) {
+                viewModel.updateValue(leftValue / 100)
+            }
+
+            override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
+
+            }
+
+            override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
+
+            }
+
+        })
 
         Log.d(TAG, "onCreate: ${folderName}")
         Log.d(TAG, "onCreate: ${backgroundPhoto?.absolute_file_path}")
@@ -143,7 +171,6 @@ class CameraActivity : AppCompatActivity() {
 //            .dontAnimate().into(
 //                binding.alphaBackgroundImage
 //            )
-
 
 
         binding.btnHome.setOnClickListener {
@@ -157,6 +184,8 @@ class CameraActivity : AppCompatActivity() {
                     bitmap!!,
                     folderName!!
                 )
+
+
             }
         }
     }

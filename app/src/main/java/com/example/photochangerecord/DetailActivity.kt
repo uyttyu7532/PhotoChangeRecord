@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.util.Range
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +17,8 @@ import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.PositionViewModel
+import com.jaygoo.widget.OnRangeChangedListener
+import com.jaygoo.widget.RangeSeekBar
 import com.ramotion.fluidslider.FluidSlider
 import splitties.toast.toast
 import java.io.File
@@ -28,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailSlider: FluidSlider
+    private lateinit var detailSlider: RangeSeekBar
     private lateinit var receiveFolder: Folder
     private var receivedPosition = 0
     private var folderSize = 0
@@ -57,12 +61,18 @@ class DetailActivity : AppCompatActivity() {
         receivedPosition = intent.getIntExtra("position", 0)
 
         folderSize = receiveFolder.photos.size
-        positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
+//        positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
 
-        detailSlider.position = positionFloat
-        detailSlider.bubbleText = (receivedPosition + 1).toString()
-        detailSlider.startText = ""
-        detailSlider.endText = ""
+//        detailSlider.position = positionFloat
+//        detailSlider.bubbleText = (receivedPosition + 1).toString()
+//        detailSlider.startText = ""
+//        detailSlider.endText = ""
+
+        detailSlider.setIndicatorTextDecimalFormat("0")
+        detailSlider.steps = folderSize-1
+        detailSlider.setRange(0.0f, (folderSize-1).toFloat(),1.0f)
+        detailSlider.setProgress((receivedPosition).toFloat())
+
 
 
 //        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
@@ -153,12 +163,37 @@ class DetailActivity : AppCompatActivity() {
     private fun setSlider() {
         val positionViewModel = PositionViewModel()
 
-        detailSlider.positionListener = {
-            var currentPosition = floor(it * (folderSize - 1)).toInt()
+//        detailSlider.positionListener = {
+//            var currentPosition = floor(it * (folderSize - 1)).toInt()
+//
+//            // 라이브 데이터 변경
+//            positionViewModel.updatePosition(currentPosition)
+//        }
 
-            // 라이브 데이터 변경
-            positionViewModel.updatePosition(currentPosition)
-        }
+        detailSlider.setOnRangeChangedListener(object :
+            OnRangeChangedListener {
+            override fun onRangeChanged(
+                rangeSeekBar: RangeSeekBar,
+                leftValue: Float,
+                rightValue: Float,
+                isFromUser: Boolean
+            ) {
+                var currentPosition = leftValue
+
+                // 라이브 데이터 변경
+                positionViewModel.updatePosition(currentPosition.toInt())
+            }
+
+            override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
+
+            }
+
+            override fun onStopTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {
+
+            }
+
+        })
+
 
 //        // end시점으로 가장 가까운 위치로 이동 (근데 생각보다 애니메이션이 별로임)
 //        detailSlider.endTrackingListener = {
@@ -171,17 +206,11 @@ class DetailActivity : AppCompatActivity() {
         //라이브 데이터 변경되면 실행
         positionViewModel.currentDetailPosition.observe(this,
             {
-                detailSlider.bubbleText = (it + 1).toString()
-
-//                Glide.with(this).load(receiveFolder.photos[it].absolute_file_path)
-//                    .diskCacheStrategy(
-//                        DiskCacheStrategy.ALL
-//                    ).dontAnimate()
-//                    .into(binding.detailImageView)
+//                detailSlider.bubbleText = (it + 1).toString()
+//                binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
+//                detailSlider.bubbleText = (it + 1).toString()
 
                 binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
-
-                detailSlider.bubbleText = (it + 1).toString()
 
             })
     }

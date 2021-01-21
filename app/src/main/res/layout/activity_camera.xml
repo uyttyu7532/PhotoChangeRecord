@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
@@ -13,15 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <FrameLayout
-            android:layout_above="@+id/alpha_background_image_slider"
             android:id="@+id/camera_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <SurfaceView
-            android:id="@+id/surfaceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <SurfaceView
+                android:id="@+id/surfaceView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/alpha_background_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:alpha="@{viewModel.imageAlpha}"/>
+
         </FrameLayout>
 
         <ImageView
@@ -47,26 +57,46 @@
             android:src="@drawable/ic_baseline_flip_camera_android_24"
             app:tint="#ffffff" />
 
-        <ImageView
-            android:layout_above="@+id/alpha_background_image_slider"
-            android:id="@+id/alpha_background_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:alpha="@{viewModel.imageAlpha}"
-            android:scaleType="centerInside" />
 
-        <com.ramotion.fluidslider.FluidSlider
+        <!--        <com.ramotion.fluidslider.FluidSlider-->
+        <!--            android:id="@+id/alpha_background_image_slider"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_above="@+id/camera_btn" />-->
+
+        <com.jaygoo.widget.VerticalRangeSeekBar
+            android:layout_above="@+id/camera_btn"
             android:id="@+id/alpha_background_image_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/camera_btn" />
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingTop="10dp"
+            app:rsb_gravity="bottom"
+            android:layout_marginTop="160dp"
+            android:layout_marginBottom="160dp"
+            app:rsb_indicator_background_color="#8BC3C3C3"
+            app:rsb_indicator_padding_bottom="10dp"
+            app:rsb_indicator_padding_left="10dp"
+            app:rsb_indicator_padding_right="10dp"
+            app:rsb_indicator_padding_top="10dp"
+            app:rsb_indicator_radius="10dp"
+            app:rsb_indicator_show_mode="showWhenTouch"
+            app:rsb_indicator_text_orientation="vertical"
+            app:rsb_indicator_width="wrap_content"
+            app:rsb_mode="single"
+            app:rsb_orientation="left"
+            app:rsb_progress_color="#8D6200EE"
+            app:rsb_progress_default_color="#8BC3C3C3"
+            app:rsb_thumb_drawable="@drawable/ic_baseline_fiber_manual_record_24"
+            app:rsb_thumb_scale_ratio="1.2"
+            app:rsb_tick_mark_mode="number" />
 
         <RelativeLayout
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/camera_frame_layout"
             android:id="@+id/camera_btn"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true">
 

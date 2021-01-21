@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
 
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -75,6 +74,8 @@ dependencies {
     // https://github.com/Ramotion/fluid-slider-android
     implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1'
 
+    implementation 'com.github.Jay-Goo:RangeSeekBar:3.0.0'
+
     // cardview
     implementation "com.google.android.material:material:1.2.0"
 
@@ -94,5 +95,6 @@ dependencies {
 
     // lottie
     implementation 'com.airbnb.android:lottie:3.6.0'
+
 
 }
