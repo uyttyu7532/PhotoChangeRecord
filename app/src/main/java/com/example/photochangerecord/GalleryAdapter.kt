@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import coil.load
 import com.example.photochangerecord.viewmodel.Folder
 import java.io.File
@@ -48,7 +49,7 @@ class GalleryAdapter(
         val photo = folder.photos[position]
 
 
-//        holder.title.text = photo.absolute_file_path
+        holder.title.text = photo.absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
 
 
         // TODO (데이터 바인딩..)
@@ -71,7 +72,7 @@ class GalleryAdapter(
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(
         itemView
     ) {
-        //        val title: TextView = itemView.findViewById(R.id.gallery_image_title) as TextView
+        val title: TextView = itemView.findViewById(R.id.gallery_image_title) as TextView
         val image: ImageView = itemView.findViewById(R.id.gallery_image_view) as ImageView
 
     }

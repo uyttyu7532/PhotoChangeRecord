@@ -2,8 +2,11 @@ package com.example.photochangerecord
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Bitmap.createScaledBitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.hardware.Sensor
 import android.hardware.SensorManager
@@ -41,6 +44,7 @@ class CameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraBinding // Build->Rebuild Project 할때 생성된다고 함!(어쩐지)
     private lateinit var viewModel: CameraBackGroundViewModel
+    private lateinit var folderName: String
 
     private lateinit var mContext: Context
 
@@ -62,6 +66,8 @@ class CameraActivity : AppCompatActivity() {
 
     private var realHeight: Int = 0
     private var realWidth: Int = 0
+
+    private var capturedBitmap: Bitmap? = null
 
     var mCameraId = CAMERA_BACK
 
@@ -88,7 +94,7 @@ class CameraActivity : AppCompatActivity() {
         mContext = this
 
         val intent = intent
-        var folderName: String? = intent.getStringExtra("folderName")
+        folderName = intent.getStringExtra("folderName")
         var backgroundPhoto: Photo? = intent.getParcelableExtra("backgroundPhoto")
 
 
@@ -128,7 +134,7 @@ class CameraActivity : AppCompatActivity() {
 
         binding.alphaBackgroundImageSlider.setIndicatorTextDecimalFormat("0")
         binding.alphaBackgroundImageSlider.setProgress(
-            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)*100
+            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f) * 100
         )
 
 
@@ -179,17 +185,56 @@ class CameraActivity : AppCompatActivity() {
 
         binding.cameraBtn.setOnClickListener {
             // 사진 확인 화면 -> 해당 폴더에 저장하기
+
             getBitMapFromSurfaceView(binding.surfaceView) { bitmap ->
-                persistImage(
-                    bitmap!!,
-                    folderName!!
+
+                capturedBitmap = bitmap
+
+                var h = binding.surfaceView.height
+                var w = binding.surfaceView.width
+
+                Log.d(TAG, "onCreate: 세로$h 가로$w")
+
+                var thumbnail = createScaledBitmap(bitmap!!, w/4 , h/4, true)
+
+                val intent = Intent(this, CameraResultActivity::class.java)
+                intent.putExtra("folderName", folderName)
+                intent.putExtra(
+                    "thumbnailBitmap",
+                    thumbnail
                 )
+                startActivityForResult(intent, 100)
+
+//                persistImage(
+//                    bitmap!!,
+//                    folderName!!
+//                )
 
 
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100) {
+            when (resultCode) {
+                RESULT_OK -> {
+
+                    persistImage(
+                        capturedBitmap!!,
+                        folderName!!
+                    )
+
+                    finish()
+                }
+                RESULT_CANCELED -> {
+
+                }
+            }
+        }
+    }
 
     /**
      * Pixel copy to copy SurfaceView/VideoView into BitMap

@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CameraResultActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linear_btn"/>
+        tools:context=".CameraResultActivity">
 
-    <LinearLayout
-        android:id="@+id/linear_btn"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/linear_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground">
+            android:layout_below="@+id/result_image"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Retry" />
-        </RelativeLayout>
+                android:layout_weight="1">
 
-        <RelativeLayout
+                <TextView
+                    android:id="@+id/cancel_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:text="Retry" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/ok_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:text="OK" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:id="@+id/result_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:backgroundTint="@color/colorPrimary" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="OK" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
