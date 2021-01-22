@@ -155,7 +155,7 @@ class ListActivity : AppCompatActivity() {
 //            override fun addBtnOnClick(view: View, position: Int, folderName: String) {
 //                val intent = Intent(mContext, LaunchActivity::class.java)
 //                intent.putExtra("folderName", folderName)
-//                // TODO                     intent.putExtra("backgroundPhoto", backgroundPhoto)
+//                // intent.putExtra("backgroundPhoto", backgroundPhoto)
 //                startActivity(intent)
 //            }
         }

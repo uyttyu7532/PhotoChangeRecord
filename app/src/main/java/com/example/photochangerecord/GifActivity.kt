@@ -1,22 +1,30 @@
 package com.example.photochangerecord
 
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import coil.load
 import com.example.photochangerecord.databinding.ActivityGifBinding
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import java.io.File
+import java.io.FileOutputStream
+import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class GifActivity : AppCompatActivity() {
 
@@ -66,15 +74,16 @@ class GifActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_save -> {
-
+                // TODO gif로 저장
             }
             R.id.action_share -> {
-
+                // TODO 공유
             }
 
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun changeGif() {
         val gifSlider = binding.gifSlider

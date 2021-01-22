@@ -32,9 +32,9 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var detailSlider: RangeSeekBar
     private lateinit var receiveFolder: Folder
-    private var receivedPosition = 0
+    private var currentPosition = 0
     private var folderSize = 0
-    private var positionFloat = 0.0f
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +46,13 @@ class DetailActivity : AppCompatActivity() {
         val intent = intent
         // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
         receiveFolder = intent.getParcelableExtra("folder")
-        receivedPosition = intent.getIntExtra("position", 0)
+        currentPosition = intent.getIntExtra("position", 0)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.elevation = 0.0f
-        supportActionBar!!.title = receiveFolder.photos[receivedPosition].absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
+        supportActionBar!!.title = receiveFolder.photos[currentPosition].absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
 
         detailSlider = binding.detailSlider
 
@@ -71,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
 //        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
 //            .into(binding.detailImageView)
 
-        binding.detailImageView.load(File(receiveFolder.photos[receivedPosition].absolute_file_path))
+        binding.detailImageView.load(File(receiveFolder.photos[currentPosition].absolute_file_path))
 
         setSlider()
 
@@ -86,7 +86,7 @@ class DetailActivity : AppCompatActivity() {
             detailSlider.setIndicatorTextDecimalFormat("0")
             detailSlider.steps = folderSize - 1
             detailSlider.setRange(0.0f, (folderSize - 1).toFloat())
-            detailSlider.setProgress((receivedPosition).toFloat())
+            detailSlider.setProgress((currentPosition).toFloat())
         }
 
         super.onResume()
@@ -108,7 +108,7 @@ class DetailActivity : AppCompatActivity() {
                 intent.putExtra("folderName", receiveFolder.title)
                 intent.putExtra(
                     "backgroundPhoto",
-                    receiveFolder.photos[receivedPosition]
+                    receiveFolder.photos[currentPosition]
                 )
                 startActivity(intent)
                 finish()
@@ -145,11 +145,12 @@ class DetailActivity : AppCompatActivity() {
         val dialog = Dialog(this)
 
         binding.deleteFolderDialogTextView.text =
-            "Are you sure you want to permanently delete this photo?"
+            "Are you sure you want to permanently delete this photo? "
+        binding.deleteFileName.text = receiveFolder.photos[currentPosition].absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
 
         binding.dialogAgreeBtn.setOnClickListener {
 
-            if (deletePhoto(receiveFolder.photos[receivedPosition].absolute_file_path)) {
+            if (deletePhoto(receiveFolder.photos[currentPosition].absolute_file_path)) {
                 callback(true)
                 dialog.dismiss()
             } else {
@@ -185,10 +186,10 @@ class DetailActivity : AppCompatActivity() {
                 rightValue: Float,
                 isFromUser: Boolean
             ) {
-                var currentPosition = leftValue
+                currentPosition = leftValue.toInt()
 
                 // 라이브 데이터 변경
-                positionViewModel.updatePosition(currentPosition.toInt())
+                positionViewModel.updatePosition(currentPosition)
             }
 
             override fun onStartTrackingTouch(view: RangeSeekBar?, isLeft: Boolean) {

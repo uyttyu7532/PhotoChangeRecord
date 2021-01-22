@@ -11,7 +11,6 @@ import com.example.photochangerecord.MyApplication
 //    MINUS
 //}
 
-// TODO 선택한 이미지도 나중에 여기에 저장해서 카메라 배경으로 보여주면 되겠다
 class CameraBackGroundViewModel : ViewModel() {
 
     // 뮤터블 라이브 데이터 - 수정 가능
