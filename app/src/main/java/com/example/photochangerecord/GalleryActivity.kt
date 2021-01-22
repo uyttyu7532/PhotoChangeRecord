@@ -141,7 +141,7 @@ class GalleryActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this, GifActivity::class.java)
-        intent.putExtra("folderPathList",folderPathList)
+        intent.putExtra("folderPathList", folderPathList)
         startActivity(intent)
 
 
@@ -173,11 +173,11 @@ class GalleryActivity : AppCompatActivity() {
         return Folder(folderName, photos)
     }
 
-    private fun renameFolder(folderName: String, newFolderName: String): Boolean {
+    private fun renameFolder(oldFolderName: String, newFolderName: String): Boolean {
         val folder = File(
             getExternalFilesDir(
                 Environment.DIRECTORY_DCIM
-            ).toString() + "/$folderName"
+            ).toString() + "/$oldFolderName"
         )
 
         folder.renameTo(
@@ -188,7 +188,11 @@ class GalleryActivity : AppCompatActivity() {
             )
         )
 
+        folderName = newFolderName
         recyclerview(getFolder(newFolderName))
+        toast("Rename Success")
+
+        finish()
 
         return true
     }
@@ -220,6 +224,8 @@ class GalleryActivity : AppCompatActivity() {
             null,
             false
         )
+
+        binding.dialogEt.setText(folderName)
 
         binding.dialogAgreeBtn.text = "RENAME"
 
