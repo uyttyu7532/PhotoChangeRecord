@@ -4,4 +4,13 @@
     <string name="new_folder">New Folder</string>
     <string name="dialog_agree">CREATE</string>
     <string name="dialog_disagree">CANCEL</string>
+
+    <string-array name="gif_marker">
+        <item name="marker1">1x</item>
+        <item name="marker2">2x</item>
+        <item name="marker3">3x</item>
+        <item name="marker4">4x</item>
+        <item name="marker3">5x</item>
+        <item name="marker4">6x</item>
+    </string-array>
 </resources>

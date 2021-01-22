@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".GifActivity">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/imageanim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/detail_slider"
+                android:layout_below="@+id/toolbar" />
+
+            <com.jaygoo.widget.RangeSeekBar
+                android:id="@+id/gif_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
+                app:rsb_gravity="bottom"
+                app:rsb_indicator_background_color="#8BC3C3C3"
+                app:rsb_indicator_padding_bottom="10dp"
+                app:rsb_indicator_padding_left="10dp"
+                app:rsb_indicator_padding_right="10dp"
+                app:rsb_indicator_padding_top="10dp"
+                app:rsb_indicator_radius="10dp"
+                app:rsb_indicator_show_mode="alwaysHide"
+                app:rsb_indicator_text_orientation="horizontal"
+                app:rsb_indicator_width="wrap_content"
+                app:rsb_mode="single"
+                app:rsb_orientation="left"
+                app:rsb_progress_color="#8D6200EE"
+                app:rsb_progress_default_color="#8BC3C3C3"
+                app:rsb_step_auto_bonding="true"
+                app:rsb_step_color="#8BC3C3C3"
+                app:rsb_step_height="10dp"
+                app:rsb_step_radius="5dp"
+                app:rsb_step_width="10dp"
+                app:rsb_thumb_scale_ratio="1.2"
+                app:rsb_tick_mark_mode="other"
+                app:rsb_tick_mark_text_array="@array/gif_marker"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

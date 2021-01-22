@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -42,20 +43,21 @@ class DetailActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
+        val intent = intent
+        // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
+        receiveFolder = intent.getParcelableExtra("folder")
+        receivedPosition = intent.getIntExtra("position", 0)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.elevation = 0.0f
-        supportActionBar!!.title = ""
+        supportActionBar!!.title = receiveFolder.photos[receivedPosition].absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
 
         detailSlider = binding.detailSlider
 
 
-        val intent = intent
-        // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
-        receiveFolder = intent.getParcelableExtra("folder")
-        receivedPosition = intent.getIntExtra("position", 0)
+
 
         folderSize = receiveFolder.photos.size
 //        positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
@@ -216,6 +218,9 @@ class DetailActivity : AppCompatActivity() {
 //                detailSlider.bubbleText = (it + 1).toString()
 
                 binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
+                supportActionBar!!.title =
+                    receiveFolder.photos[it].absolute_file_path.substringAfterLast("/")
+                        .substringBeforeLast(".jpg")
 
             })
     }

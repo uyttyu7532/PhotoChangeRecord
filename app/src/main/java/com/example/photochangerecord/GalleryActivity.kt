@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -32,6 +33,8 @@ class GalleryActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "GalleryActivity"
     }
+
+    var isAllImageToGif = true // 전체사진을 gif로 만들것인지, 다중선택할 것인지
 
     private lateinit var binding: ActivityGalleryBinding
     private lateinit var mContext: Context
@@ -64,7 +67,6 @@ class GalleryActivity : AppCompatActivity() {
 //        }else{
 //            binding.noImageFrameLayout.visibility = GONE
 //        }
-
 
 
         binding.newPhotoFab.setOnClickListener {
@@ -109,8 +111,40 @@ class GalleryActivity : AppCompatActivity() {
             R.id.action_rename_folder -> {
                 showRenameFolderDialog()
             }
+            R.id.action_generate_gif -> {
+                getImagePathToGif(isAllImageToGif)
+
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getImagePathToGif(isAllImageToGif: Boolean) {
+        val folderPathList = ArrayList<String>()
+
+        // 전체
+        if (isAllImageToGif) {
+            val folder = File(
+                getExternalFilesDir(
+                    Environment.DIRECTORY_DCIM
+                ).toString() + "/$folderName"
+            )
+
+            val folderList = folder.listFiles()
+
+            for (j in folderList.indices) {
+                folderPathList.add(folderList[j].absolutePath)
+            }
+
+        } else {
+            // TODO 다중 선택한 파일의 절대경로를 folderPathList에 담기
+        }
+
+        val intent = Intent(this, GifActivity::class.java)
+        intent.putExtra("folderPathList",folderPathList)
+        startActivity(intent)
+
+
     }
 
 
@@ -132,7 +166,7 @@ class GalleryActivity : AppCompatActivity() {
         // 폴더에 저장된 사진이 없다면 no image 표시
         if (photos.size == 0) {
             binding.noImageFrameLayout.visibility = VISIBLE
-        }else{
+        } else {
             binding.noImageFrameLayout.visibility = GONE
         }
 

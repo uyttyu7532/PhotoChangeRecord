@@ -64,7 +64,7 @@
             app:rsb_step_radius="5dp"
             app:rsb_step_width="10dp"
             app:rsb_thumb_scale_ratio="1.2"
-            app:rsb_tick_mark_mode="number" />
+            app:rsb_tick_mark_mode="number"/>
 
     </RelativeLayout>
 </layout>

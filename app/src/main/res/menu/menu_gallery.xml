@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu  xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <item android:id="@+id/action_btn1"-->
-<!--        android:title="버튼1"-->
-<!--        app:showAsAction="always" />-->
-<!--    <item android:id="@+id/action_btn2"-->
-<!--        android:title="버튼2"-->
-<!--        app:showAsAction="never" />-->
-<!--    <item android:id="@+id/action_btn3"-->
-<!--        android:text="action_btn3"-->
-<!--        android:title="버튼3"-->
-<!--        app:showAsAction="collapseActionView" />-->
+    <!--    <item android:id="@+id/action_btn1"-->
+    <!--        android:title="버튼1"-->
+    <!--        app:showAsAction="always" />-->
+    <!--    <item android:id="@+id/action_btn2"-->
+    <!--        android:title="버튼2"-->
+    <!--        app:showAsAction="never" />-->
+    <!--    <item android:id="@+id/action_btn3"-->
+    <!--        android:text="action_btn3"-->
+    <!--        android:title="버튼3"-->
+    <!--        app:showAsAction="collapseActionView" />-->
 
-    <item android:id="@+id/action_rename_folder"
-        android:title="renameFolder"
+    <item
+        android:id="@+id/action_rename_folder"
         android:icon="@drawable/ic_baseline_create_24"
-        app:showAsAction="ifRoom"/>
+        android:title="renameFolder"
+        app:showAsAction="collapseActionView" />
 
-    <item android:id="@+id/action_delete_folder"
-        android:title="deleteFolder"
+
+    <item
+        android:id="@+id/action_delete_folder"
         android:icon="@drawable/ic_baseline_delete_outline_24"
-        app:showAsAction="ifRoom"/>
+        android:title="deleteFolder"
+        app:showAsAction="withText" />
 
-<!--    <item android:id="@+id/action_btn5"-->
-<!--        android:title="버튼5"-->
-<!--        app:showAsAction="withText"/>-->
+    <item
+        android:id="@+id/action_generate_gif"
+        android:icon="@drawable/ic_baseline_gif_24"
+        android:title="generateGif"
+        app:showAsAction="ifRoom" />
+
+    <!--    <item android:id="@+id/action_btn5"-->
+    <!--        android:title="버튼5"-->
+    <!--        app:showAsAction="withText"/>-->
 
 </menu>
