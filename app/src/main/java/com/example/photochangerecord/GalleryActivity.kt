@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -23,7 +22,6 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
