@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -17,7 +15,7 @@ import java.io.File
 class GalleryAdapter : ListAdapter<Folder, GalleryAdapter.GalleryViewHolder>(MyDiffCallback) {
 
     var folder: Folder? = null
-    var tracker: SelectionTracker<Long>? = null
+//    var tracker: SelectionTracker<Long>? = null
     var itemClick: ItemClick? = null
 
     interface ItemClick {
@@ -92,15 +90,17 @@ class GalleryAdapter : ListAdapter<Folder, GalleryAdapter.GalleryViewHolder>(MyD
 
         val photo = folder!!.photos[position]
 
-        tracker?.let {
-            holder.bind(photo, it.isSelected(position.toLong()))
-        }
+        holder.bind(photo)
+
+//        tracker?.let {
+//            holder.bind(photo, it.isSelected(position.toLong()))
+//        }
     }
 
     inner class GalleryViewHolder(private val binding: ItemGalleryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         // 그냥 View하고 데이터 연결하는 거 생각하면 됩니다
-        fun bind(photo: Photo, isActivated: Boolean = false) {
+        fun bind(photo: Photo) {
             binding.galleryImageTitle.text =
                 photo.absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
             binding.galleryImageView.load(File(photo.absolute_file_path)) {
@@ -108,14 +108,14 @@ class GalleryAdapter : ListAdapter<Folder, GalleryAdapter.GalleryViewHolder>(MyD
                 crossfade(200)
                 placeholder(R.drawable.loading)
             }
-            itemView.isActivated = isActivated
+//            itemView.isActivated = isActivated
         }
 
-        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
-            object : ItemDetailsLookup.ItemDetails<Long>() {
-                override fun getPosition(): Int = adapterPosition
-                override fun getSelectionKey(): Long? = itemId
-            }
+//        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+//            object : ItemDetailsLookup.ItemDetails<Long>() {
+//                override fun getPosition(): Int = adapterPosition
+//                override fun getSelectionKey(): Long? = itemId
+//            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {

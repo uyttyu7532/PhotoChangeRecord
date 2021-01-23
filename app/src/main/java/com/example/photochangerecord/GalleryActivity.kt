@@ -17,10 +17,6 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
@@ -44,7 +40,7 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var folderName: String
 
     private var photos: ArrayList<Photo> = ArrayList()
-    private var tracker: SelectionTracker<Long>? = null
+//    private var tracker: SelectionTracker<Long>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -313,18 +309,19 @@ class GalleryActivity : AppCompatActivity() {
         adapter.folder = getFolder(folderName)
         adapter.notifyDataSetChanged()
 
-        // adpater를 먼저 연결해야 한다.
-        tracker = SelectionTracker.Builder(
-            "GalleryActivity",
-            recyclerView,
-            StableIdKeyProvider(recyclerView),
-            MyItemDetailsLookup(recyclerView),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build()
 
-        adapter.tracker = tracker
+//        // adpater를 먼저 연결해야 한다.
+//        tracker = SelectionTracker.Builder(
+//            "GalleryActivity",
+//            recyclerView,
+//            StableIdKeyProvider(recyclerView),
+//            MyItemDetailsLookup(recyclerView), // motionEvent로 접근
+//            StorageStrategy.createLongStorage() // Long Key
+//        ).withSelectionPredicate(
+//            SelectionPredicates.createSelectAnything() // 다중 선택
+//        ).build()
+//
+//        adapter.tracker = tracker
 
 
         val nsv: NestedScrollView = binding.nestedScrollViewGallery
@@ -338,5 +335,4 @@ class GalleryActivity : AppCompatActivity() {
 
 
     }
-
 }
