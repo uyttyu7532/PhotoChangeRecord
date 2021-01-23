@@ -68,12 +68,12 @@ class GifActivity : AppCompatActivity() {
                 this.onBackPressed()
                 return true
             }
-            R.id.action_save -> {
-                // TODO gif로 저장
-            }
-            R.id.action_share -> {
-                // TODO 공유
-            }
+//            R.id.action_save -> {
+//                // TODO gif로 저장
+//            }
+//            R.id.action_share -> {
+//                // TODO 공유
+//            }
 
         }
         return super.onOptionsItemSelected(item)

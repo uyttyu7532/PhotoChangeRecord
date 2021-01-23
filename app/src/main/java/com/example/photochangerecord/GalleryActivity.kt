@@ -113,7 +113,12 @@ class GalleryActivity : AppCompatActivity() {
                 showRenameFolderDialog()
             }
             R.id.action_generate_gif -> {
-                getImagePathToGif(isAllImageToGif)
+                if (photos.size != 0) {
+                    getImagePathToGif(isAllImageToGif)
+                } else {
+                    toast("2 or more photos are required")
+                }
+
 
             }
         }
