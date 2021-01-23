@@ -53,14 +53,13 @@ class ListActivity : AppCompatActivity() {
             showMakeFolderDialog()
         }
 
-
     }
 
     override fun onResume() {
         var foldernames = getFolderName()
         Log.d(TAG, "onResume: $foldernames")
         recyclerview(foldernames)
-        
+
         super.onResume()
     }
 
@@ -76,7 +75,7 @@ class ListActivity : AppCompatActivity() {
         filesNameList = ArrayList()
         Log.d(TAG, "getFolderName: $filesNameList")
 
-        for (f in files) {
+        for (f in files.sortedArray()) {
             filesNameList.add(f.name)
         }
         Log.d(TAG, "getFolderName: $filesNameList")
@@ -142,8 +141,10 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun recyclerview(folderNameList: ArrayList<String>) {
-        val adapter = VerticalAdapter(mContext!!, folderNameList)
-        adapter.itemClick = object : VerticalAdapter.ItemClick {
+        val recyclerView = binding.recyclerViewVertical
+        val adapter = ListVerticalAdapter()
+
+        adapter.itemClick = object : ListVerticalAdapter.ItemClick {
             override fun onClick(view: View, position: Int, folderName: String) {
                 Log.d(TAG, "onClick: $position clicked")
 
@@ -160,11 +161,11 @@ class ListActivity : AppCompatActivity() {
 //            }
         }
 
-        val recyclerView = binding.recyclerViewVertical
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = manager
 //        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerView.adapter = adapter
+        adapter.submitList(folderNameList)
 
 //        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
 //        multiSnapHelper.attachToRecyclerView(recyclerView)

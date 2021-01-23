@@ -268,6 +268,7 @@ class GalleryActivity : AppCompatActivity() {
         )
 
         val dialog = Dialog(this)
+        binding.deleteFileName.text = folderName
 
         binding.dialogAgreeBtn.setOnClickListener {
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/folder_layout"
+
+        android:descendantFocusability="blocksDescendants">
+
+
+        <TextView
+            android:id="@+id/folder_title"
+            style="@style/Text.Gmarket.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:includeFontPadding="true"
+            android:text="gygyg"
+            android:textSize="25sp" />
+
+        <!--    <ImageView-->
+        <!--        android:id="@+id/list_add_photo_btn"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_alignParentEnd="true"-->
+        <!--        android:layout_margin="15dp"-->
+        <!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--        android:baselineAlignBottom="true"-->
+        <!--        android:clickable="true"-->
+        <!--        android:layout_centerVertical="true"-->
+        <!--        android:src="@drawable/ic_baseline_add_24" />-->
+
+
+        <!--    <androidx.recyclerview.widget.RecyclerView-->
+        <!--        android:id="@+id/recycler_view_horizontal"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_below="@+id/folder_title"-->
+        <!--        android:layout_marginBottom=m"10dp" />-->
+    </RelativeLayout>
+</layout>

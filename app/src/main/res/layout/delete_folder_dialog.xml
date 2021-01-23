@@ -27,75 +27,82 @@
 
         <TextView
             android:id="@+id/delete_folder_dialog_text_view"
-            android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginRight="20dp"
+            android:fontFamily="@font/gmarketsansttfmedium"
 
             android:gravity="center"
-            android:singleLine="false"
+            android:includeFontPadding="true"
             android:inputType="textMultiLine"
-            android:fontFamily="@font/gmarketsansttfmedium"
-            android:text="Are you sure you want to permanently delete this folder and all its contains?" />
+            android:singleLine="false"
+            android:text="Are you sure you want to permanently delete this folder and all its contains?"
+            android:textSize="15sp" />
 
         <TextView
-            android:layout_below="@+id/delete_folder_dialog_text_view"
+
             android:id="@+id/delete_file_name"
-            android:textSize="15sp"
+            style="@style/Text.Gmarket.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/delete_folder_dialog_text_view"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
-            android:gravity="center"
-            android:singleLine="false"
-            style="@style/Text.Gmarket.Bold"
-            android:inputType="textMultiLine"
             android:fontFamily="@font/gmarketsansttfmedium"
-            android:text="20210123" />
+            android:gravity="center"
+            android:includeFontPadding="true"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:text="20210123"
+            android:textSize="15sp" />
 
 
         <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/delete_file_name"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <TextView
-                android:textSize="12sp"
-                android:layout_weight="1"
                 android:id="@+id/dialog_disagree_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="25dp"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:ems="6"
                 android:fontFamily="@font/gmarketsansttfmedium"
+
                 android:gravity="center"
-                android:text="@string/dialog_disagree" />
+                android:includeFontPadding="true"
+                android:text="@string/dialog_disagree"
+                android:textSize="12sp" />
 
             <TextView
-                android:textColor="#E60000"
-                android:textSize="12sp"
-                android:layout_weight="1"
+
                 android:id="@+id/dialog_agree_btn"
+                style="@style/Text.Gmarket.Bold"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="25dp"
+                android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:ems="6"
-                style="@style/Text.Gmarket.Bold"
                 android:fontFamily="@font/gmarketsansttfmedium"
                 android:gravity="center"
-                android:text="DELETE" />
+                android:includeFontPadding="true"
+                android:text="DELETE"
+                android:textColor="#E60000"
+                android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

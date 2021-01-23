@@ -1,47 +1,51 @@
 package com.example.photochangerecord
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.photochangerecord.databinding.ItemListVerticalBinding
 
 
-class VerticalAdapter(
-    private val context: Context,
-    private val folderNameList: ArrayList<String>
-) : RecyclerView.Adapter<VerticalAdapter.ViewHolder>() {
+class ListVerticalAdapter :
+    ListAdapter<String, ListVerticalAdapter.ListViewHolder>(MyListDiffCallback) {
 
     companion object {
         private const val TAG = "VerticalAdapter"
     }
 
-    interface ItemClick
-    {
+    interface ItemClick {
         fun onClick(view: View, position: Int, folderName: String)
 //        fun addBtnOnClick(view: View, position: Int, folderName: String)
     }
+
     var itemClick: ItemClick? = null
 
 
-
-    override fun onCreateViewHolder(
-        viewGroup: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        val inflater = LayoutInflater.from(viewGroup.context)
-        val view = inflater.inflate(R.layout.item_vertical, viewGroup, false)
-        return ViewHolder(view)
+    inner class ListViewHolder(private val binding: ItemListVerticalBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        // 그냥 View하고 데이터 연결하는 거 생각하면 됩니다
+        fun bind(folderName: String) {
+            binding.folderTitle.text = folderName
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if(itemClick != null)
-        {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding: ItemListVerticalBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_list_vertical, parent, false)
+        return ListViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        holder.bind(currentList[position])
+
+        if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, folderNameList[position])
+                itemClick?.onClick(v, position, currentList[position])
             }
         }
 
@@ -51,9 +55,6 @@ class VerticalAdapter(
 //                itemClick?.addBtnOnClick(v, position, folderNameList[position])
 //            }
 //        }
-
-        holder.folderTitle.text = folderNameList[position]
-
 
         // ListActivity(메인)에 일단 사진을 제외함. 리사이클러뷰 in 리사이클러뷰
 //        val adapter = HorizontalAdapter(context, folderList[position])
@@ -76,21 +77,5 @@ class VerticalAdapter(
 //
 //        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
 //        multiSnapHelper.attachToRecyclerView(holder.recyclerViewHorizontal)
-
-    }
-
-    override fun getItemCount(): Int {
-        return folderNameList.size
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(
-        itemView
-    ) {
-//        val recyclerViewHorizontal= itemView.findViewById(R.id.recycler_view_horizontal) as RecyclerView
-        val folderTitle: TextView = itemView.findViewById(R.id.folder_title) as TextView
-        val folderLayout : RelativeLayout = itemView.findViewById(R.id.folder_layout) as RelativeLayout
-//        val listAddPhotoBtn: ImageView = itemView.findViewById(R.id.list_add_photo_btn) as ImageView
-
-
     }
 }
