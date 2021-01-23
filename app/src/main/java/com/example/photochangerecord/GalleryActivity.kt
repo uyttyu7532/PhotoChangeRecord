@@ -18,7 +18,12 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
@@ -39,7 +44,9 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGalleryBinding
     private lateinit var mContext: Context
     private lateinit var folderName: String
+
     private var photos: ArrayList<Photo> = ArrayList()
+    private var tracker: SelectionTracker<Long>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +74,7 @@ class GalleryActivity : AppCompatActivity() {
 //        }else{
 //            binding.noImageFrameLayout.visibility = GONE
 //        }
-
+//        recyclerview()
 
         binding.newPhotoFab.setOnClickListener {
             val intent = Intent(mContext, LaunchActivity::class.java)
@@ -82,7 +89,7 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        recyclerview(getFolder(folderName))
+        recyclerview()
         Log.d(TAG, "onResume: started")
         super.onResume()
     }
@@ -191,7 +198,7 @@ class GalleryActivity : AppCompatActivity() {
         )
 
         folderName = newFolderName
-        recyclerview(getFolder(newFolderName))
+        recyclerview()
         toast("Rename Success")
 
         finish()
@@ -236,7 +243,7 @@ class GalleryActivity : AppCompatActivity() {
         binding.dialogAgreeBtn.setOnClickListener {
             var newFolderName = binding.dialogEt.text.toString()
             if (renameFolder(folderName, newFolderName)) {
-                recyclerview(getFolder(newFolderName))
+//                recyclerview()
                 supportActionBar!!.title = newFolderName
                 dialog.dismiss()
             } else {
@@ -288,9 +295,10 @@ class GalleryActivity : AppCompatActivity() {
         // TODO 다중선택?
     }
 
-    private fun recyclerview(folder: Folder) {
-        val adapter = GalleryAdapter(mContext, folder)
-//        adapter.setHasStableIds(true)
+    private fun recyclerview() {
+        val recyclerView = binding.recyclerViewGallery
+        val adapter = GalleryAdapter()
+
         adapter.itemClick = object : GalleryAdapter.ItemClick {
             override fun onClick(view: View, position: Int, folder: Folder) {
                 Log.d(TAG, "onClick: $position clicked")
@@ -302,10 +310,23 @@ class GalleryActivity : AppCompatActivity() {
             }
         }
 
-        val recyclerView = binding.recyclerViewGallery
-        val manager = GridLayoutManager(this, 2)
-        recyclerView.layoutManager = manager
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = adapter
+        adapter.folder = getFolder(folderName)
+        adapter.notifyDataSetChanged()
+
+        // adpater를 먼저 연결해야 한다.
+        tracker = SelectionTracker.Builder(
+            "GalleryActivity",
+            recyclerView,
+            StableIdKeyProvider(recyclerView),
+            MyItemDetailsLookup(recyclerView),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(
+            SelectionPredicates.createSelectAnything()
+        ).build()
+
+        adapter.tracker = tracker
 
 
         val nsv: NestedScrollView = binding.nestedScrollViewGallery
