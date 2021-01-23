@@ -159,7 +159,7 @@ class GalleryActivity : AppCompatActivity() {
 
         photos = ArrayList() // 파일 경로
 
-        for (f in files) {
+        for (f in files.sortedArray()) {
             photos.add(Photo(f.absolutePath))
         }
 
@@ -169,6 +169,8 @@ class GalleryActivity : AppCompatActivity() {
         } else {
             binding.noImageFrameLayout.visibility = GONE
         }
+
+        Log.d(TAG, "getFolder: ${Folder(folderName, photos)}")
 
         return Folder(folderName, photos)
     }

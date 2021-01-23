@@ -12,7 +12,10 @@ import android.view.MenuItem
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import coil.imageLoader
 import coil.load
+import coil.request.ImageRequest
+import coil.size.ViewSizeResolver
 import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
@@ -217,6 +220,7 @@ class DetailActivity : AppCompatActivity() {
 //                detailSlider.bubbleText = (it + 1).toString()
 //                binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
 //                detailSlider.bubbleText = (it + 1).toString()
+
 
                 binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
                 supportActionBar!!.title =
