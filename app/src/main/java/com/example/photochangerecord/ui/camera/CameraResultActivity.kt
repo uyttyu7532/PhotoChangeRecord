@@ -32,19 +32,13 @@ class CameraResultActivity : AppCompatActivity() {
         var thumbnailBitmap = intent.getParcelableExtra<Bitmap>("thumbnailBitmap")
 
         binding.resultImage.load(thumbnailBitmap)
-
-
         binding.okButton.setOnClickListener {
-
             setResult(RESULT_OK, intent)
-
             finish()
         }
 
         binding.cancelButton.setOnClickListener {
-
             setResult(RESULT_CANCELED, intent)
-
             finish()
         }
 

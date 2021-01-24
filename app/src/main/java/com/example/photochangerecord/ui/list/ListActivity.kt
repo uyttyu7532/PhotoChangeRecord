@@ -1,6 +1,5 @@
 package com.example.photochangerecord.ui.list
 
-
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -17,19 +16,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.ui.gallery.GalleryActivity
-import com.example.photochangerecord.ListVerticalAdapter
 import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.model.FolderName
+import com.example.photochangerecord.ui.adapter.ListVerticalAdapter
 import splitties.toast.toast
 import java.io.File
 
 
 class ListActivity : AppCompatActivity() {
     private var mContext: Context? = null
-//    private var filesNameList: ArrayList<FolderName> = ArrayList()
-
 
     companion object {
         private const val TAG = "ListActivity"
@@ -56,7 +53,6 @@ class ListActivity : AppCompatActivity() {
         })
 
         binding.newFolderFab.setOnClickListener {
-            // 폴더 생성 다이얼로그
             showMakeFolderDialog()
         }
     }
@@ -177,10 +173,8 @@ class ListActivity : AppCompatActivity() {
                     binding.newFolderFab.show()
                 }
                 super.onScrolled(recyclerView, dx, dy)
-
             }
         })
     }
-
 
 }

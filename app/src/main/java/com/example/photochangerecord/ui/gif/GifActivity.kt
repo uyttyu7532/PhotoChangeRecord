@@ -109,7 +109,6 @@ class GifActivity : AppCompatActivity() {
             })
     }
 
-
     object MakeGif {
         fun makeGif(view: ImageView, value: Float, folderPathList: ArrayList<String>) {
             var animation = AnimationDrawable()

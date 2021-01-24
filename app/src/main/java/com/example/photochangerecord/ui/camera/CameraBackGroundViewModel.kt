@@ -31,12 +31,6 @@ class CameraBackGroundViewModel : ViewModel() {
         _imageAlpha.value = MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
     }
 
-//    fun updateValue(actionType: ActionType) {
-//        when (actionType) {
-//            ActionType.PLUS -> _imageAlpha.value = _imageAlpha.value?.plus(1)
-//            ActionType.MINUS -> _imageAlpha.value = _imageAlpha.value?.minus(1)
-//        }
-//    }
 
     fun updateValue(position: Float) {
         _imageAlpha.postValue(position)

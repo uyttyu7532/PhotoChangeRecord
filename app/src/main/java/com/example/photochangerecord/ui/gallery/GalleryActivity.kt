@@ -48,7 +48,6 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var adapter : GalleryAdapter
 
     private var photos: ArrayList<Photo> = ArrayList()
-//    private var tracker: SelectionTracker<Long>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,9 +94,6 @@ class GalleryActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-
-
-
     }
 
     override fun onResume() {
@@ -330,20 +326,6 @@ class GalleryActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = adapter
-
-
-//        // adpater를 먼저 연결해야 한다.
-//        tracker = SelectionTracker.Builder(
-//            "GalleryActivity",
-//            recyclerView,
-//            StableIdKeyProvider(recyclerView),
-//            MyItemDetailsLookup(recyclerView), // motionEvent로 접근
-//            StorageStrategy.createLongStorage() // Long Key
-//        ).withSelectionPredicate(
-//            SelectionPredicates.createSelectAnything() // 다중 선택
-//        ).build()
-//
-//        adapter.tracker = tracker
 
 
         val nsv: NestedScrollView = binding.nestedScrollViewGallery

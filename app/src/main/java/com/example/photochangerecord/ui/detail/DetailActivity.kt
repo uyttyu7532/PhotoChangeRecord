@@ -44,7 +44,6 @@ class DetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
         val intent = intent
-        // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
         photos = intent.getParcelableArrayListExtra("photos")
         folderName = intent.getStringExtra("folderName")
         currentPosition = intent.getIntExtra("position", 0)
@@ -60,19 +59,7 @@ class DetailActivity : AppCompatActivity() {
         detailSlider = binding.detailSlider
 
 
-
-
         folderSize = photos.size
-//        positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
-
-//        detailSlider.position = positionFloat
-//        detailSlider.bubbleText = (receivedPosition + 1).toString()
-//        detailSlider.startText = ""
-//        detailSlider.endText = ""
-
-
-//        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
-//            .into(binding.detailImageView)
 
         binding.detailImageView.load(File(photos[currentPosition].absolute_file_path))
 
@@ -172,13 +159,6 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setSlider() {
         val positionViewModel = PositionViewModel()
-
-//        detailSlider.positionListener = {
-//            var currentPosition = floor(it * (folderSize - 1)).toInt()
-//
-//            // 라이브 데이터 변경
-//            positionViewModel.updatePosition(currentPosition)
-//        }
 
         detailSlider.setOnRangeChangedListener(object :
             OnRangeChangedListener {
