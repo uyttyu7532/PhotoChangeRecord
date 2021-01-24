@@ -1,5 +1,6 @@
 package com.example.photochangerecord
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,17 +8,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.databinding.ItemListVerticalBinding
+import com.example.photochangerecord.viewmodel.FolderName
 
 
 class ListVerticalAdapter :
-    ListAdapter<String, ListVerticalAdapter.ListViewHolder>(MyListDiffCallback) {
+    ListAdapter<FolderName, ListVerticalAdapter.ListViewHolder>(MyListDiffCallback) {
 
     companion object {
         private const val TAG = "VerticalAdapter"
     }
 
     interface ItemClick {
-        fun onClick(view: View, position: Int, folderName: String)
+        fun onClick(view: View, position: Int, folderName: FolderName)
 //        fun addBtnOnClick(view: View, position: Int, folderName: String)
     }
 
@@ -27,8 +29,8 @@ class ListVerticalAdapter :
     inner class ListViewHolder(private val binding: ItemListVerticalBinding) :
         RecyclerView.ViewHolder(binding.root) {
         // 그냥 View하고 데이터 연결하는 거 생각하면 됩니다
-        fun bind(folderName: String) {
-            binding.folderTitle.text = folderName
+        fun bind(folderName: FolderName) {
+            binding.folderTitle.text = folderName.folderName
         }
     }
 
@@ -45,6 +47,7 @@ class ListVerticalAdapter :
 
         if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
+                Log.d(TAG, "onBindViewHolder: $position")
                 itemClick?.onClick(v, position, currentList[position])
             }
         }

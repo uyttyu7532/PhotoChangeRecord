@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
