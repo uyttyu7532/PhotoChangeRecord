@@ -5,20 +5,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import coil.imageLoader
 import coil.load
-import coil.request.ImageRequest
-import coil.size.ViewSizeResolver
 import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
-import com.example.photochangerecord.viewmodel.Folder
+import com.example.photochangerecord.viewmodel.Photo
 import com.example.photochangerecord.viewmodel.PositionViewModel
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
@@ -34,10 +30,10 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var detailSlider: RangeSeekBar
-    private lateinit var receiveFolder: Folder
+    private lateinit var photos: ArrayList<Photo>
     private var currentPosition = 0
     private var folderSize = 0
-
+    private var folderName = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,21 +44,24 @@ class DetailActivity : AppCompatActivity() {
 
         val intent = intent
         // GalleryActivity에서 업데이트 될 수도 있으니까 전역으로 저장?
-        receiveFolder = intent.getParcelableExtra("folder")
+        photos = intent.getParcelableArrayListExtra("photos")
+        folderName = intent.getStringExtra("folderName")
         currentPosition = intent.getIntExtra("position", 0)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.elevation = 0.0f
-        supportActionBar!!.title = receiveFolder.photos[currentPosition].absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
+        supportActionBar!!.title =
+            photos[currentPosition].absolute_file_path.substringAfterLast("/")
+                .substringBeforeLast(".jpg")
 
         detailSlider = binding.detailSlider
 
 
 
 
-        folderSize = receiveFolder.photos.size
+        folderSize = photos.size
 //        positionFloat = ((receivedPosition).toFloat() / (folderSize - 1).toFloat())
 
 //        detailSlider.position = positionFloat
@@ -74,7 +73,7 @@ class DetailActivity : AppCompatActivity() {
 //        Glide.with(this).load(receiveFolder.photos[receivedPosition].absolute_file_path)
 //            .into(binding.detailImageView)
 
-        binding.detailImageView.load(File(receiveFolder.photos[currentPosition].absolute_file_path))
+        binding.detailImageView.load(File(photos[currentPosition].absolute_file_path))
 
         setSlider()
 
@@ -82,7 +81,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onResume() {
 
-        if (receiveFolder.photos.size == 1) {
+        if (photos.size == 1) {
             detailSlider.visibility = INVISIBLE
         } else {
             detailSlider.visibility = VISIBLE
@@ -108,11 +107,8 @@ class DetailActivity : AppCompatActivity() {
             }
             R.id.action_detail_camera -> {
                 val intent = Intent(this, LaunchActivity::class.java)
-                intent.putExtra("folderName", receiveFolder.title)
-                intent.putExtra(
-                    "backgroundPhoto",
-                    receiveFolder.photos[currentPosition]
-                )
+                intent.putExtra("folderName", folderName)
+                intent.putExtra("backgroundPhoto", photos[currentPosition])
                 startActivity(intent)
                 finish()
             }
@@ -149,11 +145,13 @@ class DetailActivity : AppCompatActivity() {
 
         binding.deleteFolderDialogTextView.text =
             "Are you sure you want to permanently delete this photo? "
-        binding.deleteFileName.text = receiveFolder.photos[currentPosition].absolute_file_path.substringAfterLast("/").substringBeforeLast(".jpg")
+        binding.deleteFileName.text =
+            photos[currentPosition].absolute_file_path.substringAfterLast("/")
+                .substringBeforeLast(".jpg")
 
         binding.dialogAgreeBtn.setOnClickListener {
 
-            if (deletePhoto(receiveFolder.photos[currentPosition].absolute_file_path)) {
+            if (deletePhoto(photos[currentPosition].absolute_file_path)) {
                 callback(true)
                 dialog.dismiss()
             } else {
@@ -222,9 +220,9 @@ class DetailActivity : AppCompatActivity() {
 //                detailSlider.bubbleText = (it + 1).toString()
 
 
-                binding.detailImageView.load(File(receiveFolder.photos[it].absolute_file_path))
+                binding.detailImageView.load(File(photos[it].absolute_file_path))
                 supportActionBar!!.title =
-                    receiveFolder.photos[it].absolute_file_path.substringAfterLast("/")
+                    photos[it].absolute_file_path.substringAfterLast("/")
                         .substringBeforeLast(".jpg")
 
             })

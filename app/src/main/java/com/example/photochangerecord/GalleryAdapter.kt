@@ -11,30 +11,34 @@ import com.example.photochangerecord.databinding.ItemGalleryBinding
 import com.example.photochangerecord.viewmodel.Folder
 import com.example.photochangerecord.viewmodel.Photo
 import java.io.File
+import java.util.*
 
-class GalleryAdapter : ListAdapter<Folder, GalleryAdapter.GalleryViewHolder>(MyDiffCallback) {
+
+class GalleryAdapter(val folderName: String) : ListAdapter<Photo, GalleryAdapter.GalleryViewHolder>(
+    MyDiffCallback
+) {
 
     var folder: Folder? = null
 //    var tracker: SelectionTracker<Long>? = null
     var itemClick: ItemClick? = null
 
     interface ItemClick {
-        fun onClick(view: View, position: Int, folder: Folder)
+        fun onClick(view: View, position: Int, folderName: String, photos: ArrayList<Photo>)
     }
 
 
-    init {
-        // true: long 타입의 유일한 id는 각각 하나의 아이템에만 매칭된다는 뜻
-        setHasStableIds(true)
-    }
-
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong() // 적절한 id값 리턴한다.
-    }
+//    init {
+//        // true: long 타입의 유일한 id는 각각 하나의 아이템에만 매칭된다는 뜻
+//        setHasStableIds(true)
+//    }
+//
+//
+//    override fun getItemId(position: Int): Long {
+//        return position.toLong() // 적절한 id값 리턴한다.
+//    }
 
     override fun getItemCount(): Int {
-        return folder!!.photos.size
+        return currentList.size
     }
 
 
@@ -82,15 +86,14 @@ class GalleryAdapter : ListAdapter<Folder, GalleryAdapter.GalleryViewHolder>(MyD
 
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
+
         if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position, folder!!)
+                itemClick?.onClick(v, position, folderName, currentList.toList() as ArrayList<Photo>)
             }
         }
 
-        val photo = folder!!.photos[position]
-
-        holder.bind(photo)
+        holder.bind(currentList[position])
 
 //        tracker?.let {
 //            holder.bind(photo, it.isSelected(position.toLong()))

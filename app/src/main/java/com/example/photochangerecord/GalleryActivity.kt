@@ -17,12 +17,15 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
 import com.example.photochangerecord.viewmodel.Folder
+import com.example.photochangerecord.viewmodel.FolderNameListViewModel
 import com.example.photochangerecord.viewmodel.Photo
+import com.example.photochangerecord.viewmodel.PhotosViewModel
 import splitties.toast.toast
 import java.io.File
 
@@ -38,6 +41,8 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGalleryBinding
     private lateinit var mContext: Context
     private lateinit var folderName: String
+    private lateinit var viewModel: PhotosViewModel
+    private lateinit var adapter : GalleryAdapter
 
     private var photos: ArrayList<Photo> = ArrayList()
 //    private var tracker: SelectionTracker<Long>? = null
@@ -58,6 +63,14 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar!!.elevation = 0.0f
         supportActionBar!!.title = folderName
 
+        recyclerview()
+
+        viewModel = ViewModelProvider(this).get(PhotosViewModel::class.java)
+        viewModel.photos?.observe(this, {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
 
 //        // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
 //        if (photos.size == 0) {
@@ -80,11 +93,13 @@ class GalleryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
     }
 
     override fun onResume() {
-        recyclerview()
         Log.d(TAG, "onResume: started")
+        getFolder(folderName)
         super.onResume()
     }
 
@@ -154,7 +169,7 @@ class GalleryActivity : AppCompatActivity() {
     }
 
 
-    private fun getFolder(folderName: String): Folder {
+    private fun getFolder(folderName: String){
 
         var directory = File(
             getExternalFilesDir(
@@ -178,7 +193,7 @@ class GalleryActivity : AppCompatActivity() {
 
         Log.d(TAG, "getFolder: ${Folder(folderName, photos)}")
 
-        return Folder(folderName, photos)
+        viewModel.updateValue(photos)
     }
 
     private fun renameFolder(oldFolderName: String, newFolderName: String): Boolean {
@@ -197,7 +212,6 @@ class GalleryActivity : AppCompatActivity() {
         )
 
         folderName = newFolderName
-        recyclerview()
         toast("Rename Success")
 
         finish()
@@ -297,14 +311,15 @@ class GalleryActivity : AppCompatActivity() {
 
     private fun recyclerview() {
         val recyclerView = binding.recyclerViewGallery
-        val adapter = GalleryAdapter()
+        adapter = GalleryAdapter(folderName)
 
         adapter.itemClick = object : GalleryAdapter.ItemClick {
-            override fun onClick(view: View, position: Int, folder: Folder) {
+            override fun onClick(view: View, position: Int, folderName: String, photos: ArrayList<Photo>) {
                 Log.d(TAG, "onClick: $position clicked")
 
                 val intent = Intent(mContext, DetailActivity::class.java)
-                intent.putExtra("folder", folder)
+                intent.putExtra("folderName", folderName)
+                intent.putExtra("photos", photos)
                 intent.putExtra("position", position)
                 startActivity(intent)
             }
@@ -312,8 +327,6 @@ class GalleryActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = adapter
-        adapter.folder = getFolder(folderName)
-        adapter.notifyDataSetChanged()
 
 
 //        // adpater를 먼저 연결해야 한다.
@@ -342,3 +355,4 @@ class GalleryActivity : AppCompatActivity() {
 
     }
 }
+

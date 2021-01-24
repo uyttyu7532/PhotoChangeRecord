@@ -35,10 +35,11 @@ class LaunchActivity : AppCompatActivity() {
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
                     for(i in deniedPermissions!!)
                         Log.i("permissionDenied", i)
+                    finish()
                 }
 
             })
-            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
+            .setDeniedMessage("You need to grant permission to run the app.")
             .setPermissions(Manifest.permission.CAMERA)
             .check()
     }
