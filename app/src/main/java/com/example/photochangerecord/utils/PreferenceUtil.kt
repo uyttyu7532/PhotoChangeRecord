@@ -1,4 +1,4 @@
-package com.example.utils
+package com.example.photochangerecord.utils
 
 import android.content.Context
 import android.content.SharedPreferences

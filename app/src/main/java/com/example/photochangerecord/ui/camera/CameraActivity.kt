@@ -25,7 +25,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
 import coil.load
-import com.example.utils.MyApplication
+import com.example.photochangerecord.utils.MyApplication
 import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.model.Photo

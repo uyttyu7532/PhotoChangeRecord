@@ -1,4 +1,4 @@
-package com.example.binding
+package com.example.photochangerecord.binding
 
 // 슬라이더 값이 바뀌면 이미지 뷰의 투명도가 바뀌는 것이기 때문에 양방향 데이터 바인딩이 아니었다.
 object ViewBinding {
