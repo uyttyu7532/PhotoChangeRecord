@@ -6,56 +6,36 @@
 
         <variable
             name="viewModel"
-            type="com.example.photochangerecord.viewmodel.CameraBackGroundViewModel" />
+            type="com.example.photochangerecord.ui.camera.CameraBackGroundViewModel" />
     </data>
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
 
         <FrameLayout
             android:id="@+id/camera_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/camera_btn_layout">
 
             <SurfaceView
                 android:id="@+id/surfaceView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <ImageView
                 android:id="@+id/alpha_background_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:alpha="@{viewModel.imageAlpha}"/>
+                android:alpha="@{viewModel.imageAlpha}" />
 
         </FrameLayout>
-
-        <ImageView
-            android:id="@+id/btn_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:backgroundTint="@android:color/transparent"
-            android:elevation="2dp"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="#ffffff" />
-
-
-        <ImageView
-            android:id="@+id/btn_convert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="20dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:backgroundTint="@android:color/transparent"
-            android:elevation="2dp"
-            android:src="@drawable/ic_baseline_flip_camera_android_24"
-            app:tint="#ffffff" />
 
 
         <!--        <com.ramotion.fluidslider.FluidSlider-->
@@ -65,15 +45,15 @@
         <!--            android:layout_above="@+id/camera_btn" />-->
 
         <com.jaygoo.widget.VerticalRangeSeekBar
-            android:layout_above="@+id/camera_btn"
             android:id="@+id/alpha_background_image_slider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/camera_btn_layout"
             android:layout_gravity="end"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="100dp"
             android:paddingTop="10dp"
             app:rsb_gravity="bottom"
-            android:layout_marginTop="160dp"
-            android:layout_marginBottom="160dp"
             app:rsb_indicator_background_color="#8BC3C3C3"
             app:rsb_indicator_padding_bottom="10dp"
             app:rsb_indicator_padding_left="10dp"
@@ -92,20 +72,89 @@
             app:rsb_tick_mark_mode="number" />
 
         <RelativeLayout
-            android:layout_below="@+id/camera_frame_layout"
-            android:id="@+id/camera_btn"
+            android:id="@+id/camera_btn_layout"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:minHeight="80dp">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_baseline_photo_camera_24"
-                app:tint="@color/colorPrimaryDark" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <FrameLayout
+                    android:id="@+id/btn_home"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_arrow_back_24"
+                        app:tint="@color/colorPrimaryDark" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/camera_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_baseline_photo_camera_24"
+                        app:tint="@color/colorPrimaryDark" />
+
+                    <!--                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+                    <!--                        android:id="@+id/new_photo_fab"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_gravity="bottom|center"-->
+                    <!--                        android:layout_marginBottom="20dp"-->
+                    <!--                        android:backgroundTint="#ffffff"-->
+                    <!--                        android:tint="#ffffff"-->
+
+                    <!--                        app:icon="@drawable/ic_baseline_photo_camera_24"-->
+                    <!--                        app:iconTint="#0C0039"-->
+                    <!--                        app:strokeColor="#0C0039"-->
+                    <!--                        app:strokeWidth="2dp" />-->
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/btn_convert"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true">
+
+
+                    <ImageView
+
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+
+                        android:elevation="2dp"
+                        android:src="@drawable/ic_baseline_flip_camera_android_24"
+                        app:tint="@color/colorPrimaryDark" />
+                </FrameLayout>
+
+
+            </LinearLayout>
+
         </RelativeLayout>
 
 

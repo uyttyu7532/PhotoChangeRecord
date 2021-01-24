@@ -1,9 +1,10 @@
-package com.example.photochangerecord.viewmodel
+package com.example.photochangerecord.ui.gallery
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.photochangerecord.model.Photo
 
 
 class PhotosViewModel : ViewModel() {

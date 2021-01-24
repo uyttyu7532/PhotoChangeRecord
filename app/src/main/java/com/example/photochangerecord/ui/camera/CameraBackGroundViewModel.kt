@@ -1,10 +1,10 @@
-package com.example.photochangerecord.viewmodel
+package com.example.photochangerecord.ui.camera
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.photochangerecord.MyApplication
+import com.example.utils.MyApplication
 
 //enum class ActionType {
 //    PLUS,

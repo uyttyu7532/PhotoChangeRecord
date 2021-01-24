@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.databinding.ItemListVerticalBinding
-import com.example.photochangerecord.viewmodel.FolderName
+import com.example.photochangerecord.model.FolderName
 
 
 class ListVerticalAdapter :
@@ -81,4 +82,24 @@ class ListVerticalAdapter :
 //        val multiSnapHelper = MultiSnapHelper(SnapGravity.START, 1, 100f)
 //        multiSnapHelper.attachToRecyclerView(holder.recyclerViewHorizontal)
     }
+}
+
+object MyListDiffCallback : DiffUtil.ItemCallback<FolderName>() {
+    const val TAG = "MyListDiffCallback"
+    override fun areItemsTheSame(
+        oldItem: FolderName,
+        newItem: FolderName
+    ): Boolean {
+        Log.d(TAG, "areItemsTheSame: $oldItem $newItem ${oldItem.folderName == newItem.folderName}")
+        return oldItem.folderName == newItem.folderName
+    }
+
+    override fun areContentsTheSame(
+        oldItem: FolderName,
+        newItem: FolderName
+    ): Boolean {
+        Log.d(TAG, "areContentsTheSame:$oldItem $newItem ${oldItem == newItem}")
+        return oldItem == newItem
+    }
+
 }

@@ -1,6 +1,5 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.gif
 
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.ColorDrawable
@@ -14,11 +13,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import coil.load
+import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityGifBinding
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
-import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
 import java.util.*
 
 class GifActivity : AppCompatActivity() {

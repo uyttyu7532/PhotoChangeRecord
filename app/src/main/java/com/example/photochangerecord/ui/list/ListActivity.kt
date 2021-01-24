@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.list
 
 
 import android.app.Dialog
@@ -16,10 +16,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.photochangerecord.ui.gallery.GalleryActivity
+import com.example.photochangerecord.ListVerticalAdapter
+import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityListBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
-import com.example.photochangerecord.viewmodel.FolderName
-import com.example.photochangerecord.viewmodel.FolderNameListViewModel
+import com.example.photochangerecord.model.FolderName
 import splitties.toast.toast
 import java.io.File
 

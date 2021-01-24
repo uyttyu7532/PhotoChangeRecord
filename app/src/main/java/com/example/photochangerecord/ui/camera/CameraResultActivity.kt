@@ -1,19 +1,13 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.camera
 
-import android.R.attr.data
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import coil.load
+import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityCameraResultBinding
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class CameraResultActivity : AppCompatActivity() {

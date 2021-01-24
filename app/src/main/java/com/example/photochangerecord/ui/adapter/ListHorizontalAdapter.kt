@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import coil.load
-import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.Photo
+import com.example.photochangerecord.R
+import com.example.photochangerecord.model.Folder
 import java.io.File
 
-class HorizontalAdapter(
+class ListHorizontalAdapter(
     private val context: Context,
     private val folder: Folder
-) : androidx.recyclerview.widget.RecyclerView.Adapter<HorizontalAdapter.ViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<ListHorizontalAdapter.ViewHolder>() {
 
     interface ItemClick
     {
@@ -27,7 +27,7 @@ class HorizontalAdapter(
         viewType: Int
     ): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
-        val view = inflater.inflate(R.layout.item_horizontal, viewGroup, false)
+        val view = inflater.inflate(R.layout.item_list_horizontal, viewGroup, false)
         return ViewHolder(view)
     }
 

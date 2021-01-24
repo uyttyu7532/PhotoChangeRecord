@@ -1,9 +1,10 @@
-package com.example.photochangerecord.viewmodel
+package com.example.photochangerecord.ui.list
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.photochangerecord.model.FolderName
 
 
 class FolderNameListViewModel : ViewModel() {

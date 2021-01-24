@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.camera
 
 import android.Manifest
 import android.content.Context
@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Bitmap.createScaledBitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.hardware.Sensor
 import android.hardware.SensorManager
@@ -26,9 +25,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import com.example.utils.MyApplication
+import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityCameraBinding
-import com.example.photochangerecord.viewmodel.CameraBackGroundViewModel
-import com.example.photochangerecord.viewmodel.Photo
+import com.example.photochangerecord.model.Photo
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import splitties.toast.toast
@@ -195,7 +195,8 @@ class CameraActivity : AppCompatActivity() {
 
                 Log.d(TAG, "onCreate: 세로$h 가로$w")
 
-                var thumbnail = createScaledBitmap(bitmap!!, w/4 , h/4, true)
+                // TODO 비트맵 용량을 줄이기 힘드므로.. 내부저장소에 저장하고 불러와야 할듯
+                var thumbnail = createScaledBitmap(bitmap!!, w/10 , h/10, true)
 
                 val intent = Intent(this, CameraResultActivity::class.java)
                 intent.putExtra("folderName", folderName)

@@ -1,4 +1,4 @@
-package com.example.photochangerecord.viewmodel
+package com.example.photochangerecord.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

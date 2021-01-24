@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.camera
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent

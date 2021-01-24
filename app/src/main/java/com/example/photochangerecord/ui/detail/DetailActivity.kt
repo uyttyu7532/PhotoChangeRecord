@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.detail
 
 import android.app.Dialog
 import android.content.Intent
@@ -12,10 +12,11 @@ import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import coil.load
+import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
-import com.example.photochangerecord.viewmodel.Photo
-import com.example.photochangerecord.viewmodel.PositionViewModel
+import com.example.photochangerecord.ui.camera.CameraPermissionActivity
+import com.example.photochangerecord.model.Photo
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import splitties.toast.toast
@@ -106,7 +107,7 @@ class DetailActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_detail_camera -> {
-                val intent = Intent(this, LaunchActivity::class.java)
+                val intent = Intent(this, CameraPermissionActivity::class.java)
                 intent.putExtra("folderName", folderName)
                 intent.putExtra("backgroundPhoto", photos[currentPosition])
                 startActivity(intent)

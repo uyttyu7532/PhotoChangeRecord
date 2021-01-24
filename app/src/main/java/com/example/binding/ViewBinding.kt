@@ -1,16 +1,7 @@
-package com.example.photochangerecord.viewmodel
-
-import android.content.ContentValues.TAG
-import android.util.Log
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
-import com.example.photochangerecord.CameraActivity
-import com.ramotion.fluidslider.FluidSlider
+package com.example.binding
 
 // 슬라이더 값이 바뀌면 이미지 뷰의 투명도가 바뀌는 것이기 때문에 양방향 데이터 바인딩이 아니었다.
-object BindingAdapter {
+object ViewBinding {
 
 
 //    // 단반향 데이터 바인딩에서도 사용

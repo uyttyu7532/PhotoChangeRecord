@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.camera
 
 
 import android.Manifest
@@ -6,15 +6,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.photochangerecord.viewmodel.Photo
+import com.example.photochangerecord.R
+import com.example.photochangerecord.model.Photo
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 
-class LaunchActivity : AppCompatActivity() {
+class CameraPermissionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_launch)
+        setContentView(R.layout.activity_camera_permission)
 
         TedPermission.with(this)
             .setPermissionListener(object : PermissionListener {
@@ -24,7 +25,7 @@ class LaunchActivity : AppCompatActivity() {
                     var folderName: String? = intentReceived.getStringExtra("folderName")
                     var backgroundPhoto: Photo? = intentReceived.getParcelableExtra("backgroundPhoto")
 
-                    val intent = Intent(this@LaunchActivity, CameraActivity::class.java)
+                    val intent = Intent(this@CameraPermissionActivity, CameraActivity::class.java)
                     intent.putExtra("folderName", folderName)
                     intent.putExtra("backgroundPhoto", backgroundPhoto)
                     startActivity(intent)

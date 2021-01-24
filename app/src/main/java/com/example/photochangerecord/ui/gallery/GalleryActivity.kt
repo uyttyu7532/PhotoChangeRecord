@@ -1,4 +1,4 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.gallery
 
 import android.app.Dialog
 import android.content.Context
@@ -19,13 +19,16 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.photochangerecord.ui.detail.DetailActivity
+import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
 import com.example.photochangerecord.databinding.AddFolderDialogBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
-import com.example.photochangerecord.viewmodel.Folder
-import com.example.photochangerecord.viewmodel.FolderNameListViewModel
-import com.example.photochangerecord.viewmodel.Photo
-import com.example.photochangerecord.viewmodel.PhotosViewModel
+import com.example.photochangerecord.ui.adapter.GalleryAdapter
+import com.example.photochangerecord.ui.gif.GifActivity
+import com.example.photochangerecord.model.Folder
+import com.example.photochangerecord.model.Photo
+import com.example.photochangerecord.ui.camera.CameraPermissionActivity
 import splitties.toast.toast
 import java.io.File
 
@@ -84,7 +87,7 @@ class GalleryActivity : AppCompatActivity() {
 //        recyclerview()
 
         binding.newPhotoFab.setOnClickListener {
-            val intent = Intent(mContext, LaunchActivity::class.java)
+            val intent = Intent(mContext, CameraPermissionActivity::class.java)
             intent.putExtra("folderName", folderName)
 
             if (photos.size != 0) {

@@ -1,4 +1,4 @@
-package com.example.photochangerecord.viewmodel
+package com.example.photochangerecord.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

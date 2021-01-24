@@ -1,9 +1,11 @@
-package com.example.photochangerecord
+package com.example.photochangerecord.ui.splash
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import com.example.photochangerecord.R
+import com.example.photochangerecord.ui.list.ListActivity
 
 
 class SplashActivity : Activity(){
