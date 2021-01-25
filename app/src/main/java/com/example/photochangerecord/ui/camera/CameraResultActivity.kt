@@ -8,6 +8,9 @@ import androidx.databinding.DataBindingUtil
 import coil.load
 import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityCameraResultBinding
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CameraResultActivity : AppCompatActivity() {
@@ -28,10 +31,23 @@ class CameraResultActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera_result)
 
         val intent = intent
-        var folderName = intent.getStringExtra("folderName")
+//        var folderName = intent.getStringExtra("folderName")
         var thumbnailBitmap = intent.getParcelableExtra<Bitmap>("thumbnailBitmap")
+        val cachePath = intent.getStringExtra("cachePath")
 
-        binding.resultImage.load(thumbnailBitmap)
+//        var storage: File = cacheDir
+
+        Log.d(TAG, "onCreate: $cachePath")
+
+//        //storage 에 파일 인스턴스를 생성합니다.
+//        var tempFile = File(storage, cachePath)
+//        Log.d(TAG, "onCreate: tempFile $tempFile")
+
+//        binding.resultImage.load(thumbnailBitmap)
+        binding.resultImage.load(File(cachePath))
+
+        intent.putExtra("cachePath",cachePath)
+
         binding.okButton.setOnClickListener {
             setResult(RESULT_OK, intent)
             finish()

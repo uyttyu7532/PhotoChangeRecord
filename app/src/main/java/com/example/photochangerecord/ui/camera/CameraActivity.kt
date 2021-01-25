@@ -25,10 +25,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModelProvider
 import coil.load
-import com.example.photochangerecord.utils.MyApplication
 import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityCameraBinding
 import com.example.photochangerecord.model.Photo
+import com.example.photochangerecord.utils.MyApplication
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import splitties.toast.toast
@@ -68,8 +68,10 @@ class CameraActivity : AppCompatActivity() {
     private var realWidth: Int = 0
 
     private var capturedBitmap: Bitmap? = null
+    private var cachePath: String = ""
 
     var mCameraId = CAMERA_BACK
+
 
     companion object {
         private const val TAG = "CameraActivity"
@@ -195,15 +197,19 @@ class CameraActivity : AppCompatActivity() {
 
                 Log.d(TAG, "onCreate: 세로$h 가로$w")
 
-                // TODO 비트맵 용량을 줄이기 힘드므로.. 내부저장소에 저장하고 불러와야 할듯
-                var thumbnail = createScaledBitmap(bitmap!!, w/10 , h/10, true)
+                var thumbnail = createScaledBitmap(bitmap!!, w / 10, h / 10, true)
+
+                cachePath = saveCacheImage(bitmap)
+
+                Log.d(TAG, "onCreate: cachePath $cachePath")
 
                 val intent = Intent(this, CameraResultActivity::class.java)
-                intent.putExtra("folderName", folderName)
+//                intent.putExtra("folderName", folderName)
                 intent.putExtra(
                     "thumbnailBitmap",
                     thumbnail
                 )
+                intent.putExtra("cachePath", cachePath)
                 startActivityForResult(intent, 100)
 
 //                persistImage(
@@ -215,6 +221,42 @@ class CameraActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun saveCacheImage(bitmap: Bitmap): String {
+        var cachePath = ""
+        try {
+            //내부저장소 캐시 경로를 받아옵니다.
+            var storage: File = cacheDir
+
+            val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss")
+            var time = dateFormat.format(Date())
+
+            //저장할 파일 이름
+            var fileName = "$time.jpg"
+
+            //storage 에 파일 인스턴스를 생성합니다.
+            var tempFile = File(storage, fileName)
+
+
+            // 자동으로 빈 파일을 생성합니다.
+            tempFile.createNewFile()
+
+            // 파일을 쓸 수 있는 스트림을 준비합니다.
+            var out = FileOutputStream(tempFile)
+
+            // compress 함수를 사용해 스트림에 비트맵을 저장합니다.
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+
+            // 스트림 사용후 닫아줍니다.
+            out.close()
+            cachePath = tempFile.absolutePath
+            Log.d(TAG, "saveCacheImage: tempFilePath $cachePath")
+        } catch (e: java.lang.Exception) {
+            Log.d(TAG, "saveCacheImage: $e")
+        }
+        return cachePath
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -228,12 +270,24 @@ class CameraActivity : AppCompatActivity() {
                         folderName!!
                     )
 
+                    val cacheFile = File(cachePath)
+
+                    if (cacheFile.exists()) {
+                        cacheFile.deleteOnExit()
+                    }
+
                     finish()
                 }
                 RESULT_CANCELED -> {
 
+                    val cacheFile = File(cachePath)
+
+                    if (cacheFile.exists()) {
+                        cacheFile.deleteOnExit()
+                    }
                 }
             }
+
         }
     }
 

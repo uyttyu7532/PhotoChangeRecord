@@ -122,10 +122,10 @@ class DetailActivity : AppCompatActivity() {
                     }
                 })
             }
-            R.id.action_detail_save -> {
-                val bitmap = binding.detailImageView.drawable.toBitmap()
-                persistImage(bitmap)
-            }
+//            R.id.action_detail_save -> {
+//                val bitmap = binding.detailImageView.drawable.toBitmap()
+//                persistImage(bitmap)
+//            }
         }
         return super.onOptionsItemSelected(item)
     }

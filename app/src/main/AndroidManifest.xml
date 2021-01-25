@@ -3,8 +3,8 @@
     package="com.example.photochangerecord">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
 
     <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
@@ -27,7 +27,11 @@
             android:name=".ui.camera.CameraResultActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.detail.DetailActivity"
@@ -40,11 +44,6 @@
             android:launchMode="singleTop" />
         <activity android:name=".ui.camera.CameraPermissionActivity" />
         <activity android:name=".ui.splash.StoragePermissionActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.camera.CameraActivity"

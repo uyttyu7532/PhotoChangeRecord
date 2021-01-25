@@ -17,11 +17,10 @@
         android:icon="@drawable/ic_baseline_delete_outline_24"
         app:showAsAction="collapseActionView"/>
 
-
-    <item android:id="@+id/action_detail_save"
-        android:title="Save"
-        android:icon="@drawable/ic_baseline_save_alt_24"
-        app:showAsAction="ifRoom"/>
+<!--    <item android:id="@+id/action_detail_save"-->
+<!--        android:title="Save"-->
+<!--        android:icon="@drawable/ic_baseline_save_alt_24"-->
+<!--        app:showAsAction="ifRoom"/>-->
 
     <item android:id="@+id/action_detail_camera"
         android:title="Camera"
