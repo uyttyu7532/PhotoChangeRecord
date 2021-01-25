@@ -3,6 +3,7 @@ package com.example.photochangerecord.ui.gallery
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -19,6 +20,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.photochangerecord.ui.detail.DetailActivity
 import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityGalleryBinding
@@ -46,6 +48,9 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var folderName: String
     private lateinit var viewModel: PhotosViewModel
     private lateinit var adapter : GalleryAdapter
+    private lateinit var recyclerView: RecyclerView
+
+    private var spanCount = 2
 
     private var photos: ArrayList<Photo> = ArrayList()
 
@@ -64,6 +69,8 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.elevation = 0.0f
         supportActionBar!!.title = folderName
+
+        recyclerView=binding.recyclerViewGallery
 
         recyclerview()
 
@@ -96,8 +103,15 @@ class GalleryActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onResume() {
-        Log.d(TAG, "onResume: started")
+        spanCount = 2
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            spanCount = 3
+        }
+        recyclerView.layoutManager = GridLayoutManager(this, spanCount)
+
+        Log.d(TAG, "onResume: ${resources.configuration.orientation}")
         getFolder(folderName)
         super.onResume()
     }
@@ -309,7 +323,6 @@ class GalleryActivity : AppCompatActivity() {
     }
 
     private fun recyclerview() {
-        val recyclerView = binding.recyclerViewGallery
         adapter = GalleryAdapter(folderName)
 
         adapter.itemClick = object : GalleryAdapter.ItemClick {
@@ -324,7 +337,7 @@ class GalleryActivity : AppCompatActivity() {
             }
         }
 
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = GridLayoutManager(this, spanCount)
         recyclerView.adapter = adapter
 
 
