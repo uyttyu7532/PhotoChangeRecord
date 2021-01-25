@@ -1,26 +1,35 @@
 package com.example.photochangerecord.ui.detail
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Environment
+import android.os.Environment.getExternalStoragePublicDirectory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import coil.load
 import com.example.photochangerecord.R
 import com.example.photochangerecord.databinding.ActivityDetailBinding
 import com.example.photochangerecord.databinding.DeleteFolderDialogBinding
-import com.example.photochangerecord.ui.camera.CameraPermissionActivity
 import com.example.photochangerecord.model.Photo
+import com.example.photochangerecord.ui.camera.CameraPermissionActivity
 import com.jaygoo.widget.OnRangeChangedListener
 import com.jaygoo.widget.RangeSeekBar
 import splitties.toast.toast
 import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class DetailActivity : AppCompatActivity() {
@@ -111,6 +120,10 @@ class DetailActivity : AppCompatActivity() {
                     }
                 })
             }
+            R.id.action_detail_save -> {
+                val bitmap = binding.detailImageView.drawable.toBitmap()
+                persistImage(bitmap)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -119,6 +132,37 @@ class DetailActivity : AppCompatActivity() {
         val f = File(filePath)
         return f.delete()
     }
+
+    private fun persistImage(bitmap: Bitmap) {
+        try {
+
+            val dir = File(this.getExternalFilesDir(
+                Environment.DIRECTORY_PICTURES), "PhotoChangeRecord")
+
+            if (!dir!!.exists()) {
+                Log.d(TAG, "persistImage: 폴더생성")
+                dir.mkdirs()
+            }
+            val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss")
+            var time = dateFormat.format(Date())
+            val newFile = File(dir, "${time}.jpg")
+
+            val out = FileOutputStream(newFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.flush()
+            out.close()
+
+            toast("Save Success")
+            Log.d(TAG, "persistImage: $dir")
+
+        } catch (e: Exception) {
+            Log.d(TAG, "persistImage: $e")
+            toast("Save Failed")
+        }
+    }
+
+
+
 
 
     private fun showDeletePhotoDialog(callback: (Boolean) -> Unit) {

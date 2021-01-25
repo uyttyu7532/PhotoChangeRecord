@@ -16,20 +16,20 @@
     <item
         android:id="@+id/action_rename_folder"
         android:icon="@drawable/ic_baseline_create_24"
-        android:title="renameFolder"
+        android:title="Rename"
         app:showAsAction="collapseActionView" />
 
 
     <item
         android:id="@+id/action_delete_folder"
         android:icon="@drawable/ic_baseline_delete_outline_24"
-        android:title="deleteFolder"
+        android:title="Delete"
         app:showAsAction="withText" />
 
     <item
         android:id="@+id/action_generate_gif"
         android:icon="@drawable/ic_baseline_play_circle_outline_24"
-        android:title="showAnimation"
+        android:title="Animation"
         app:showAsAction="ifRoom" />
 
     <!--    <item android:id="@+id/action_btn5"-->

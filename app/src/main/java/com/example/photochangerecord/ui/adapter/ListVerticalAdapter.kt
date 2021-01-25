@@ -43,13 +43,14 @@ class ListVerticalAdapter :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(currentList[position])
+        holder.bind(currentList[holder.adapterPosition])
 
         if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
-                Log.d(TAG, "onBindViewHolder: $position")
-                itemClick?.onClick(v, position, currentList[position])
+                Log.d(TAG, "onBindViewHolder: ${holder.adapterPosition}")
+                itemClick?.onClick(v, holder.adapterPosition, currentList[holder.adapterPosition])
             }
+
         }
     }
 

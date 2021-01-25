@@ -116,7 +116,7 @@ class GalleryActivity : AppCompatActivity() {
             R.id.action_delete_folder -> {
                 showDeleteFolderDialog(callback = {
                     if (it) {
-                        toast("Delete Success")
+                        setResult(RESULT_OK);
                         finish()
                     } else {
                         toast("Delete Failed")

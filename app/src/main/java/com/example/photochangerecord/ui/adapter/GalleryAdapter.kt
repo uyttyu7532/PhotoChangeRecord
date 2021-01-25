@@ -54,19 +54,19 @@ class GalleryAdapter(private val folderName: String) :
             holder?.itemView?.setOnClickListener { v ->
                 itemClick?.onClick(
                     v,
-                    position,
+                    holder.adapterPosition,
                     folderName,
                     currentList.toList() as ArrayList<Photo>
                 )
             }
         }
-        holder.bind(currentList[position])
+        holder.bind(currentList[holder.adapterPosition])
     }
 
 
-    override fun getItemCount(): Int {
-        return currentList.size
-    }
+//    override fun getItemCount(): Int {
+//        return currentList.size
+//    }
 
 
     object MyDiffCallback : DiffUtil.ItemCallback<Photo>() {

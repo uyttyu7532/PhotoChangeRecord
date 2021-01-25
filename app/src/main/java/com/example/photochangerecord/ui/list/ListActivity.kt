@@ -34,7 +34,7 @@ class ListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListBinding
     private lateinit var viewModel: FolderNameListViewModel
-    private lateinit var adapter : ListVerticalAdapter
+    private lateinit var adapter: ListVerticalAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +57,16 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 200) {
+            if (resultCode == RESULT_OK) {
+                toast("Delete Success")
+            }
+        }
+
+    }
+
     override fun onResume() {
         Log.d(TAG, "onResume: ")
         getFolderName()
@@ -72,11 +82,11 @@ class ListActivity : AppCompatActivity() {
         )
         var files = directory.listFiles().sortedArray()
         val filesNameList = ArrayList<FolderName>()
+        Log.d(TAG, "getFolderName: after $filesNameList")
         for (f in files) {
             filesNameList.add(FolderName(f.name))
         }
         viewModel.updateValue(filesNameList)
-
     }
 
 
