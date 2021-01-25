@@ -74,6 +74,8 @@ class DetailActivity : AppCompatActivity() {
 
         setSlider()
 
+        Log.d(TAG, "onCreate: $currentPosition ${photos} ")
+
     }
 
     override fun onResume() {

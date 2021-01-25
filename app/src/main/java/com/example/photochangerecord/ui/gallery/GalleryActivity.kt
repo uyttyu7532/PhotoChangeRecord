@@ -31,6 +31,7 @@ import com.example.photochangerecord.ui.gif.GifActivity
 import com.example.photochangerecord.model.Folder
 import com.example.photochangerecord.model.Photo
 import com.example.photochangerecord.ui.camera.CameraPermissionActivity
+import com.example.photochangerecord.utils.MyApplication.Companion.prefsSortBy
 import splitties.toast.toast
 import java.io.File
 
@@ -47,10 +48,11 @@ class GalleryActivity : AppCompatActivity() {
     private lateinit var mContext: Context
     private lateinit var folderName: String
     private lateinit var viewModel: PhotosViewModel
-    private lateinit var adapter : GalleryAdapter
+    private lateinit var adapter: GalleryAdapter
     private lateinit var recyclerView: RecyclerView
 
     private var spanCount = 2
+//    private var listSize = 0
 
     private var photos: ArrayList<Photo> = ArrayList()
 
@@ -70,7 +72,7 @@ class GalleryActivity : AppCompatActivity() {
         supportActionBar!!.elevation = 0.0f
         supportActionBar!!.title = folderName
 
-        recyclerView=binding.recyclerViewGallery
+        recyclerView = binding.recyclerViewGallery
 
         recyclerview()
 
@@ -78,8 +80,12 @@ class GalleryActivity : AppCompatActivity() {
         viewModel.photos?.observe(this, {
             it?.let {
                 adapter.submitList(it)
+                Log.d(TAG, "onCreate: submitList $it")
+//                listSize = it.size
             }
         })
+
+//
 
 //        // 폴더에 저장된 사진이 없다면 바로 카메라 액티비티로 이동
 //        if (photos.size == 0) {
@@ -112,7 +118,7 @@ class GalleryActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(this, spanCount)
 
         Log.d(TAG, "onResume: ${resources.configuration.orientation}")
-        getFolder(folderName)
+        getFolder(folderName, prefsSortBy.getBoolean(folderName, true))
         super.onResume()
     }
 
@@ -130,7 +136,8 @@ class GalleryActivity : AppCompatActivity() {
             R.id.action_delete_folder -> {
                 showDeleteFolderDialog(callback = {
                     if (it) {
-                        setResult(RESULT_OK);
+                        setResult(RESULT_OK)
+                        prefsSortBy.setBoolean(folderName, true)
                         finish()
                     } else {
                         toast("Delete Failed")
@@ -146,33 +153,42 @@ class GalleryActivity : AppCompatActivity() {
                 } else {
                     toast("2 or more photos are required")
                 }
+            }
+            R.id.action_sort_folder -> {
+                prefsSortBy.setBoolean(folderName, !prefsSortBy.getBoolean(folderName, true))
 
-
+                getFolder(folderName, prefsSortBy.getBoolean(folderName, true))
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getImagePathToGif(isAllImageToGif: Boolean) {
+    private fun getImagePathToGif(isAllImageToGif: Boolean?) {
         val folderPathList = ArrayList<String>()
 
-        // 전체
-        if (isAllImageToGif) {
-            val folder = File(
-                getExternalFilesDir(
-                    Environment.DIRECTORY_DCIM
-                ).toString() + "/$folderName"
-            )
+//        // 전체
+//        if (isAllImageToGif) {
+//            val folder = File(
+//                getExternalFilesDir(
+//                    Environment.DIRECTORY_DCIM
+//                ).toString() + "/$folderName"
+//            )
+//
+//            val folderList = folder.listFiles()
+//
+//            for (j in folderList.indices) {
+//                folderPathList.add(folderList[j].absolutePath)
+//            }
+//
+//        } else {
+//            // TODO 다중 선택한 파일의 절대경로를 folderPathList에 담기
+//        }
 
-            val folderList = folder.listFiles()
-
-            for (j in folderList.indices) {
-                folderPathList.add(folderList[j].absolutePath)
+            for( i in photos.indices){
+                folderPathList.add(photos[i].absolute_file_path)
             }
 
-        } else {
-            // TODO 다중 선택한 파일의 절대경로를 folderPathList에 담기
-        }
+
 
         val intent = Intent(this, GifActivity::class.java)
         intent.putExtra("folderPathList", folderPathList)
@@ -182,7 +198,7 @@ class GalleryActivity : AppCompatActivity() {
     }
 
 
-    private fun getFolder(folderName: String){
+    private fun getFolder(folderName: String, sortByOldest: Boolean) {
 
         var directory = File(
             getExternalFilesDir(
@@ -193,7 +209,14 @@ class GalleryActivity : AppCompatActivity() {
 
         photos = ArrayList() // 파일 경로
 
-        for (f in files.sortedArray()) {
+        files = if (sortByOldest) {
+            files.sortedArray()
+        } else {
+            files.sortedArray().reversedArray()
+        }
+
+
+        for (f in files) {
             photos.add(Photo(f.absolutePath))
         }
 
@@ -326,7 +349,12 @@ class GalleryActivity : AppCompatActivity() {
         adapter = GalleryAdapter(folderName)
 
         adapter.itemClick = object : GalleryAdapter.ItemClick {
-            override fun onClick(view: View, position: Int, folderName: String, photos: ArrayList<Photo>) {
+            override fun onClick(
+                view: View,
+                position: Int,
+                folderName: String,
+                photos: ArrayList<Photo>
+            ) {
                 Log.d(TAG, "onClick: $position clicked")
 
                 val intent = Intent(mContext, DetailActivity::class.java)
@@ -336,6 +364,7 @@ class GalleryActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
 
         recyclerView.layoutManager = GridLayoutManager(this, spanCount)
         recyclerView.adapter = adapter
@@ -350,6 +379,8 @@ class GalleryActivity : AppCompatActivity() {
             }
         })
 
+//        recyclerView.smoothScrollToPosition(listSize-1)
+////        Log.d(TAG, "onCreate: size ${listSize}")
 
     }
 }

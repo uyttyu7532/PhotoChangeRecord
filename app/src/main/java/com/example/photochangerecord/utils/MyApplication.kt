@@ -4,11 +4,15 @@ import android.app.Application
 
 class MyApplication : Application() {
     companion object {
-        lateinit var prefs: PreferenceUtil
+        lateinit var prefsAlpha: AlphaPreferenceUtil
+        lateinit var prefsSortBy: SortByPreferenceUtil
+
+
     }
 
     override fun onCreate() {
-        prefs = PreferenceUtil(applicationContext)
+        prefsAlpha = AlphaPreferenceUtil(applicationContext)
+        prefsSortBy = SortByPreferenceUtil(applicationContext)
         super.onCreate()
     }
 }

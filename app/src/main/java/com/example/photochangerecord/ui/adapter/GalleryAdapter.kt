@@ -21,6 +21,10 @@ class GalleryAdapter(private val folderName: String) :
         MyDiffCallback
     ) {
 
+    companion object {
+        const val TAG ="GalleryAdapter"
+    }
+
     var itemClick: ItemClick? = null
 
     interface ItemClick {
@@ -50,8 +54,6 @@ class GalleryAdapter(private val folderName: String) :
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
 
-//        val photos: ArrayList<Photo> = currentList.toList() as ArrayList<Photo>
-        val photos: ArrayList<Photo> = ArrayList(currentList)
 
         if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
@@ -59,7 +61,7 @@ class GalleryAdapter(private val folderName: String) :
                     v,
                     holder.adapterPosition,
                     folderName,
-                    photos
+                    ArrayList(currentList)
                 )
             }
         }

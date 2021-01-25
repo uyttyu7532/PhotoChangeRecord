@@ -28,14 +28,14 @@ class CameraBackGroundViewModel : ViewModel() {
     // 초기값 설정
     init {
         Log.d(TAG, "CameraBackGroundViewModel 생성자 호출 ")
-        _imageAlpha.value = MyApplication.prefs.getFloat("backGroundAlpha", 0.5f)
+        _imageAlpha.value = MyApplication.prefsAlpha.getFloat("backGroundAlpha", 0.5f)
     }
 
 
     fun updateValue(position: Float) {
         _imageAlpha.postValue(position)
 //        Log.d(TAG, "updateValue: $position")
-        MyApplication.prefs.setFloat("backGroundAlpha", position)
+        MyApplication.prefsAlpha.setFloat("backGroundAlpha", position)
     }
 
     companion object {

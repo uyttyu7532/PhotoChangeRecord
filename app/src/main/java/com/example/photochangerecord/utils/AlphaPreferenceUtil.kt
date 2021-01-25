@@ -3,7 +3,7 @@ package com.example.photochangerecord.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferenceUtil(context: Context) {
+class AlphaPreferenceUtil(context: Context) {
     private val imageAlphaPrefs: SharedPreferences =
         context.getSharedPreferences("backGroundAlpha", Context.MODE_PRIVATE)
 

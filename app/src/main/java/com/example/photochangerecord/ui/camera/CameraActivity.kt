@@ -136,7 +136,7 @@ class CameraActivity : AppCompatActivity() {
 
         binding.alphaBackgroundImageSlider.setIndicatorTextDecimalFormat("0")
         binding.alphaBackgroundImageSlider.setProgress(
-            MyApplication.prefs.getFloat("backGroundAlpha", 0.5f) * 100
+            MyApplication.prefsAlpha.getFloat("backGroundAlpha", 0.5f) * 100
         )
 
 
