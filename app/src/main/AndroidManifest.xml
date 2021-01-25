@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.gif.GifActivity"></activity>
-        <activity android:name=".ui.camera.CameraResultActivity"></activity>
+        <activity
+            android:name=".ui.camera.CameraResultActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.splash.SplashActivity">
 
         </activity>
@@ -37,7 +39,7 @@
             android:name=".ui.gallery.GalleryActivity"
             android:launchMode="singleTop" />
         <activity android:name=".ui.camera.CameraPermissionActivity" />
-        <activity android:name=".ui.splash.StoragePermissionActivity" >
+        <activity android:name=".ui.splash.StoragePermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +48,8 @@
         </activity>
         <activity
             android:name=".ui.camera.CameraActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
