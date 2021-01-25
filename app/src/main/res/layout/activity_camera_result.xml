@@ -15,8 +15,7 @@
         <LinearLayout
             android:id="@+id/linear_btn"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/result_image"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -52,6 +51,7 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_above="@+id/linear_btn"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:id="@+id/result_image"
