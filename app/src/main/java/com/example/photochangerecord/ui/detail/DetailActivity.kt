@@ -1,14 +1,14 @@
 package com.example.photochangerecord.ui.detail
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Environment.getExternalStoragePublicDirectory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -88,6 +88,8 @@ class DetailActivity : AppCompatActivity() {
             detailSlider.setProgress((currentPosition).toFloat())
         }
 
+        Log.d(TAG, "onResume: 외부 저장소 ${isExternalStorageWritable()} ${isExternalStorageReadable()}")
+
         super.onResume()
     }
 
@@ -136,8 +138,11 @@ class DetailActivity : AppCompatActivity() {
     private fun persistImage(bitmap: Bitmap) {
         try {
 
-            val dir = File(this.getExternalFilesDir(
-                Environment.DIRECTORY_PICTURES), "PhotoChangeRecord")
+            val dir = File(
+                this.getExternalFilesDir(
+                    Environment.DIRECTORY_PICTURES
+                ), "PhotoChangeRecord"
+            )
 
             if (!dir!!.exists()) {
                 Log.d(TAG, "persistImage: 폴더생성")
@@ -152,18 +157,32 @@ class DetailActivity : AppCompatActivity() {
             out.flush()
             out.close()
 
+
             toast("Save Success")
             Log.d(TAG, "persistImage: $dir")
+
+
 
         } catch (e: Exception) {
             Log.d(TAG, "persistImage: $e")
             toast("Save Failed")
         }
+
+
     }
 
 
 
+    /* Checks if external storage is available for read and write */
+    fun isExternalStorageWritable(): Boolean {
+        return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+    }
 
+    /* Checks if external storage is available to at least read */
+    fun isExternalStorageReadable(): Boolean {
+        return Environment.getExternalStorageState() in
+                setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+    }
 
     private fun showDeletePhotoDialog(callback: (Boolean) -> Unit) {
         val binding: DeleteFolderDialogBinding = DataBindingUtil.inflate(

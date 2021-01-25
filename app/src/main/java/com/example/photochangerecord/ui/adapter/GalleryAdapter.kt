@@ -50,13 +50,16 @@ class GalleryAdapter(private val folderName: String) :
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
 
+//        val photos: ArrayList<Photo> = currentList.toList() as ArrayList<Photo>
+        val photos: ArrayList<Photo> = ArrayList(currentList)
+
         if (itemClick != null) {
             holder?.itemView?.setOnClickListener { v ->
                 itemClick?.onClick(
                     v,
                     holder.adapterPosition,
                     folderName,
-                    currentList.toList() as ArrayList<Photo>
+                    photos
                 )
             }
         }

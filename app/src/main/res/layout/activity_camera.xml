@@ -11,27 +11,33 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <FrameLayout
             android:id="@+id/camera_frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_above="@+id/camera_btn_layout">
 
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <SurfaceView
                 android:id="@+id/surfaceView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_height="wrap_content" />
+            </FrameLayout>
+
 
             <ImageView
                 android:id="@+id/alpha_background_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:adjustViewBounds="true"
                 android:alpha="@{viewModel.imageAlpha}" />
 
@@ -50,8 +56,8 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/camera_btn_layout"
             android:layout_gravity="end"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="120dp"
             android:paddingTop="10dp"
             app:rsb_gravity="bottom"
             app:rsb_indicator_background_color="#8BC3C3C3"

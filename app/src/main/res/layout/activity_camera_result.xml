@@ -52,7 +52,7 @@
 
         <ImageView
             android:layout_above="@+id/linear_btn"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:id="@+id/result_image"
             android:layout_width="match_parent"

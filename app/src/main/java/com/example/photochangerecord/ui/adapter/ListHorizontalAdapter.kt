@@ -42,8 +42,6 @@ class ListHorizontalAdapter(
         val photo = folder.photos[position]
         holder.title.text = photo.absolute_file_path
 
-        // TODO (데이터 바인딩..)
-//        Glide.with(context).load(photo.absolute_file_path).into(holder.image)
         holder.image.load(File(photo.absolute_file_path))
     }
 
