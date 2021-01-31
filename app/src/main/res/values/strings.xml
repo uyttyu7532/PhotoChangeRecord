@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhotoChangeRecord</string>
+    <string name="app_name">PhotoLapse</string>
 
     <string name="new_folder">New Folder</string>
     <string name="dialog_agree">CREATE</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.photochangerecord">
+    package="com.uyttyu7532.photolapse">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
@@ -13,7 +13,7 @@
         android:required="false" />
 
     <application
-        android:name=".utils.MyApplication"
+        android:name="com.uyttyu7532.photolapse.utils.MyApplication"
         android:allowBackup="true"
         android:configChanges="orientation|screenSize"
         android:icon="@mipmap/ic_launcher"
@@ -22,31 +22,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.gif.GifActivity"></activity>
+        <activity android:name="com.uyttyu7532.photolapse.ui.gif.GifActivity"/>
         <activity
-            android:name=".ui.camera.CameraResultActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.splash.SplashActivity">
+            android:name="com.uyttyu7532.photolapse.ui.camera.CameraResultActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.uyttyu7532.photolapse.ui.splash.SplashActivity"/>
+        <activity android:name="com.uyttyu7532.photolapse.ui.splash.IconSplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name="com.uyttyu7532.photolapse.ui.detail.DetailActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.list.ListActivity"
+            android:name="com.uyttyu7532.photolapse.ui.list.ListActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".ui.gallery.GalleryActivity"
+            android:name="com.uyttyu7532.photolapse.ui.gallery.GalleryActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ui.camera.CameraPermissionActivity" />
-        <activity android:name=".ui.splash.StoragePermissionActivity">
+        <activity android:name="com.uyttyu7532.photolapse.ui.camera.CameraPermissionActivity" />
+        <activity android:name="com.uyttyu7532.photolapse.ui.splash.StoragePermissionActivity">
         </activity>
         <activity
-            android:name=".ui.camera.CameraActivity"
+            android:name="com.uyttyu7532.photolapse.ui.camera.CameraActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
     </application>

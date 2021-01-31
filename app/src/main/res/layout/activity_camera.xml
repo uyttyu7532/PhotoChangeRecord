@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.photochangerecord.ui.camera.CameraBackGroundViewModel" />
+            type="com.uyttyu7532.photolapse.ui.camera.CameraBackGroundViewModel" />
     </data>
 
 
